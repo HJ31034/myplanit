@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.snsMapper">
+  
+	<sql id="boardColumns">
+		  idx
+		, title
+		, content
+		, writer
+		, view_cnt
+		, notice_yn
+		, secret_yn
+		, delete_yn
+		, insert_time
+		, update_time
+		, delete_time
+	</sql>
+
+	<insert id="insertBoard" parameterType="BoardDTO">
+		INSERT INTO board (
+			<include refid="boardColumns" />
+		) VALUES (
+			  seq_board_no.nextval
+			, #{title}
+			, #{content}
+			, #{writer}
+			, 0
+			, NVL(#{noticeYn, jdbcType=VARCHAR}, 'N')
+			, NVL(#{secretYn, jdbcType=VARCHAR}, 'N')
+			, 'N'
+			, SYSDATE
+			, NULL
+			, NULL
+		)
+	</insert>
+
+	<select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			board
+		WHERE
+			delete_yn = 'N'
+		AND
+			idx = #{idx}
+	</select>
+
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE board
+		SET
+			  update_time = SYSDATE
+			, title = #{title}
+			, content = #{content}
+			, writer = #{writer}
+			, notice_yn = NVL(#{noticeYn, jdbcType=VARCHAR}, 'N')
+			, secret_yn = NVL(#{secretYn, jdbcType=VARCHAR}, 'N')
+		WHERE
+			idx = #{idx}
+	</update>
+
+	<update id="deleteBoard" parameterType="long">
+		UPDATE board
+		SET
+			  delete_yn = 'Y'
+			, delete_time = SYSDATE
+		WHERE
+			idx = #{idx}
+	</update>
+	
+  <!-- Oracle Paging -->
+	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
+	  <include refid="CommonMapper.pagingHeader"/>
+	    SELECT 
+	    <include refid="boardColumns" />
+        FROM board
+       WHERE delete_yn = 'N'
+      <include refid="CommonMapper.search_o" />
+       ORDER BY notice_yn DESC, idx DESC, insert_time DESC
+	  <include refid="CommonMapper.pagingFooter"/>
+	</select>
+	
+	<select id="selectBoardList2" parameterType="Criteria" resultType="BoardDTO">
+    SELECT <include refid="boardColumns" />
+      FROM (
+            SELECT ROW_NUMBER() OVER (ORDER BY notice_yn DESC, idx DESC, insert_time DESC) NUM
+                 , <include refid="boardColumns" />
+              FROM board
+             WHERE delete_yn = 'N'
+             ORDER BY 
+               notice_yn DESC, idx DESC, insert_time DESC
+            ) 
+    WHERE NUM BETWEEN #{startPage} AND ( #{startPage} + #{recordsPerPage} )
+  </select>
+  
+  <!-- Mysql Paging -->
+  <select id="selectBoardList3" parameterType="BoardDTO" resultType="BoardDTO">
+    SELECT
+      <include refid="boardColumns" />
+    FROM
+      tb_board
+    WHERE
+      delete_yn = 'N'
+    <include refid="CommonMapper.search_m" />
+    ORDER BY
+      notice_yn ASC,
+      idx DESC,
+      insert_time DESC
+    <include refid="CommonMapper.paging" />
+  </select>
+
+	<select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
+    SELECT
+      COUNT(*)
+    FROM
+      board
+    WHERE
+      delete_yn = 'N'
+    <include refid="CommonMapper.search_o" />
+  </select>
+	
+
+</mapper>
