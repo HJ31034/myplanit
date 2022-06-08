@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+
+<style type="text/css">
+@import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500);
+
+  
+ 
+ 
+.shadow-1 {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
+}
+ 
+.blue-hover {
+  transition: all 0.25s ease-in;
+  border-bottom: 5px solid transparent;
+}
+.blue-hover:hover {
+  transform: translateY(-5px);
+  border: none;
+  border-bottom: 5px solid #74DF00;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	
+	<script type="text/javascript">
+
+jQuery(document).ready(function() {
+     $("#follower").on("click", function() {
+	    	location.href="followList.html";
+	        
+	    });
+    
+ 
+});
+</script>
+
 </head>
 <body>
 
+
+<section id="container">
+
+
+    <header id="header">
+        <section class="inner">
+
+            <h1 class="lsogo">
+                <a href="index.html">
+                 <img src="../imgs/LOGO.JPG" style="width: 190px;">   
+                </a>
+            </h1>
+
+            <div class="search_box">
+                <input type="text" placeholder="검색어 입력" id="search-field">    
+            </div>
+                     <span style="background-color: #70c745; width: 50px; height: 40px; margin-top: 19px; text-align: center; margin-left: 4px;">
+                 <img src="imgs/magnifying-glass.png" style="width: 30px; height: 30px; margin-top: 4px;  ">  </span>
+
+             <a href="profile_edit.html">프로필수정</a>
+
+        </section>
+
+    </header>
+
+    
+
+    <section id="main_container">
+        <div class="inner">
+
+            <div class="contents_box">
+                <article class="contents">
+               <!--인기게시물 리스트 -->
+                    <div class="img_section">
+                        <div class="trans_inner">
+                            <div  style="width: 100%; margin-top: 5px; overflow: hidden; border-radius: 1px;">
+                            <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/싱고니움.jpg" alt="visual01"> 
+                             <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/마란타.jpg" alt="visual01"> 
+                             <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/박쥐란.jpg" alt="visual01">
+                             <img  class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"src="imgs/img_section/몬스테라아단소니.jpg" alt="visual01">
+                             <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/싱고니움.jpg" alt="visual01">
+                             <img  class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/몬스테라아단소니.jpg" alt="visual01">
+                             <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/마란타.jpg" alt="visual01">
+                             <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/박쥐란.jpg" alt="visual01">
+                             <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="imgs/img_section/싱고니움.jpg" alt="visual01">
+                        </div>
+                        </div>
+                    </div>
+                    
+                    
+               
+                </article>
+               
+                
+
+            </div>
+            <input type="hidden" id="page" value="1">
+
+            <div class="side_box">
+                <div class="user_profile">
+                    <div class="profile_thumb">
+                        <img src="imgs/thumb.jpeg" alt="프로필사진"> 
+                    </div>
+                 </div>
+                 <div> 
+                  <div class="follower" id="follower">팔로워 <br>
+                  <p/>50</div>
+                  
+                 <div class="following">팔로잉
+                  <p/>50</div>
+                </div>
+<br><br>
+					<!-- ##### Single Widget Area ##### -->
+                        <div class="single-widget-area">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h1 style="text-align: center; width: 97%;">My Plants</h1>
+                            </div>
+                            <!-- Tags -->
+                             
+                            <ol class="popular-tags d-flex flex-wrap" style="margin-left: 90px;
+    width: 210px;">
+                                <li><a href="#">* PLANTS</a> 
+                                 <a href="#">* NEW PRODUCTS</a>
+                                 </li>
+                                <li><a href="#">* CACTUS</a></li>
+                            </ol>
+                            
+                                
+                        </div>
+
+
+				</div>
+
+
+        </div>
+    </section>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

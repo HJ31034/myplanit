@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+
+jQuery(document).ready(function() {
+	
+	 $("#following").on("click", function() {
+	    	$("#follower_section").hide();
+	    	$("#following_section").show();
+	    });
+	 $("#follower").on("click", function() {
+	    	$("#following_section").hide();
+	    	$("#follower_section").show();
+	    });
+	    
+    
+ 
+});
+</script>
+
+<style type="text/css">
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+</style>
+</head>
+<body>
+
+
+<section id="container">
+
+
+    <header id="header">
+        <section class="inner">
+
+            <h1 class="lsogo">
+                <a href="index.html">
+                 <img src="../imgs/LOGO.JPG" style="width: 190px;">  
+                    
+                </a>
+            </h1>
+
+            <div class="search_box">
+                <input type="text" placeholder="검색어 입력" id="search-field">
+
+                 
+            </div>
+                     <span style="background-color: #70c745; width: 50px; height: 40px; margin-top: 19px; text-align: center; margin-left: 4px;">
+                 <img src="imgs/magnifying-glass.png" style="width: 30px; height: 30px; margin-top: 4px;  ">  </span>
+
+             
+
+        </section>
+
+    </header>
+
+    
+
+    <section id="main_container">
+        <div class="inner">
+
+            <div class="contents_box">
+                <article class="contents">
+               <!--팔로워 리스트 -->
+       <div class="follower_section" id="follower_section" >
+               <div class="followList" id="followList">
+               <div style="width: 180px; float: left; "> 
+                     <img class="followerPro" src="imgs/img_section/싱고니움.jpg"  style="width: 150px; height: 150px;  border-radius: 70%;display:block;  margin: 15px;" >
+                     </div>
+                     
+                     <div style="width: 250px; float: right; margin-top: 30px; margin-right: 110px;"> 
+                     <P class="followerUserName">홍길동</P>
+                     <P class="followerDis">공기정화 식물을 좋아하는, 프로가되고싶은, 식집사</P> 
+                      </div>
+                      <div style="width: 0px;"> 
+                     <input class="followerButton" type="button" value="팔로우"/></div>
+               </div>
+               <div class="followList" id="followList">
+               <div style="width: 180px; float: left; "> 
+                     <img class="followerPro" src="imgs/img_section/몬스테라아단소니.jpg"  style="width: 150px; height: 150px;  border-radius: 70%;display:block;  margin: 15px;" >
+                     </div>
+                     
+                     <div style="width: 250px; float: right; margin-top: 30px; margin-right: 110px;"> 
+                     <P class="followerUserName">곽하나</P>
+                     <P class="followerDis">공기정화 식물을 좋아하는, 프로가되고싶은, 식집사</P> 
+                      </div>
+                      <div style="width: 0px;"> 
+                     <input class="followerButton" type="button" value="팔로우"/></div>
+               </div>
+               <div class="followList" id="followList">
+               <div style="width: 180px; float: left; "> 
+                     <img class="followerPro" src="imgs/img_section/마란타.jpg"  style="width: 150px; height: 150px;  border-radius: 70%;display:block;  margin: 15px;" >
+                     </div>
+                     
+                     <div style="width: 250px; float: right; margin-top: 30px; margin-right: 110px;"> 
+                     <P class="followerUserName">바세린</P>
+                     <P class="followerDis">공기정화 식물을 좋아하는, 프로가되고싶은, 식집사</P> 
+                      </div>
+                      <div style="width: 0px;"> 
+                     <input class="followerButton" type="button" value="팔로우"/></div>
+               </div>
+   </div>  
+               <!-- 팔로잉 리스트  -->
+               
+                <div class="following_section" id="following_section" >
+                 <div class="followList" id="followList">
+               <div style="width: 180px; float: left; "> 
+                     <img class="followerPro" src="imgs/img_section/마란타.jpg"  style="width: 150px; height: 150px;  border-radius: 70%;display:block;  margin: 15px;" >
+                     </div>
+                     
+                     <div style="width: 250px; float: right; margin-top: 30px; margin-right: 110px;"> 
+                     <P class="followerUserName">바세린</P>
+                     <P class="followerDis">공기정화 식물을 좋아하는, 프로가되고싶은, 식집사</P> 
+                      </div>
+                      <div style="width: 0px;"> 
+                     <input class="followerButton" type="button" value="팔로잉"/></div>
+               </div>
+                </div>
+                </article>
+               
+                
+
+            </div>
+            <input type="hidden" id="page" value="1">
+
+            <div class="side_box">
+                <div class="user_profile">
+                    <div class="profile_thumb">
+                        <img src="imgs/thumb.jpeg" alt="프로필사진"> 
+                    </div>
+                 </div>
+                 <div> 
+                  <div class="follower" id="follower">팔로워 <br>
+                  <p/>50</div>
+                  
+                 <div class="following" id="following">팔로잉
+                  <p/>50</div>
+                </div>
+<br><br>
+					<!-- ##### Single Widget Area ##### -->
+                         <div class="single-widget-area">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h1 style="text-align: center; width: 97%;">My Plants</h1>
+                            </div>
+                            <!-- Tags -->
+                             
+                            <ol class="popular-tags d-flex flex-wrap" style="margin-left: 90px;
+    width: 210px;">
+                                <li><a href="#">* PLANTS</a> 
+                                 <a href="#">* NEW PRODUCTS</a>
+                                 </li>
+                                <li><a href="#">* CACTUS</a></li>
+                            </ol>
+                            
+                                
+                        </div>
+
+
+				</div>
+
+
+        </div>
+    </section>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
