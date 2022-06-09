@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+ <th:block layout:fragment="title">
+		<title>list page</title>
+</th:block>
+
+ <th:block layout:fragment="content">
+
+
+    <!-- HEADER -->
+  
+
+    
+ 
+        <div class="inner" style="margin-left: 300px;">
+
+            <div class="contents_box">
+                <article class="contents">
+               <!--인기게시물 리스트 -->
+                  <div class="img_section"> 
+                 <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="../../imgs/img_section/싱고니움.jpg" 
+                 style=" width: 200px;  height: 200px;  border-radius: 50%; margin-top: 40px;"><br><br>
+                 <input type="file" style="margin-left: 220px; display: block;" > 
+                
+                 <textarea rows="3" cols="50" placeholder="50자이내로 적어주세요." style="resize: none; margin-top: 20px;"></textarea><br><br><br><br>
+               <div style="height: 50px;">  <input type="button" value="수정하기"> </div> 
+                  
+                    </div>
+                    
+                    
+               
+                </article>
+               
+                
+
+            </div>
+         
+
+        </div>
+     
+
+
+
+ </th:block>
+
+
+
+
+
+
+
+ 
+ 
+
+
+<th:block layout:fragment="script">
+<script type="text/javascript">
+
+jQuery(document).ready(function() {
+     
+});
+</script>
+</th:block>
+</html>

@@ -1,3 +1,5 @@
+ 
+
 body {
     background: #f8f8f8;
 }
@@ -40,7 +42,7 @@ body {
 .sprite_small_search_icon {
     display: inline-block;
     background: url('../imgs/background01.png') no-repeat -337px -246px;
-    width: 30px;
+    width: 	30px;
     height: 30px;
 }
 

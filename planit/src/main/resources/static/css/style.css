@@ -36,20 +36,20 @@ body{
 
 
 #search-field{
-    width: 185px;
-    height: 28px;
-    background:#fafafa;
-    border: 1px solid #70c745;
+   /*  width: 185px; */
+    height: 30px;
+    background: #FAFAFA;
+    border: 1px solid #70C745;
     border-radius: 3px;
-    padding:5px 60px;
-    color:#999;
+    padding: 5px 60px;
+    color: #999;
     font-weight: 500;
     text-align: left;
     font-size: 17px;
-    outline:none;
+    outline: none;
     padding-left: 110px;
     margin-left: 120px;
-    margin-top:19px;
+    margin-top: 19px;
 }
 
 #search-field::placeholder{
@@ -115,10 +115,11 @@ body{
 .contents .img_section img{
      width: 200px;
      height: 180px;
+     padding: 2.3px;
      
 }
 
-/* .contents .follower_section{
+.contents .follower_section{
     overflow:hidden;
      text-align: center;
 }
@@ -138,7 +139,7 @@ body{
      width: 200px;
      height: 180px;
      
-} */
+}
 
 
 
@@ -205,7 +206,11 @@ margin-left: 150px;
 .single-widget-area {
   position: relative;
   z-index: 1;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  background-color: #e5f9dc;
+margin-left: 40px;
+    width: 210px;
+    }
   
    .single-widget-area .widget-title {
     width: 100%;
@@ -233,13 +238,30 @@ margin-left: 150px;
      .single-widget-area .popular-tags li a:hover, .single-widget-area .popular-tags li a:focus {
       color: #ffffff;
       background-color: #70c745; }
- /* index.html END */
- 
- 
+
+@import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500);
+
+.shadow-1 {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+}
+
+.blue-hover {
+	transition: all 0.25s ease-in;
+	border-bottom: 5px solid transparent;
+}
+
+.blue-hover:hover {
+	transform: translateY(-5px);
+	border: none;
+	border-bottom: 5px solid #74DF00;
+}
+
+/* index.html END */
+
+
 
 
 /* followList start   */
-
 .contents .followList{
     overflow:hidden;
     text-align: center;
@@ -270,7 +292,7 @@ margin-left: 150px;
 	height: 40px;
 	width: 250px;
 	text-align: left;
-}
+} 
 
 /* followList END */
 
