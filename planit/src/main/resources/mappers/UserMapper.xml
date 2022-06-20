@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.main.UserMapper">
+
+<!-- 회원가입시 입력 내용 -->
+	<insert id="saveUser">
+		INSERT INTO
+		USERS(USERID, PASSWORD, USERNAME, EMAIL, PHONE)
+		VALUES(#{userId}, #{password}, #{userName}, #{email}, #{phone})
+
+	</insert>
+
+
+	<!-- 로그인 -->
+	<select id="loginUser" resultType="UserDTO">
+	SELECT USERID, PASSWORD
+	FROM USERS
+	WHERE USERID=#{userId}
+	AND PASSWORD=#{password}
+	</select>
+	
+	<!-- name search  -->
+	<select id= "userId" resultType="UserDTO">
+	SELECT USERID
+	FROM USERS
+	WEHRE USERID=#{userId}
+	</select>
+
+</mapper>

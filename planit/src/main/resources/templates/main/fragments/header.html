@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<meta charset="UTF-8">
+<th:block th:fragment="headerFragment">
+
+	<section id="topbar" class="d-flex align-items-center">
+		<div
+			class="container d-flex justify-content-center justify-content-md-between">
+			<div class="contact-info d-flex align-items-center"></div>
+			<div class="social-links d-none d-md-flex align-items-center">
+				<!-- <th:block th:if=""> -->
+				<a href="/planit/login">로그인</a> <a href="/planit/join">회원가입</a> <a href="/planiter/">SNS</a>
+				<!-- </th:block> -->
+
+				<!-- <th:block th:unless="">
+					<a href="#">SNS</a>
+					<a href="#">내계정</a>
+					<a href="#">로그아웃</a>
+				</th:block> -->
+			</div>
+		</div>
+	</section>
+
+
+	<header id="header" class="d-flex align-items-center">
+
+		<div
+			class="container d-flex align-items-center justify-content-between" style="padding-left: 10%;">
+
+			<h1 class="logo">
+				<a href="/"><img src="../../imgs/LOGO.JPG"></a>
+			</h1>
+			<nav id="navbar" class="navbar">
+				<ul id="menu">
+					<li data-menuanchor="section1"><a href="#section1">식물검색</a></li>
+					<li data-menuanchor="section2"><a href="#section2">식물찾기</a></li>
+					<li data-menuanchor="section3"><a href="#section3">추천식물</a></li>
+					<li data-menuanchor="section4"><a href="#section4">추천계정</a></li>
+					<li data-menuanchor="section5"><a href="#section5">최신포스트</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+</th:block>
+</html>

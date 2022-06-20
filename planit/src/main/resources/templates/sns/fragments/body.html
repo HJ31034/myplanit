@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<body th:fragment="main-body">
+	<div id="container">
+
+		<div id="header">
+			<div class="inner">
+				<h1 class="lsogo">
+					<a th:href="@{/planiter/}"> <img src="/imgs/LOGO.JPG"
+						style="width: 190px;">
+					</a>
+				</h1>
+
+				<div class="search_box">
+					<input type="text" placeholder="검색어 입력" id="search-field">
+				</div>
+				<span
+					style="background-color: #70c745; width: 50px; height: 40px; margin-top: 19px; text-align: center; margin-left: 4px;">
+					<img src="/imgs/magnifying-glass.png"
+					style="width: 30px; height: 30px; margin-top: 4px;">
+				</span> <a th:href="@{/planiter/goProfileEdit.do}">프로필수정</a>
+			</div>
+		</div>
+
+		<div id="main_container">
+			<th:block layout:fragment="content"></th:block>
+			<th:block layout:fragment="write-post"></th:block>
+			<th:block layout:fragment="read-post"></th:block>
+		</div>
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<th:block layout:fragment="script"></th:block>
+</body>
+
+</html>

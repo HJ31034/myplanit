@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="sns/layout/basic">
+<th:block layout:fragment="title">
+	<title>list page</title>
+</th:block>
+
+<th:block layout:fragment="sub-head">
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+	<!-- Facebook Meta Tags / 페이스북 오픈 그래프 -->
+	<meta property="og:url" content="http://kindtiger.dothome.co.kr/insta">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="instagram">
+	<meta property="og:description" content="instagram clone">
+	<meta property="og:image"
+		content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
+
+	<!-- Twitter Meta Tags / 트위터 -->
+	<meta name="twitter:card" content="instagram clone">
+	<meta name="twitter:title" content="instagram">
+	<meta name="twitter:description" content="instagram clone">
+	<meta name="twitter:image"
+		content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
+
+	<!-- Google / Search Engine Tags / 구글 검색 엔진 -->
+	<meta itemprop="name" content="instagram">
+	<meta itemprop="description" content="instagram clone">
+	<meta itemprop="image"
+		content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
+
+	<link rel="stylesheet" href="/css/profile.css">
+	<link rel="shortcut icon" href="/imgs/instagram.png">
+
+</th:block>
+
+<th:block layout:fragment="script">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$('.plantName').click(function() {
+				var plantName = $(this).text();
+				var userId = $(".user_name").text();
+				$.ajax({
+					type : 'POST',
+					url : '/planiter/plantPosts',
+					data : {
+						userId : userId,
+						plantsName : plantName.split("#")[1]
+					},
+					dataType : 'json',
+					success : function(data) {
+						console.log(data);
+						str = "<div class='plant_name'>";
+						str += "<a href='javascript:void(0);' class='plantName'>";
+						str += plantsName;
+						str += "</a> </div>";
+						str += "<div class='contents_container'>";
+
+						for (var i = 0; i < data.length; i++) {
+							str += "<div class='pic'>";
+							str += "<a href='#'><img src='/imgs/img_section/";
+							str += data[i].fileName;
+							str += "' alt=''></a>";
+							str += "</div>";
+						}
+						str += "</div>";
+
+						$('.contents_box').html(str);
+						console.log(str);
+					},
+					error : function() {
+						alert("에러 발생");
+					}
+				});
+			});
+			
+			// 추후 수정
+			var userId = 'test';
+			var check = $('button').val();
+			console.log(check);
+			if(check == 1){
+				$('button').attr('class','write_btn');
+			}
+			else {
+				$('button').attr('class','profile_modify');
+			}
+			
+			$('button').click(function(){
+				var followingId = $('.user_name').text();
+				
+				if(check == 0){ // 팔로우가 되어 있지 않은 상태에서 팔로우 버튼을 눌렀을 경우
+					$(this).attr('class','write_btn');
+					check = 1;
+					
+					$.ajax({
+						type : 'POST',
+						url : '/planiter/follow',
+						data : {
+							userId : userId,
+							followerId: userId,
+							followingId : followingId
+						},
+						dataType : 'json',
+						success : function(data) {
+							$('.followerCount').text(data.followerCount);
+						},
+						error : function(request, error) {
+							alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+						}
+					});
+				}
+				else {
+					$(this).attr('class','profile_modify');
+					check = 0;
+					$.ajax({
+						type : 'POST',
+						url : '/planiter/unfollow',
+						data : {
+							userId : userId,
+							followingId : followingId
+						},
+						dataType : 'json',
+						success : function(data) {
+							$('.followerCount').text(data.followerCount);
+						},
+						error : function() {
+							alert("에러 발생");
+						}
+					});
+				}
+
+				$(this).attr('value', check);
+			});
+		});
+	</script>
+</th:block>
+
+<th:block layout:fragment="content">
+	<section class="b_inner">
+
+		<div class="hori_cont">
+			<div class="profile_wrap">
+				<div class="profile_img">
+					<img th:src="@{/imgs/img_section/} + ${userProfile.profileImg}" alt="착한호랑이">
+				</div>
+			</div>
+
+			<div class="detail">
+				<div class="top">
+					<div class="user_name">[[${userProfile.userId}]]</div>
+					<button type="button" th:value="${followCheck}">팔로우</button>
+				</div>
+
+				<ul class="middle plant_name">
+					<li>
+						<a href="/planiter/follower.do">
+							<div class="label">팔로워</div>
+							<div class="followerCount">[[${userProfile.followerCount}]]</div>
+						</a>
+					</li>
+					<li>
+						<a href="/planiter/follower.do">
+							<div class="label">팔로우</div>
+							<div>[[${userProfile.followingCount}]]</div>
+						</a>
+					</li>
+					<li>
+						<a th:href="@{/planiter/} + ${userProfile.userId}">
+							<div class="label">게시물</div>
+							<div>[[${postCount}]]</div>
+						</a>
+					</li>
+				</ul>
+
+				<div>
+					<span>[[${userProfile.accDescription}]]</span>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="contents_box">
+			<th:block th:each="plant, index : ${userPlants}">
+				<div class="plant_name">
+					<a href="javascript:void(0);" class="plantName">#[[${plant.plantsName}]]</a>
+				</div>
+				<div class="contents_container">
+					<div th:each="post : ${userPosts[index.index]}" class="pic">
+						<a href="#"><img th:src="@{/imgs/img_section/} + ${post.fileName}" alt=""></a>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</section>
+</th:block>
+
+</html>

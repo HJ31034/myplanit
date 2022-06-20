@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+ lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Congrats for signing in successfully!!</h1>
+<p th:if="${authUser== null}">hi</p>
+
+
+<h3 th:text="|세션정보:${session} |"></h3>
+ <!-- <span th:text="${userName}"></span>  -->
+
+
+<!-- 로그인 전 출력 -->
+<ul th:if="${session.id==null}">
+<li><a th:href="@{/login}">로그인 </a></li>
+<li><a th:href="@{/join}">회원가입</a></li>
+</ul>
+
+<p>회원정보 수정 로그아웃이 뜨면 정상적으로 세션 처리됨을 알림!</p>
+<th:block th:if="${session.id != null}">
+<h2 th:text="|${session.id} 님 안녕?|"></h2>
+</th:block>
+<ul th:if="${session.id != null}">
+<li><a href="">회원정보 수정</a><li>
+<li><a href="logout">로그아웃</a></li>
+</ul> 
+
+ 
+
+</body>
+</html>

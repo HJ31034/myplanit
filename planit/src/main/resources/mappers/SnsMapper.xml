@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.sns.SnsMapper">
+
+
+<!--메인 좋아요순 이미지 정렬   -->
+		<select id="selectImgPost" resultType="com.planit.domain.sns.PostDTO">
+	<![CDATA[
+	select rn,no,filename,likescount,postno from
+	(select /*+ INDEX_DESC(seq_POSTNO_no) */
+	rownum rn, pf.no,pf.filename,p.likescount,p.postno
+ 	from postfiles pf join post p
+ 	on p.postno=pf.postno
+ 	and no in
+ 	(select
+ 	min(no)
+ 	from postfiles
+ 	group by postno)
+    and rownum <= #{parameter1} + #{parameter2}
+ 	order by likescount desc)
+    WHERE rn > #{parameter1}
+	]]>
+		</select>
+	 
+	 
+<!-- 전체 게시물 수  -->
+<select id="selectImgPostCnt" resultType="int">
+	<![CDATA[
+	select count(postno)
+    from post
+    ]]>
+</select>
+	 
+	 
+<!--메인 계정정보 출력 (팔로잉,팔로워,프로필사진)-->
+		<select id="selectMainAccINfo" parameterType="String" resultType="com.planit.domain.sns.AccountDTO">
+	<![CDATA[
+	select userId,ACCDESCRIPTION,PROFILEIMG,FOLLOWERCOUNT,FOLLOWINGCOUNT
+	from account
+	where userId=#{userId}
+	]]>	
+		</select>
+	 
+	 
+<!--메인 계정정보 출력 (식물카테고리)-->
+		<select id="selectMainCate" parameterType="String" resultType="com.planit.domain.sns.PlantsCateDTO">
+	<![CDATA[
+	select plantsname
+	from usertoplants
+	where userId=#{userId}
+	]]>	
+		</select>
+		
+		
+<!-- 프로필 수정 -->
+		<update id="updateInfo" parameterType="String">
+	<![CDATA[
+	UPDATE account
+	SET
+	ACCDESCRIPTION = #{accDescription},
+	profileimg = #{profileImg}
+	WHERE
+	userId = #{userId}
+	]]>	
+		</update>
+		
+		
+<!-- followList 팔로잉 리스트 출력  -->
+			<select id="selectFollowingList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
+		<![CDATA[
+		select f.userId,f.followerid,f.followingid,a.ACCdescription,a.profileimg
+		from follow f join account a
+		on f.followerid=a.userId
+		where f.userId=#{userId}
+ 		]]>	
+			</select>
+ 
+			
+			
+<!-- followList 팔로워 리스트 출력 f.followerid -->
+			<select id="selectFollowerList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
+		<![CDATA[
+		select f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid
+        from follow f join account a
+        on f.userId=a.userId
+        where f.followerid=#{userId}
+	 
+ 		]]>
+			</select>
+			
+			
+<!-- followList 팔로워 리스트 한번 거르기 -->
+	<select id="selectFollowerList2" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
+		<![CDATA[
+		select f.userId,f.followerid,f.followingid,a.ACCdescription,a.profileimg
+		from follow f, account a
+		where f.followerid=a.userId and f.userId=#{parameter1} and f.followerid=#{parameter2}
+ 		]]>	
+			</select>
+			
+ 
+			
+			
+<!-- 팔로우 -->
+			<insert id="insertFollow" parameterType="String">
+		<![CDATA[
+		INSERT INTO FOLLOW(userId,FOLLOWERID,FOLLOWINGID)  VALUES(#{parameter1},#{parameter2},1)
+		]]>
+		</insert>
+		
+<!-- 언팔로우 -->
+		<delete id="unFollow" parameterType="String">
+		<![CDATA[
+		    delete from FOLLOW where userId=#{parameter1} and FOLLOWERID=#{parameter2}
+		]]>
+		</delete>
+		
+		
+ 
+		
+ 
+		
+<!-- 팔로워 숫자 -->
+		<select id="followerCount" resultType="int" parameterType="String" >
+		<![CDATA[
+		  select count(followerid) from follow where followerid=#{userId}
+		]]>
+		</select>
+		
+<!-- 팔로잉 숫자 -->
+		<select id="followingCount" resultType="int" parameterType="String" >
+		<![CDATA[ 
+		   select count(followerid) from follow where userId=#{userId}
+		]]>
+		</select>
+		
+
+
+
+</mapper>

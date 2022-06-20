@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="margin:0;">
+    <div id="map" style="width: 100vw; height: 100vh;">
+
+    </div>
+</body>
+
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7a0f64aeb06c20320c2ed2716218074"></script>
+<script th:inline="javascript">
+    let latitude = [[${latitude}]];
+    let longitude = [[${longitude}]];
+
+    drawMap();
+
+    function drawMap(){
+        let mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        let marker = new kakao.maps.Marker({
+            position: map.getCenter()
+        });
+        marker.setMap(map);
+
+        addMarkerEvent(map, marker);
+    }
+
+    function addMarkerEvent(map, marker){
+        kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+            // 클릭한 위도, 경도 정보를 가져옵니다
+            var latlng = mouseEvent.latLng;
+
+            // 마커 위치를 클릭한 위치로 옮깁니다
+            marker.setPosition(latlng);
+
+            latitude = latlng.getLat();
+            longitude = latlng.getLng();
+
+            changeParent(latitude, longitude);
+        });
+    }
+
+    //바꾸는 함수
+    function changeParent(latitude, longitude){
+        opener.parent.setLatAndLong(latitude, longitude);
+        opener.parent.setLocation();
+        opener.parent.setWeather();
+    }
+</script>
+</html>

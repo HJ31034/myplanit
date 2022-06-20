@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="sns/layout/basic">
+<th:block layout:fragment="title">
+		<title>list page</title>
+</th:block>
+ 
+
+		<th:block layout:fragment="content">
+        <div class="inner">
+
+            <div class="contents_box">
+                <article class="contents">
+               <!--인기게시물 리스트 -->
+                    <div class="img_section">
+                        <div class="trans_inner" id="trans_inner">
+                            <div class="list" >
+   
+                        </div>
+                        </div> 
+                        
+                       
+				</div> 
+                </article>
+               
+                
+
+            </div>
+            
+            
+         
+            
+            <input type="hidden" id="page" value="1">
+
+            <div class="side_box" th:each="info:${AccInfo}">
+                <div class="user_profile">
+                    <div class="profile_thumb">
+                        <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
+                    </div>
+                 </div>
+                 <div> 
+                  <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
+                  <p th:text="${followerCount}"/></a></div>
+                 <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
+                 <p th:text="${followingCount}"/></a></div>
+                </div>
+<br><br>
+					<!-- ##### Single Widget Area ##### -->
+                        <div class="single-widget-area">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h1 style="text-align: center; width: 97%;">My Plants</h1>
+                            </div>
+                            <!-- Tags -->
+                             
+                            <ol th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
+                               <ol style="margin-left: -40px;">
+                               		 <li>#<a th:text="${cate.plantsName}" href="#"></a> </li>
+                               </ol>
+                            </ol>
+                            
+                        </div>
+			 	 
+		</div>
+				
+				 
+
+
+        </div>
+        </th:block>
+    <!-- </section> -->
+
+
+
+ 
+
+
+  <th:block layout:fragment="script">
+ 
+
+  <script th:inline="javascript">
+     
+  jQuery(document).ready(function() {
+	  
+})
+
+
+  var page = 1;
+  
+  $(function(){   
+	       getList(page);
+	       page++;
+	  }); 
+	  
+	  $(window).scroll(function(){
+		        if($(window).scrollTop() >= $(document).height() - $(window).height()){
+			            getList(page);
+			             page++;  
+			 
+		       } 
+		  });
+	  console.log($(window).scrollTop() +' / '+$(document).height()+' / '+$(window).scrollTop());
+	  
+	  /* $('.img_section').scroll(function(){  
+		   if($('.img_section').scrollTop() >= $('.img_section').height() - $('.img_section').height()){
+			            getList(page);
+			             page++;   
+			  } 
+	  console.log($('.img_section').scrollTop() +' / '+$('.img_section').height()+' / '+$('.img_section').height());
+	  }); */
+		 
+		  
+  function getList(page){
+  $.ajax({
+		type : 'get',
+		url : "/planiter/imgList.do?page="+page,
+		contentType : "application/json; charset=UTF-8",
+		dataType : "json",
+		success : function(data) {
+			console.log(data);
+			
+			 var imgList = "";
+			 if (page==1){   
+				    $(".list").html(""); 
+			  }  
+				 
+			  $.each(data, function(index, item) { // 데이터 =item
+				    
+				  imgList = '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.fileName+'"alt="프로필사진">';
+		           $(".list").append(imgList);
+				 
+					  
+				  
+				  
+			});   
+			 
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR.responseText);
+		}
+	});
+  
+  }
+  
+ 
+  
+ 
+  
+  </script>
+
+
+
+
+
+</th:block> 
+</html>

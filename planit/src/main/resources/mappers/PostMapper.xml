@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.sns.PostMapper">
+
+	
+	<select id="selectPostDetail" parameterType="Long" resultType="PostDTO">
+		SELECT p.postno, p.postcontent, p.userid, TO_CHAR(p.createdt, 'yyyy-MM-dd') createdt, p.likescount, u.PLANTSNAME, f.FILENAME 
+		FROM POST p 
+		FULL OUTER JOIN (
+			SELECT f.POSTNO, LISTAGG(f.FILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS FILENAME 
+			FROM POSTFILES f
+			WHERE f.POSTNO = #{postNo}
+			GROUP BY f.POSTNO 
+		) f ON (p.POSTNO = f.POSTNO)
+		FULL OUTER JOIN USERTOPLANTS u 
+		ON (p.PLANTSCATENO = u.PLANTSCATENO)
+		WHERE p.POSTNO = #{postNo}
+	</select>
+	
+	<select id="commentList" parameterType="Long" resultType="CommentDTO">
+		SELECT userid, content, TO_CHAR(regdate, 'yyyy-MM-dd') regdate
+		FROM pcomment  
+		WHERE POSTNO = #{postNo}
+		ORDER BY regdate desc
+	</select>
+	
+	<insert id="insertComment" parameterType="commentDTO">
+		INSERT INTO pcomment (
+			no,
+			postno, 
+			userid, 
+			regdate, 
+			content 
+		)
+		VALUES (
+			seq_pcommentno_no.nextval, 
+			#{postNo}, 
+			#{userId}, 
+			sysdate, 
+			#{content}
+		)
+	</insert>
+
+</mapper>

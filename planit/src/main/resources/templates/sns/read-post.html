@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="sns/layout/basic">
+<th:block layout:fragment="title">
+	<title>read post page</title>
+</th:block>
+
+<th:block layout:fragment="write-post">
+	<div class="post_inner" th:object="${post}">
+
+		<div class="post_box_left"> 
+			<div class="photo_box" th:each="fileName, index : ${post.fileNameArr}">
+				<img class="photo"  th:src="${'/imgs/img_section/' + fileName}" > 
+			</div>
+			<div class="hashtag_box">
+				<span th:text="'#' + *{plantsName}"></span><br/>
+				<span>#날씨</span><br/>
+				<span th:text="'#' + *{createDt}"></span>
+			</div>
+		</div>
+
+		<div class="post_box_right_read">
+			<div class="read_box">
+				<p th:text="*{postContent}">글읽기</p>
+			</div>
+			<div class="icon_box">
+				<img src="/imgs/img_section/leaves.png">
+				<img src="/imgs/img_section/comment.png">
+			</div>
+			
+			<div th:action="@{/planiter/post/insert/comment}" class="comment_box">
+				<div class="write_comment">
+					<input id="user_id" type="hidden" th:object="${post}" th:field="${post.userId}">
+					<input id="post_no" type="hidden" th:object="${post}" th:field="${post.postNo}">
+					<textarea id="comment" placeholder="댓글 작성하기"></textarea>
+				</div>
+				<div class="commit_comment">
+					<form>
+						<button type="submit" class="getComment" onclick="return getComment()">등록</button>
+					</form>
+				</div>
+			</div>
+			<div class="comment">
+				<table class="comment_table">
+					<tr class="comment_tr" th:each="c,index : ${commentList}">
+						<th:block th:if="${index.index} < 4">
+							<td th:text="${c.userId}"></td>
+							<td th:text="${c.content}"></td>
+							<td th:text="${c.regDate}"></td>
+							<td href="#">삭제</td>
+						</th:block>
+					</tr>
+				</tabl>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="script">
+
+	<script th:inline="javascript">
+		function getComment(){
+			let userId = document.getElementById('user_id').value;
+			let postNo = document.getElementById('post_no').value;
+			let comment = document.getElementById('comment').value;
+			
+			let data = {
+				'userId': userId,
+				'postNo': postNo,
+				'content': comment
+			};
+			
+			$.ajax({
+				url : "/planiter/post/insert/comment",
+				type : "post",
+				//dataType : "json",
+				data: data,
+				//contentType: "application/json; charset=utf-8",
+				success : function(data) {
+					
+					//var str = '';
+					//str += '<th:block th:if="${index.index} < 4">'
+					//str += '<td th:text="' + data.userId + '">s</td>'
+					//str += '<td th:text="' + data.cosntent + '"></td>'
+					//str += '<td th:text="' + data.regDate + '"></td>'
+					//str += '<td href="#">삭제</td>'
+					//str += '</th:block>'
+									
+					$(".comment_table").replaceWith(data);
+					
+				},
+				error : function(XHR, status, errosr) {
+					console.error(status + " : " + error);
+				}
+			});
+		 	
+		 	return false;
+		}
+
+	</script>
+
+</th:block>
+
+</html>

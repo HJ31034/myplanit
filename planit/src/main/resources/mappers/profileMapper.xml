@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.sns.ProfileMapper">
+	<select id="selectUserProfile" parameterType="String" resultType="AccountDTO">
+		SELECT userId, accDescription, profileImg, followerCount, followingCount
+		FROM
+			account
+		WHERE
+			userId = #{userId}
+	</select>
+	
+	<select id="selectUserPlants" parameterType="String" resultType="UserToPlantsDTO">
+		SELECT *
+		FROM USERTOPLANTS
+		WHERE USERID = #{userId}
+	</select>
+	
+	<select id="selectUserPost" parameterType="map" resultType="PostDTO">
+ 		<if test='page.equals("main")'>
+		SELECT *
+		FROM (
+		</if>
+		SELECT ROW_NUMBER() OVER (ORDER BY p.createdt DESC) NUM, p.*, p2.FILENAME
+		FROM (SELECT *
+			FROM post
+			WHERE USERID = #{params.userId}) p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
+									LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+		WHERE u.PLANTSNAME = #{params.plantsName}
+ 		<if test='page.equals("main")'>
+		)
+		WHERE NUM BETWEEN 1 AND 4
+		</if>
+	</select>
+	
+	
+	<select id="selectUserLikes" parameterType="String" resultType="PostDTO">
+		SELECT p.*, p2.FILENAME  
+		FROM POST p RIGHT OUTER JOIN (SELECT * FROM LIKES WHERE USERID = #{userId}) l ON p.POSTNO = l.POSTNO
+					LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+		ORDER BY p.createdt DESC
+	</select>
+	
+	<select id="selectFollow" parameterType="FollowDTO" resultType="Integer">
+		select count(*)
+		from follow
+		where userId = #{userId} and followingId = #{followingId}
+	</select>
+	
+	<insert id="insertFollow" parameterType="FollowDTO">
+		insert into follow values (#{userId}, #{followerId}, #{followingId})
+	</insert>
+	
+	<delete id="deleteFollow" parameterType="FollowDTO">
+		delete 
+		from follow 
+		where userId = #{userId} and followingId = #{followingId}
+	</delete>
+	
+	<update id="updateFollowCount" parameterType="map">
+		update account
+		<choose>
+			<when test='check.equals("following")'>
+			set followingCount = followingCount + 1
+			</when>
+			<when test='check.equals("unfollowing")'>
+			set followingCount = followingCount - 1
+			</when>
+			<when test='check.equals("follower")'>
+			set followerCount = followerCount + 1
+			</when>
+			<when test='check.equals("unfollower")'>
+			set followerCount = followerCount - 1
+			</when>
+		</choose>
+		where userId = #{userId}
+	</update>
+
+	
+</mapper>
