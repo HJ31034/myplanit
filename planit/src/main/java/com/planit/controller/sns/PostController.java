@@ -57,7 +57,7 @@ public class PostController {
 		
 		model.addAttribute("commentList", postService.getCommentDetail(params.getPostNo()));
 		
-		 return "sns/insert/comment";		
+		 return "sns/read-post :: #comment_table";		
 	}
 	
 	@GetMapping(value = "/popup/map")

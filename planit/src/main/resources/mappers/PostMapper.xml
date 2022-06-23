@@ -18,10 +18,13 @@
 	</select>
 	
 	<select id="commentList" parameterType="Long" resultType="CommentDTO">
-		SELECT userid, content, TO_CHAR(regdate, 'yyyy-MM-dd') regdate
-		FROM pcomment  
-		WHERE POSTNO = #{postNo}
-		ORDER BY regdate desc
+		SELECT p.userid, p.content, TO_CHAR(regdate, 'yyyy.MM.dd') regdate
+		FROM (
+			SELECT p.userid, p.content, p.regdate
+			FROM PCOMMENT p 
+			WHERE POSTNO = #{postNo}
+			ORDER BY regdate desc
+		) p
 	</select>
 	
 	<insert id="insertComment" parameterType="commentDTO">

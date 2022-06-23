@@ -9,9 +9,18 @@
 	<div class="post_inner" th:object="${post}">
 
 		<div class="post_box_left"> 
-			<div class="photo_box" th:each="fileName, index : ${post.fileNameArr}">
-				<img class="photo"  th:src="${'/imgs/img_section/' + fileName}" > 
-			</div>
+		
+			<div class="photo_box">
+	            <div class="swiper-wrapper">
+	               <div class="swiper-slide" th:each="fileName, index : ${post.fileNameArr}">
+	                  <img class="photo swiper-lazy"  th:src="${'/imgs/img_section/' + fileName}" />
+	               </div>
+	            </div>
+	            <div class="swiper-button-next"></div>
+	            <div class="swiper-button-prev"></div>
+	            <div class="swiper-pagination"></div>
+         	</div>
+         
 			<div class="hashtag_box">
 				<span th:text="'#' + *{plantsName}"></span><br/>
 				<span>#날씨</span><br/>
@@ -41,9 +50,9 @@
 				</div>
 			</div>
 			<div class="comment">
-				<table class="comment_table">
-					<tr class="comment_tr" th:each="c,index : ${commentList}">
-						<th:block th:if="${index.index} < 4">
+				<table id="comment_table">
+					<tr th:each="c,index : ${commentList}" th:if="${index.index} < 4">
+						<th:block>
 							<td th:text="${c.userId}"></td>
 							<td th:text="${c.content}"></td>
 							<td th:text="${c.regDate}"></td>
@@ -60,34 +69,24 @@
 
 	<script th:inline="javascript">
 		function getComment(){
-			let userId = document.getElementById('user_id').value;
-			let postNo = document.getElementById('post_no').value;
-			let comment = document.getElementById('comment').value;
+			let userId = document.getElementById('user_id');
+			let postNo = document.getElementById('post_no');
+			let comment = document.getElementById('comment');
 			
 			let data = {
-				'userId': userId,
-				'postNo': postNo,
-				'content': comment
+				'userId': userId.value,
+				'postNo': postNo.value,
+				'content': comment.value
 			};
+			
+			comment.value = '';
 			
 			$.ajax({
 				url : "/planiter/post/insert/comment",
 				type : "post",
-				//dataType : "json",
 				data: data,
-				//contentType: "application/json; charset=utf-8",
-				success : function(data) {
-					
-					//var str = '';
-					//str += '<th:block th:if="${index.index} < 4">'
-					//str += '<td th:text="' + data.userId + '">s</td>'
-					//str += '<td th:text="' + data.cosntent + '"></td>'
-					//str += '<td th:text="' + data.regDate + '"></td>'
-					//str += '<td href="#">삭제</td>'
-					//str += '</th:block>'
-									
-					$(".comment_table").replaceWith(data);
-					
+				success : function(data) {			
+					$("#comment_table").replaceWith(data);
 				},
 				error : function(XHR, status, errosr) {
 					console.error(status + " : " + error);
@@ -96,6 +95,21 @@
 		 	
 		 	return false;
 		}
+		
+		let swiper = new Swiper(".photo_box", {
+	         slidesPerView: '1',
+	         pagination: {
+			    el: '.swiper-pagination',
+			    type: 'bullets',
+			    clickable: true,
+			  },
+	
+	         // 좌우 화살표 navigation element 지정
+	         navigation: {
+	            nextEl: ".swiper-button-next",
+	            prevEl: ".swiper-button-prev"
+	         },
+	      });
 
 	</script>
 
