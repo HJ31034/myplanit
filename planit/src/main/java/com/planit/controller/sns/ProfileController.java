@@ -3,6 +3,9 @@ package com.planit.controller.sns;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,19 +31,21 @@ public class ProfileController {
 	private ProfileService profileService;
 	
 	@GetMapping("/profile.do")
-	public String myProfile(Model model) {
-		// ����� ���� ������ ���� ���� �����ͼ� �Ѱ��ֱ�
-		String id = "test";
+	public String myProfile(Model model, HttpServletRequest request) {
+		
+		HttpSession session  = request.getSession();
+		
+		String id = session.getAttribute("id").toString();
 		String page = "main";
 		
-		// ����� ������
+		// 사용자 프로필 정보
 		model.addAttribute("myUserProfile", profileService.selectUserProfile(id));
 		
-		// ������� �ݷ��Ĺ� �̸� ����Ʈ
+		// 사용자가 키우는 반려식물의 리스트
 		List<UserToPlantsDTO> userPlantList = profileService.selectUserPlants(id);
 		model.addAttribute("myUserPlants", userPlantList);
 		
-		// ������ �̸��� ���� ����Ʈ
+		// 사용자가 게시한 게시물 리스트
 		List<List<PostDTO>> userPostList = new ArrayList<>();
 		int count = 0;
 		for(int i = 0; i < userPlantList.size(); i++) {
@@ -49,42 +54,41 @@ public class ProfileController {
 		}
 		model.addAttribute("myUserPosts", userPostList);
 		
-		// �Խù� ����
+		// 사용자의 게시물 총 개수
 		model.addAttribute("myPostCount", count);
 		
 		List<PostDTO> userLikes = profileService.selectUserLikes(id);
 
-		// ���ƿ� �Խù� ����
+		// 사용자가 좋아요를 누른 게시물의 개수
 		model.addAttribute("userLikes", userLikes.size());
 		
 		return "sns/profile";
 	}
 	
-	@ResponseBody // ajax�� �� ������ ���!!!
+	// 사용자 게시물에서 식물 이름 해시태그를 누르면 해당 식물에 대한 게시물 전체를 보여줌
+	@ResponseBody
 	@PostMapping("/plantPosts")
 	public List<PostDTO> profile(@ModelAttribute UserToPlantsDTO params) {
 		return profileService.selectUserPost(params, "detail");
 	}
 	
+	// 사용자가 좋아요를 누른 게시물 리스트
 	@ResponseBody
 	@PostMapping("/userLikes")
 	public List<PostDTO> userLikes(@RequestParam("userId") String id){
 		return profileService.selectUserLikes(id);
 	}
 	
-	// �ٸ� ��� ����
+	// 다른 사용자의 계정 프로필
 	@GetMapping("/{id}")
-	public String userProfile(@PathVariable String id, Model model) {
+	public String userProfile(@PathVariable String id, Model model, HttpServletRequest request) {
 		String page = "main";
 		
-		// ����� ������
 		model.addAttribute("userProfile", profileService.selectUserProfile(id));
 		
-		// ������� �ݷ��Ĺ� �̸� ����Ʈ
 		List<UserToPlantsDTO> userPlantList = profileService.selectUserPlants(id);
 		model.addAttribute("userPlants", userPlantList);
 		
-		// ������ �̸��� ���� ����Ʈ
 		List<List<PostDTO>> userPostList = new ArrayList<>();
 		int count = 0;
 		for(int i = 0; i < userPlantList.size(); i++) {
@@ -93,28 +97,27 @@ public class ProfileController {
 		}
 		model.addAttribute("userPosts", userPostList);
 		
-		// �Խù� ����
 		model.addAttribute("postCount", count);
 		
 		List<PostDTO> userLikes = profileService.selectUserLikes(id);
 		
-		// ���ƿ� �Խù� ����
 		model.addAttribute("userLikes", userLikes.size());
 		
 		FollowDTO follow = new FollowDTO();
 		
-		// ���� ����
-		String myId = "test";
+		HttpSession session  = request.getSession();
+		
+		String myId = session.getAttribute("id").toString();
 		
 		follow.setUserId(myId);
 		follow.setFollowingId(id);
 		
-		// �ٸ� ������� �ȷο� ����
 		model.addAttribute("followCheck", profileService.selectFollow(follow));
 
 		return "sns/otherProfile";
 	}
 	
+	// 팔로우하기
 	@ResponseBody
 	@PostMapping("/follow")
 	public AccountDTO insertFollow(@ModelAttribute FollowDTO follow) {
@@ -124,6 +127,7 @@ public class ProfileController {
 		return profileService.selectUserProfile(follow.getFollowingId());
 	}
 	
+	// 팔로우 취소하기
 	@ResponseBody
 	@PostMapping("/unfollow")
 	public AccountDTO deleteFollow(@ModelAttribute FollowDTO follow) {

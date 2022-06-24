@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-
+@RequestMapping(value = "/planit")
 public class UserController {
 
 	@Autowired

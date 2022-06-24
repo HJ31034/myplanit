@@ -18,14 +18,19 @@
 		</choose>
 	</select>
 	
-	<select id="selectUsers" parameterType="Integer" resultType="AccountDTO">
+	<select id="selectUsers" parameterType="String" resultType="AccountDTO">
 		SELECT *
 		FROM (
 			SELECT ROWNUM NUM, a.*
 			FROM
 				account a
 		)
-		WHERE NUM BETWEEN 1 AND 6
+		WHERE 
+		<if test="userId != null">
+			NOT userId IN (#{userId}) AND
+		</if>
+			NUM BETWEEN 1 AND 6
+		
 	</select>
 	
 	<select id="selectPost" resultType="PostDTO">

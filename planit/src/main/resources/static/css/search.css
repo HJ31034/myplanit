@@ -1,0 +1,87 @@
+.main {
+	margin-top: 10%;
+	overflow-x: hidden;
+	height: 100%;
+}
+
+
+.title{
+	margin-bottom: 50px;
+}
+.title h2 {
+	font-weight: bold;
+	transform: translate(10%, 0);
+}
+
+
+.search-box {
+	margin: 20px 0;
+	width: 80%;
+	height: 50px;
+	text-align: center;
+	padding-top: 10px;
+	border-bottom: 2px solid #000;
+	transform: translate(10%, 0);
+}
+#search-icon {
+	float: left;
+	margin: 5px 10px 0 10px;
+	color: #aaa;
+}
+.search-info {
+	float: left;
+	width: 95%;
+	border: none;
+	outline: none;
+}
+
+.search-info::placeholder {
+	color: #aaa;
+	font-weight: bold;
+}
+
+
+.info {
+	width: 80%;
+	height: 40px;
+	transform: translate(10%, 0);
+}
+.total {
+	margin-left: 20px;
+	font-size: 15px;
+	font-weight: bold;
+	float: left;
+}
+.filter {
+	list-style:none;
+	position: absolute;
+	left: 88%;
+}
+.filter li {
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+}
+.div {
+	color: #bbb;
+	margin: 0 10px;
+}
+
+
+.plantList{
+	margin: 20px 0;
+	transform: translate(10%, 0);
+}
+.plant-box{
+	width: 250px;
+}
+.plant-img {
+	border-radius: 15px;
+	overflow:hidden;
+	width: 100%;
+}
+.plant-name{
+	font-weight: bold;
+	margin-top: 10px;
+}
+
