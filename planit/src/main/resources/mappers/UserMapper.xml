@@ -13,17 +13,49 @@
 
 	<!-- 로그인 -->
 	<select id="loginUser" resultType="UserDTO">
-	SELECT USERID, PASSWORD
-	FROM USERS
+	SELECT USERNAME, USERID, EMAIL, PHONE
+	FROM USERS 
 	WHERE USERID=#{userId}
 	AND PASSWORD=#{password}
+
+
 	</select>
 	
-	<!-- name search  -->
-	<select id= "userId" resultType="UserDTO">
-	SELECT USERID
-	FROM USERS
-	WEHRE USERID=#{userId}
+
+	
+	<!-- 아이디 중복체크 -->
+	<select id= "idCheck" resultType="int" >
+	SELECT count(USERID)
+	FROM USERS u 
+	WHERE USERID = #{userId}
 	</select>
+	
+	<!-- 현재 비밀번호검사  -->
+	<select id= "pwdCheck" resultType="int" >
+	SELECT count(password)
+	FROM USERS u 
+	WHERE USERID = #{userId} and password = #{password}
+	</select>
+	
+	<!-- 회원정보 보기 -->
+	<select id="userInfo" resultType="UserDTO">
+	 SELECT USERID, USERNAME, EMAIL, PHONE
+	FROM USERS
+	WHERE USERID = #{userId} 
+	
+	</select>
+	
+	<!-- 비밀번호 변경  -->
+	<update id="pwdCh"> 
+	UPDATE USERS
+	SET PASSWORD = #{password}
+	WHERE USERID = #{userId}
+	</update>
+	
+	<update id="infoCh" >
+	UPDATE USERS
+	SET USERNAME=#{userName}, EMAIL=#{email}, PHONE=#{phone}
+	WHERE USERID=#{userId}
+	</update>
 
 </mapper>

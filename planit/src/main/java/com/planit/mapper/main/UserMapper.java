@@ -13,14 +13,26 @@ public interface UserMapper {
 	public void saveUser(UserDTO userdto);
 	
 	//로그인
-	public UserDTO loginUser(@Param("userId") String userId, @Param("password") String password);
+	//public UserDTO loginUser(@Param("userId") String userId, @Param("password") String password);
+	public UserDTO loginUser(UserDTO userdto);
 	
 	
 	
 	//중복 체크
-	public UserDTO userId(String userId) throws Exception;
+	//public UserDTO userId(@Param ("userId")String userId) throws Exception;
+	public int idCheck(@Param ("userId")String userId);
+	
+	//현재 비밀번호
+	public int pwdCheck(@Param("password") String password);
 
-
+	//회원정보 수정 (비밀번호)
+	//public void pwdCh(@Param("userId") String userId,@Param("password") String password);
+	public void pwdCh(UserDTO userdto);
 
 	
+	//회원정보 불러오기
+	public void userInfo(UserDTO userdto);
+	
+	//회원정보 수정
+	public void infoCh(UserDTO userdto);
 }

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///Users/johndoe/Downloads/user-update.html -->
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	lang="en">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Sidebars · Bootstrap v5.1</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
+    
+    
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script th:inline="javascript">
+
+
+$(document).ready(function() {
+	                
+	  var test = "${session.userdto.phone}";
+	  var testDate = test.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+	  
+	  $("#phone").text(testDate);
+	 
+	});
+
+$(function(){
+	$("#alert-success").hide();
+	$("#alert-danger").hide();
+	$("input").keyup(function(){
+	    var phone = $("#phone").val();
+	    var patternPhone= new RegExp("01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}");
+	    
+	    if(phone != ""){
+	        if(phone.length >= 1){
+	            $("#alert-success").show();
+	            $("#alert-danger").hide();
+	            $("#phone").val(temp.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+	            $("#submit").removeAttr("disabled");
+	        }else if(phonePattern.test(phone) ) {
+	            $("#alert-success").hide();
+	            $("#alert-danger").show();
+	           
+	            $("#submit").attr("disabled", "disabled");
+	        } 
+	    }
+	});
+	});
+
+
+</script>
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../assets/dist/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .mb-3 {
+      margin-top:50px;
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="../assets/dist/sidebars.css" rel="stylesheet">
+    <link href="../assets/dist/register.css" rel="stylesheet">
+  
+  
+
+  </head>
+  <body >
+
+
+<th:block th:if="${session.userdto !=null}">
+<main>
+  
+  <h1 class="visually-hidden">Sidebars examples</h1>
+
+ 
+
+ 
+
+  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+    <a href="file:///" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-5 fw-semibold">PLANIT</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+          Home
+        </button>
+        <div class="collapse show" id="home-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/planit" class="link-dark rounded">홈으로 돌아가기</a></li>
+            <li><a href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#" class="link-dark rounded">SNS 페이지 이동</a></li>
+            <li><a href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#" class="link-dark rounded">쇼핑몰 보러가기</a></li>
+          </ul>
+        </div>
+      </li>
+      
+      
+      <li class="border-top my-3"></li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+          Account
+        </button>
+        <div class="collapse" id="account-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/planit/userInfo" class="link-dark rounded">기본정보 보기</a></li>
+            <li><a href="/planit/password.do" class="link-dark rounded">비밀번호 변경</a></li>
+            <li><a href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#" class="link-dark rounded">......</a></li>
+            <li><a href="/logout" class="link-dark rounded">로그아웃</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  
+    
+  
+
+    
+
+
+  <div class="row g-5">
+      <br>
+    <div class="col-md-7 col-lg-8">
+      <h4 class="mb-3">회원정보 수정</h4>
+
+
+      <form class="needs-validation" novalidate="" method="post">
+        <div class="row g-3">
+          
+          <div class="col-12">
+            <label for="address2" class="form-label">이름</label>
+            <input type="text"  class="form-control" id="userName" name="userName"
+            th:value="${session.userdto.userName}" placeholder="이름" >
+          </div>
+
+          <div class="col-12">
+            <label for="username" class="form-label">아이디</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">@</span>
+              <input type="text" class="form-control" name="userId"
+              th:value="${session.userdto.userId}" id="userId" placeholder="" required="" readonly >
+            <div class="invalid-feedback">
+                Your username is required.
+              </div>
+            </div>
+          </div>
+          
+         
+ 
+          <div class="col-12">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email"
+              th:value="${session.userdto.email}"
+            id="email" placeholder="you@example.com" >
+            <div class="invalid-feedback">
+              Please enter a valid email address for updates.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="phone" class="form-label">휴대폰</label>
+            <input type="text" class="form-control" id="phone" 
+            th:value="${session.userdto.phone}" name="phone"
+            maxlength="13" oninput="ph()"
+            placeholder="휴대폰 번호(-없이)" >
+            <div class="alert alert-success" id="alert-success">숫자만 입력가능합니다</div>
+			<div class="alert alert-danger" id="alert-danger">휴대폰 번호를 정확히 입력해 주세요.</div>
+          	
+            <div class="invalid-feedback">
+              Please enter a valid phone-number for updates.
+            </div>
+          </div>
+    
+		
+		
+	
+          
+        </div>
+
+       
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        <hr class="my-4">
+
+        
+        
+      <button class="w-100 btn btn-lg btn-primary" type="submit"
+				style="background-color: #9FCF62; border-color: #9FCF62;">수정하기
+				</button>
+      </form>
+      
+    </div>
+  </div>
+  
+
+  
+</main>
+
+</th:block>
+<th:block th:if="${session.userdto == null}">
+<h1>올바르지 않은 접근입니다. 로그인 화면으로 이동해 주세요</h1>
+<a th:href= "@{/login}">로그인 하러가기</a>
+</th:block>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
+      <script src="/js/sidebars.js"></script>
+      <script src="/js/register.js"></script>
+
+</body>
+</html>
