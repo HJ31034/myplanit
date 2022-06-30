@@ -81,6 +81,27 @@ $("input").keyup(function(){
 });
 });
 
+$(function(){
+
+	$("input").keyup(function(){
+	    var phone = $("#phone").val();
+	    var patternPhone= new RegExp("01[016789]-[^0][0-9]{2,4}-[0-9]{3,4}");
+	    
+	    if(phone != ""){
+	        if(phone.length >= 3){
+	            $("#phone").val(phone.replace(/[^0-9]/g, '')
+	          		  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, ""));
+	           
+	           
+	            $("#submit").removeAttr("disabled");
+	        }else if(phonePattern.test(phone) ) {
+	            
+	           
+	            $("#submit").attr("disabled", "disabled");
+	        } 
+	    }
+	});
+	}); 
 
 </script>
 
@@ -179,7 +200,7 @@ $("input").keyup(function(){
             
             <div class="col-12">
               <label for="address2" class="form-label">휴대폰 <span class="text-muted"></span></label>
-              <input type="text" class="form-control" name="phone" id="address2" 
+              <input type="tel" class="form-control" name="phone" id="phone"  maxlength="13"
               th:value="${user?.phone}" placeholder="010-1234-5678(-없이)">
               <span th:text="${valid_phone}"></span>
             </div>

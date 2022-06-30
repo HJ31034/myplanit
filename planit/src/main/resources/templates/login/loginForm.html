@@ -24,18 +24,30 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script th:inline="javascript">
 
+/* 
+function login(){
+	let login1 = document.login1;
+	let userId = document.getElementById('userId').value;
+	var message='[[${msg}]]';
+	
+	if(userId=="") {
+		
+	} else{
+		login1.submit();
+	}
+	
+} */
+
 
 
 /*<![CDATA[*/
-var message='[[${msg}]]';
-alert(message); 
+
+/*  var message='[[${msg}]]';
+alert(message);  */
 /*]]>*/
 
 </script>
 
-<!-- 
-
- -->
 
 
 
@@ -81,7 +93,7 @@ alert(message);
 
 
 			</div>
-			<button class="w-100 btn btn-lg btn-primary" type="submit"
+			<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()"
 				style="background-color: #9FCF62; border-color: #9FCF62;">Sign
 				in</button>
 			

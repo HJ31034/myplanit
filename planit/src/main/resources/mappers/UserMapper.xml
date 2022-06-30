@@ -31,7 +31,7 @@
 	</select>
 	
 	<!-- 현재 비밀번호검사  -->
-	<select id= "pwdCheck" resultType="int" >
+	<select id= "pwdCheck" resultType="int" parameterType="map" >
 	SELECT count(password)
 	FROM USERS u 
 	WHERE USERID = #{userId} and password = #{password}

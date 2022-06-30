@@ -31,8 +31,7 @@ public class UserDTO {
 	private String phone;
 
 	
-	//private int keyId;
-	
+		
 	
 	
 }

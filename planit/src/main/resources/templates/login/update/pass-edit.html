@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <!-- saved from url=(0048)file:///Users/johndoe/Downloads/user-update.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -120,12 +122,12 @@
             <div class="input-group has-validation">
               <span class="input-group-text">@</span>
               <input type="text" class="form-control" name="userId"
-              th:value="${session.userdto.userId}" id="userId" placeholder="아이디" readonly>
+              th:value="${session.userdto.userId}" id="userId" placeholder="아이디">
             
             </div>
           </div>
           
-          <div class="col-12">
+          <!-- <div class="col-12" style="display:none;">
               <label for="password" class="form-label">현재 비밀번호 </label>
               <input type="password" class="form-control" name="curpwd" id="curpwd" 
               
@@ -135,18 +137,18 @@
                 <p class="id_ok">일치합니다</p>
 				<p class="id_already">현재 비밀번호를 다시 확인해 주세요</p>
                 </div>
-            </div>
+            </div> -->
           
            <div class="col-12">
-              <label for="password" class="form-label">비밀번호 </label>
-              <input type="password" class="form-control" name="password" id="pwd1" 
+              <label for="password" class="form-label">새 비밀번호 </label>
+              <input type="password" class="form-control" name="password" id="pwd1" onchange=""
               
               autocomplete="new-password" placeholder="PASSWORD" required/>
               <span th:text="${valid_password}"></span>
             </div>
             
             <div class="col-12">
-              <label for="password" class="form-label">비밀번호 확인</label>
+              <label for="password" class="form-label">새 비밀번호 확인</label>
               <input type="password" class="form-control" name="password2" id="pwd2"
               autocomplete="new-password"  placeholder="RE-PASSWORD" required/>
              <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
@@ -177,7 +179,7 @@
         <hr class="my-4">
 
         
-        <button class="w-100 btn btn-primary btn-lg" 
+        <button class="w-100 btn btn-primary btn-lg" id="chkPW()"
         style="background-color: #9FCF62; border-color: #9FCF62;"
         type="submit">수정하기</button>
       
@@ -202,36 +204,48 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>          
 <script th:inline="javascript" >
 //비밀번호 확인 스크릡트 
-$(function(){
+
+
+	$(function(){
 $("#alert-success").hide();
 $("#alert-danger").hide();
 $("input").keyup(function(){
     var pwd1 = $("#pwd1").val();
     var pwd2 = $("#pwd2").val();
+    var reg = new RegExp("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/");
+    			//비밀번호 영문 대소문자,특수기호 각 1개 포함한 조합으로 8 자리 이상
+    var res1 = reg.test(pwd1);		
+    if(res1 == true){
     
-    if(pwd1 != ""){
-        if(pwd1 == pwd2 && pwd2 !=""){
+    if(pwd1 != ""  ){
+        if( (pwd1 == pwd2 && (res1 == res2)) ){
             $("#alert-success").show();
             $("#alert-danger").hide();
             $("#alert-info").hide();
             $("#submit").removeAttr("disabled");
-        }else if((pwd1 != pwd2 && pwd2!="") && pwd1.length >=8) {
+        }else if((pwd1 != pwd2) && pwd2!="" && (res1 != res2) ) {
             $("#alert-success").hide();
             $("#alert-danger").show();
             $("#alert-info").hide();
             $("#submit").attr("disabled", "disabled");
         } 
     }
+    }
 });
 });
 
-
-function checkPwd(){
+/* 
+&& ((pwd1.length && pw2.length) > 8 )
+ */
+ 
+ /* 현재 비밀번호 처리 */
+/* function checkPwd(){
     var curpwd = $('#curpwd').val();
+    var userId = $('#userId').val();
 $.ajax({
     url:'/pwdCheck',
     type:'post',
-    data:{curpwd:curpwd},
+    data:{curpwd: curpwd},
     dataType:'json',
     success:
     	function(count){ //컨트롤러에서 넘어온 cnt값을 받는다 
@@ -252,7 +266,22 @@ $.ajax({
         alert("에러입니다");
     }
 });
-};
+}; */
+
+function chkPW(){
+
+	var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+
+	var pwd1 = $("#pwd1").val();
+	var pwd2 = $("#pwd2").val();
+	if(false === reg.test(pwd1)) {
+	alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
+	}else {
+	console.log("통과");
+	}
+
+	}
+
 </script>
       <script src="/js/sidebars.js"></script>
       <script src="/js/register.js"></script>

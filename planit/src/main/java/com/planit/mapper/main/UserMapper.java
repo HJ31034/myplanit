@@ -23,8 +23,10 @@ public interface UserMapper {
 	public int idCheck(@Param ("userId")String userId);
 	
 	//현재 비밀번호
-	public int pwdCheck(@Param("password") String password);
-
+	//public int pwdCheck(@Param("password") String password);
+	public int pwdCheck(@Param("password") String password, @Param("userId") String userId);
+	
+	
 	//회원정보 수정 (비밀번호)
 	//public void pwdCh(@Param("userId") String userId,@Param("password") String password);
 	public void pwdCh(UserDTO userdto);

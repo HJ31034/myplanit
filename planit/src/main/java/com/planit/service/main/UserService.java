@@ -46,20 +46,8 @@ public class UserService {
         return validatorResult;
     }
 
-//로그인 메서드 
-//	public UserDTO userLogin(String userId, String password) throws Exception {
-//		//(userdto.getUserId(), userdto.getPassword())
-//		UserDTO authUser = userMapper.loginUser(userId, password);
-//		if (authUser == null) {
-//			System.out.println("service: 정보 불러들일 수 없음");
-//
-//		} else {
-//			System.out.println("service: 로그인 정보 불러오기 정상작동 ");
-//
-//		}
-//		return authUser;
-//	}
-    //로그인 메서드 2 
+
+    //로그인 메서드 수정본
 	public UserDTO userLogin(UserDTO userdto) throws Exception {
 		
 		UserDTO authUser = userMapper.loginUser(userdto);
@@ -81,10 +69,11 @@ public class UserService {
         System.out.println(cnt);
         return cnt;
     }
+    
     //현재 비밀번호 확인
-public int pwdCheck(String password) {
+public int pwdCheck(String password, String userId) {
     	
-        int count = userMapper.pwdCheck(password);
+        int count = userMapper.pwdCheck(password, userId);
         System.out.println("현재 비밀번호 확인"+count);
         return count;
     }
