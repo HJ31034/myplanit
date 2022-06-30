@@ -10,5 +10,5 @@ public class WeatherLocationDTO {
 	private String longitude;
 	private String baseDate;
 	private String weather;
-
+	private String address;
 }

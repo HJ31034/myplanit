@@ -422,10 +422,16 @@ margin-left: 150px;
 	width: 350px;
 	margin: 15px 15px 0px 15px;
 	position:relative;
-    border: 1px solid rgba(0,0,0,0.09);
     background: white;
 	box-sizing: border-box;
-	padding: 5px;
+}
+
+.write_box textarea{
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid rgba(0,0,0,0.09);
+    padding: 5px;
 }
 
 .read_box{
@@ -592,6 +598,8 @@ margin-left: 150px;
     flex-direction: row;
     padding-left: 5px;
     padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #comment_table{
@@ -601,7 +609,7 @@ margin-left: 150px;
 
 #comment_table tr td{
 	vertical-align: middle !important;
-}
+	height: 30px !important;
 
 #comment_table tr td:nth-child(1){
 	text-align: left;

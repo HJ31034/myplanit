@@ -23,7 +23,7 @@
          
 			<div class="hashtag_box">
 				<span th:text="'#' + *{plantsName}"></span><br/>
-				<span>#날씨</span><br/>
+				<span th:text="'#' + *{weather}"></span><br/>
 				<span th:text="'#' + *{createDt}"></span>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 				<img src="/imgs/img_section/comment.png">
 			</div>
 			
-			<div th:action="@{/planiter/post/insert/comment}" class="comment_box">
+			<div class="comment_box">
 				<div class="write_comment">
 					<input id="user_id" type="hidden" th:object="${post}" th:field="${post.userId}">
 					<input id="post_no" type="hidden" th:object="${post}" th:field="${post.postNo}">
