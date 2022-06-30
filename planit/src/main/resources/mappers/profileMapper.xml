@@ -52,7 +52,7 @@
 	</select>
 	
 	<insert id="insertFollow" parameterType="FollowDTO">
-		insert into follow values (#{userId}, #{followerId}, #{followingId})
+		insert into follow values (#{userId}, #{followerId}, #{followingId},1)
 	</insert>
 	
 	<delete id="deleteFollow" parameterType="FollowDTO">

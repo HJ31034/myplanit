@@ -8,6 +8,7 @@ public class FollowDTO {
 	private String followerId;
 	private String followingId;
 	
+	private int ftype;
 	private String accDescription;
 	private String profileImg;
 
