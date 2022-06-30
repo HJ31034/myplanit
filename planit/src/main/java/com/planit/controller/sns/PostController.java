@@ -8,13 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.planit.domain.sns.CommentDTO;
 import com.planit.domain.sns.PostDTO;
+import com.planit.domain.sns.PostDetailDTO;
+import com.planit.domain.sns.UserToPlantsDTO;
 import com.planit.service.sns.PostService;
 
 @Controller
@@ -26,14 +27,25 @@ public class PostController {
 	
 	@GetMapping(value = "/write")
 	public String writePost (Model model) {
+		//session으로 변경할 것 
+		String userId = "test";
+		List<UserToPlantsDTO> userToPlantList = postService.selectPlantsCate(userId);
 		
+		model.addAttribute("userToPlantList", userToPlantList);
 		
-
+		return "sns/write-post";
+	}
+	
+	@PostMapping(value = "/write")
+	public String writePost (@ModelAttribute("params") PostDetailDTO params, MultipartFile[] uploadFiles, Model model) {
+		
+		postService.insertPost(params);
+		
 		return "sns/write-post";
 	}
 	
 	@GetMapping(value = "/read")
-	public String readPost (@ModelAttribute("params") PostDTO params, @RequestParam(value = "postno") Long postNo, Model model) {
+	public String readPost (@RequestParam(value = "postno") Long postNo, Model model) {
 		
 		PostDTO post = postService.getBoardDetail(postNo);
 		
@@ -42,7 +54,6 @@ public class PostController {
 		List<CommentDTO> commentList = postService.getCommentDetail(postNo);
 		
 		model.addAttribute("commentList", commentList);
-		
 		
 		return "sns/read-post";
 	}
@@ -57,7 +68,7 @@ public class PostController {
 		
 		model.addAttribute("commentList", postService.getCommentDetail(params.getPostNo()));
 		
-		 return "sns/insert/comment";		
+		 return "sns/read-post :: #comment_table";		
 	}
 	
 	@GetMapping(value = "/popup/map")
