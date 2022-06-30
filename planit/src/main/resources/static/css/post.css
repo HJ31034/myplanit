@@ -1,5 +1,5 @@
-
-/* index.html start */
+/* 
+index.html start
 
 body{
     background:#fafafa;
@@ -22,7 +22,7 @@ body{
     height: 77px;
     margin: 0 auto;
     display:flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
     transition:all 1s;
 }
@@ -36,7 +36,7 @@ body{
 
 
 #search-field{
-   /*  width: 185px; */
+    width: 185px;
     height: 30px;
     background: #FAFAFA;
     border: 1px solid #70C745;
@@ -81,8 +81,8 @@ body{
 
 #main_container .inner{
     width: 935px;
-    /*height: 500px;*/
-    /*background: red;*/
+    height: 500px;
+    background: red;
     position: relative;
 }
 
@@ -147,7 +147,7 @@ body{
 .side_box{
     width: 293px;
     height: 550px; 
-    /*background: rgba(255, 0, 0, 0.16);*/
+    background: rgba(255, 0, 0, 0.16);
     position:absolute;
     right: 0;
     top: 0;
@@ -232,12 +232,12 @@ margin-left: 150px;
      .single-widget-area .popular-tags li a:hover, .single-widget-area .popular-tags li a:focus {
       color: #ffffff;
       background-color: #70c745; }
- /* index.html END */
+ index.html END
  
  
 
 
-/* followList start   */
+followList start  
 
 .contents .followList{
     overflow:hidden;
@@ -271,7 +271,7 @@ margin-left: 150px;
 	text-align: left;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500);
+@import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500); */
 
   
  
@@ -333,10 +333,31 @@ margin-left: 150px;
 }
 
 .photo_box{
-	height: 350px;
-	width: 350px;
+   height: 350px;
+   width: 350px;
+   margin: 15px 15px 0px 15px;
+   position:relative;
+    border: 3px solid rgba(0,0,0,0.09);
+    background: white;
+   box-sizing: border-box;
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+}
+
+.photo_box::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.swiper-container { 
+	width: 350px; 
+	height: 350px; 
 	margin: 15px 15px 0px 15px;
-	position:relative;
     border: 3px solid rgba(0,0,0,0.09);
     background: white;
 	box-sizing: border-box;
@@ -344,7 +365,7 @@ margin-left: 150px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
+	}
 
 .photo_box_insert{
 	height: 350px;
@@ -361,6 +382,11 @@ margin-left: 150px;
 }
 
 .photo_box img{
+	height:100%;
+	width:100%;
+}
+
+.swiper-slide img{
 	height:100%;
 	width:100%;
 }
@@ -396,10 +422,16 @@ margin-left: 150px;
 	width: 350px;
 	margin: 15px 15px 0px 15px;
 	position:relative;
-    border: 1px solid rgba(0,0,0,0.09);
     background: white;
 	box-sizing: border-box;
-	padding: 5px;
+}
+
+.write_box textarea{
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid rgba(0,0,0,0.09);
+    padding: 5px;
 }
 
 .read_box{
@@ -555,7 +587,7 @@ margin-left: 150px;
 }
 
 .comment{
-	height: 120px;
+	height: 130px;
 	width: 350px;
 	position:relative;
     border: 1px solid rgba(0,0,0,0.09);
@@ -564,35 +596,41 @@ margin-left: 150px;
 	margin: 5px 15px 0px 15px;
 	display: flex;
     flex-direction: row;
-    padding-top: 10px;
     padding-left: 5px;
     padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-.comment table {
+#comment_table{
 	width: 100%;
 	height: 100%;
 }
 
-.comment tr td:nth-child(1){
+#comment_table tr td{
+	vertical-align: middle !important;
+	height: 30px !important;
+
+#comment_table tr td:nth-child(1){
 	text-align: left;
 	width: 20%;
 }
 
-.comment tr td:nth-child(2){
+#comment_table tr td:nth-child(2){
 	text-align: left;
 	width: 45%;
 }
 
-.comment tr td:nth-child(3){
+#comment_table tr td:nth-child(3){
 	text-align: right;
 	width: 25%;
 }
 
-.comment tr td:nth-child(4){
+#comment_table tr td:nth-child(4){
 	text-align: right;
 	width: 10%;
 }
+
 /* followList END */
 
 

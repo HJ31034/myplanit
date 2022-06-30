@@ -1,5 +1,7 @@
 package com.planit.domain.sns;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
