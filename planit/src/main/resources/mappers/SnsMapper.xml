@@ -6,9 +6,9 @@
 <!--메인 좋아요순 이미지 정렬   -->
 		<select id="selectImgPost" resultType="com.planit.domain.sns.PostDTO">
 	<![CDATA[
-	select rn,no,filename,likescount,postno from
+	select rn,postno,filename,likescount,postcontent from
 	(select /*+ INDEX_DESC(seq_POSTNO_no) */
-	rownum rn, pf.no,pf.filename,p.likescount,p.postno
+	rownum rn,p.postno,pf.no,fs.filename,p.likescount,p.postcontent
  	from postfiles pf join post p
  	on p.postno=pf.postno
  	and no in
@@ -16,12 +16,82 @@
  	min(no)
  	from postfiles
  	group by postno)
+    join files fs
+    on pf.no=fs.no
     and rownum <= #{parameter1} + #{parameter2}
  	order by likescount desc)
     WHERE rn > #{parameter1}
 	]]>
 		</select>
 	 
+	 
+ 
+		<select id="searchSNS" resultType="com.planit.domain.sns.PostDTO">
+		
+		<choose>
+			<when test='keyField.equals("plantsname")'>
+		<![CDATA[ 
+		 select rn,no,filename,likescount,postno,postcontent,plantscateno from
+			(select /*+ INDEX_DESC(seq_POSTNO_no) */
+			rownum rn, pf.no,fs.filename,p.likescount,p.postno, p.postcontent,p.plantscateno
+ 			from post p join postfiles pf 
+ 			on p.postno=pf.postno
+ 			and no in
+ 			(select
+ 			min(no)
+ 			from postfiles
+ 			group by postno)
+             join files fs
+            on pf.no=fs.no
+            join usertoplants u
+       	    on u.plantscateno=p.plantscateno
+            where u.plantsname=#{keyword} and rownum <= #{startNum} + #{endNum}
+ 		    order by likescount desc)
+            WHERE rn > #{startNum}
+ 		]]>
+			</when>
+			<when test='keyField.equals("userId")'>
+		<![CDATA[ 
+			 select rn,no,filename,likescount,postno,postcontent from
+			(select /*+ INDEX_DESC(seq_POSTNO_no) */
+		    rownum rn, pf.no,fs.filename,p.likescount,p.postno, p.postcontent
+ 		    from postfiles pf join post p
+ 		    on p.postno=pf.postno
+ 		    and no in
+ 		    (select
+ 		    min(no)
+ 		    from postfiles
+ 		    group by postno)
+   		    and userId=#{keyword} and rownum <= #{startNum} + #{endNum}
+             join files fs
+            on pf.no=fs.no
+ 		    order by likescount desc)
+ 		    WHERE rn > #{startNum}
+		]]>
+			</when>
+			<when test='keyField.equals("postcontent")'>
+		<![CDATA[ 
+			 select rn,no,filename,likescount,postno,postcontent from
+			(select /*+ INDEX_DESC(seq_POSTNO_no) */
+		    rownum rn, pf.no,fs.filename,p.likescount,p.postno, p.postcontent
+ 		    from postfiles pf join post p
+ 		    on p.postno=pf.postno
+ 		    and no in
+ 		    (select
+ 		    min(no)
+ 		    from postfiles
+ 		    group by postno)
+   		    and p.postcontent=#{keyword} and rownum <= #{startNum} + #{endNum}
+             join files fs
+            on pf.no=fs.no
+ 		    order by likescount desc)
+ 		    WHERE rn > #{startNum}
+		]]>
+			</when>
+		</choose>
+		<![CDATA[
+		]]>
+		</select>
 	 
 <!-- 전체 게시물 수  -->
 <select id="selectImgPostCnt" resultType="int">
@@ -66,13 +136,15 @@
 		
 		
 <!-- followList 팔로잉 리스트 출력  -->
-			<select id="selectFollowingList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
-		<![CDATA[
-		select f.userId,f.followerid,f.followingid,a.ACCdescription,a.profileimg
-		from follow f join account a
-		on f.followerid=a.userId
-		where f.userId=#{userId}
- 		]]>	
+			<select id="selectFollowingList" resultType="com.planit.domain.sns.FollowDTO">
+ 		<![CDATA[
+ 		select rn,userId,accdescription,profileimg,followerid,followingid,ftype from(
+ 		select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
+        from follow f join account a
+        on f.followingid=a.userId
+        where followerid=#{userId} and rownum < #{startNum} + #{endNum} )
+        WHERE rn >= #{startNum}
+        ]]>
 			</select>
  
 			
@@ -80,59 +152,93 @@
 <!-- followList 팔로워 리스트 출력 f.followerid -->
 			<select id="selectFollowerList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
 		<![CDATA[
-		select f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid
+	      
+ 			    select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
         from follow f join account a
         on f.userId=a.userId
-        where f.followerid=#{userId}
-	 
+        where f.followingid=#{userId}
+        
  		]]>
 			</select>
+<!-- 			<select id="selectFollowerList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
+		<![CDATA[
+	      select rn,userId,accdescription,profileimg,followerid,followingid,ftype from(
+ 		select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
+        from follow f join account a
+        on f.userId=a.userId
+        where followerid=#{userId} and rownum < #{startNum} + #{endNum} )
+        WHERE rn >= #{startNum}
+ 		]]>
+			</select> -->
 			
 			
 <!-- followList 팔로워 리스트 한번 거르기 -->
 	<select id="selectFollowerList2" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
 		<![CDATA[
-		select f.userId,f.followerid,f.followingid,a.ACCdescription,a.profileimg
-		from follow f, account a
-		where f.followerid=a.userId and f.userId=#{parameter1} and f.followerid=#{parameter2}
+	    select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
+        from follow f join account a
+        on f.userId=a.userId
+        where f.followingid=#{parameter2} and f.followerid=#{parameter1}
+    
  		]]>	
+ 		
+ 		
+ 		
+ 		  <!--   select f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
+        from follow f join account a
+         on f.followingid=a.userId
+        where followerid='kosta' and followingid=''; -->
+ 		
 			</select>
 			
  
 			
 			
 <!-- 팔로우 -->
-			<insert id="insertFollow" parameterType="String">
+			<insert id="insertFollow" parameterType="HashMap">
 		<![CDATA[
-		INSERT INTO FOLLOW(userId,FOLLOWERID,FOLLOWINGID)  VALUES(#{parameter1},#{parameter2},1)
+		INSERT INTO FOLLOW(userId,FOLLOWERID,FOLLOWINGID,ftype)  VALUES(#{parameter1},#{parameter2},#{parameter3},#{parameter4})
 		]]>
 		</insert>
 		
 <!-- 언팔로우 -->
 		<delete id="unFollow" parameterType="String">
 		<![CDATA[
-		    delete from FOLLOW where userId=#{parameter1} and FOLLOWERID=#{parameter2}
+		delete 
+		from follow 
+		where userId = #{parameter1} and followingId = #{parameter2}
 		]]>
 		</delete>
 		
-		
- 
-		
- 
-		
-<!-- 팔로워 숫자 -->
-		<select id="followerCount" resultType="int" parameterType="String" >
+<!-- 팔로우 count 업데이트 -->	
+		<update id="updateFollowcount">
+		update account
+	<choose>
+		<when test='check.equals("following")'>
+			<![CDATA[	set followercount=followercount+1 ]]>
+		</when>
+		<when test='check.equals("follower")'>
+			<![CDATA[	set followingcount=followingcount+1	]]>
+		</when>
+		<when test='check.equals("unfollowing")'>
+			<![CDATA[	set followingcount=followingcount-1	]]>
+		</when>
+		<when test='check.equals("unfollower")'>
+			<![CDATA[	set followercount=followercount-1 ]]>
+		</when>
+	</choose>
 		<![CDATA[
-		  select count(followerid) from follow where followerid=#{userId}
+		where userid=#{userId}
 		]]>
-		</select>
+</update>
 		
-<!-- 팔로잉 숫자 -->
-		<select id="followingCount" resultType="int" parameterType="String" >
-		<![CDATA[ 
-		   select count(followerid) from follow where userId=#{userId}
-		]]>
-		</select>
+		
+		 
+ 
+		
+ 
+		
+
 		
 
 

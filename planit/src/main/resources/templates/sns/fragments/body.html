@@ -5,7 +5,8 @@
 
 <body th:fragment="main-body">
 	<div id="container">
-
+	
+<form action="/planiter/" method="post" onsubmit="return onSubmit()">
 		<div id="header">
 			<div class="inner">
 				<h1 class="lsogo">
@@ -15,29 +16,55 @@
 				</h1>
 
 				<div class="search_box">
-					<input type="text" placeholder="검색어 입력" id="search-field">
+					<input type="text" placeholder="검색어 입력" id="search-field" name="keyword" th:value="${keyword}">
 				</div>
-				<span
-					style="background-color: #70c745; width: 50px; height: 40px; margin-top: 19px; text-align: center; margin-left: 4px;">
-					<img src="/imgs/magnifying-glass.png"
-					style="width: 30px; height: 30px; margin-top: 4px;">
-				</span> <a th:href="@{/planiter/goProfileEdit.do}">프로필수정</a>
+					<div>
+					<div class="dropdown">
+						 
+							<span class="dropbtn_icon"> 
+							<img alt="dropDown" src="/imgs/img_section/dropDown2.png" class="dropbtn">
+							</span>
+ 						  
+							<div class="dropdown-content" id="dropdown-content" >
+								<div>식물</div>
+								<div>계정</div>
+								<div>내용</div> 
+							</div>
+						 
+							<input type="hidden" id="keyField" name="keyField" th:value="${keyField}"/>
+						</div>
+					</div>
+ 
+				 	<span  class="searchSNS" >
+					<input type="image" src="/imgs/magnifying-glass.png"  >
+				   </span> 
+				   
+				
+				<a th:href="@{/planiter/goProfileEdit.do}">프로필수정</a>
+
 			</div>
 		</div>
+	</form>
 
 		<div id="main_container">
 			<th:block layout:fragment="content"></th:block>
 			<th:block layout:fragment="write-post"></th:block>
 			<th:block layout:fragment="read-post"></th:block>
 		</div>
-
+		
 	</div>
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-	<th:block layout:fragment="script"></th:block>
+	<th:block layout:fragment="script">
+	 <script type="text/javascript">
+	 
+	 
+	 </script>
+ 
+	</th:block>
 </body>
 
 </html>

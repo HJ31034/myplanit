@@ -13,16 +13,20 @@ import com.planit.domain.sns.PostDTO;
 public interface snsService {
 
 	public List<PostDTO> selectImgPost(int startNum, int endNum);
-	public List<AccountDTO> selectMainAccINfo();
-	public List<PlantsCateDTO> selectMainCate();
-	public boolean updateInfo(AccountDTO params);
-	public List<FollowDTO> selectFollowerList(String USERID);
-	 
-	public List<FollowDTO> selectFollowingList(String USERID);
+	public List<PostDTO> searchSNS(String keyField,String keyword,int startNum, int endNum);
 	
-	public boolean insertFollow(String USERID, String followingid);
-	public boolean unfollow(String USERID, String followerid);
- 
+	public List<AccountDTO> selectMainAccINfo(String USERID);
+	public List<PlantsCateDTO> selectMainCate(String USERID);
+	
+	public boolean updateInfo(AccountDTO params);
+	
+	public List<FollowDTO> selectFollowingList(int startNum, int endNum, String USERID);
+	//public List<FollowDTO> selectFollowerList(int startNum, int endNum, String USERID);
+	public List<FollowDTO> selectFollowerList(String USERID);
 	public List<FollowDTO> selectFollowerList2(String USERID, String followingid);
+	
+	public boolean insertFollow(String userId,String followerId,String followingId,int ftype);
+	public boolean unfollow(String USERID, String followingid);
+ 
  
 }

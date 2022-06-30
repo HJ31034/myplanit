@@ -1,5 +1,5 @@
-
-/* index.html start */
+/* 
+index.html start
 
 body{
     background:#fafafa;
@@ -22,7 +22,7 @@ body{
     height: 77px;
     margin: 0 auto;
     display:flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
     transition:all 1s;
 }
@@ -36,7 +36,7 @@ body{
 
 
 #search-field{
-   /*  width: 185px; */
+    width: 185px;
     height: 30px;
     background: #FAFAFA;
     border: 1px solid #70C745;
@@ -81,8 +81,8 @@ body{
 
 #main_container .inner{
     width: 935px;
-    /*height: 500px;*/
-    /*background: red;*/
+    height: 500px;
+    background: red;
     position: relative;
 }
 
@@ -147,7 +147,7 @@ body{
 .side_box{
     width: 293px;
     height: 550px; 
-    /*background: rgba(255, 0, 0, 0.16);*/
+    background: rgba(255, 0, 0, 0.16);
     position:absolute;
     right: 0;
     top: 0;
@@ -232,12 +232,12 @@ margin-left: 150px;
      .single-widget-area .popular-tags li a:hover, .single-widget-area .popular-tags li a:focus {
       color: #ffffff;
       background-color: #70c745; }
- /* index.html END */
+ index.html END
  
  
 
 
-/* followList start   */
+followList start  
 
 .contents .followList{
     overflow:hidden;
@@ -271,7 +271,7 @@ margin-left: 150px;
 	text-align: left;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500);
+@import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500); */
 
   
  
