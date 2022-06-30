@@ -22,8 +22,8 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<AccountDTO> selectUsers(int keyId) {
-		return mainMapper.selectUsers(keyId);
+	public List<AccountDTO> selectUsers(String userId) {
+		return mainMapper.selectUsers(userId);
 	}
 
 	@Override

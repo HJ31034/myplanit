@@ -18,22 +18,28 @@
 		</choose>
 	</select>
 	
-	<select id="selectUsers" parameterType="Integer" resultType="AccountDTO">
+	<select id="selectUsers" parameterType="String" resultType="AccountDTO">
 		SELECT *
 		FROM (
 			SELECT ROWNUM NUM, a.*
 			FROM
 				account a
 		)
-		WHERE NUM BETWEEN 1 AND 6
+		WHERE 
+		<if test="userId != null">
+			NOT userId IN (#{userId}) AND
+		</if>
+			NUM BETWEEN 1 AND 6
+		
 	</select>
 	
 	<select id="selectPost" resultType="PostDTO">
 		SELECT *
 		FROM (
-		SELECT ROW_NUMBER() OVER (ORDER BY p.createdt DESC) NUM, p.*, p2.FILENAME
+		SELECT ROW_NUMBER() OVER (ORDER BY p.createdt DESC) NUM, p.*, f.FILENAME
 		FROM post p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
-									LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+					LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+					LEFT OUTER JOIN FILES f ON p2.NO = f.NO 
 		)
 		WHERE NUM BETWEEN 1 AND 4
 	</select>

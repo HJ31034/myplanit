@@ -11,6 +11,6 @@ import com.planit.domain.sns.PostDTO;
 @Mapper
 public interface MainMapper {
 	public List<PlantKeywordDTO> selectPlantKeyword(int keyId);
-	public List<AccountDTO> selectUsers(int keyId);
+	public List<AccountDTO> selectUsers(String userId);
 	public List<PostDTO> selectPost();
 }

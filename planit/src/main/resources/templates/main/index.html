@@ -12,17 +12,15 @@
 	<meta name="Resource-type" content="Document" />
 
 
-	<link rel="stylesheet" type="text/css" href="assets/css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="../../assets/css/jquery.fullPage.css" />
 
 
 <th:block layout:fragment="css">
-	<link href="assets/css/main.css" rel="stylesheet">
+	<link href="../../assets/css/main.css" rel="stylesheet">
 </th:block>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
 	<script type="text/javascript">
-		var deleteLog = false;
-
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
 				sectionsColor: ['#fff', '#fff', '#fff', '#fff', '#fff'],
@@ -32,11 +30,16 @@
 				navigationPosition: 'right',
 			});
 			
+			// 페이지가 로드되면 검색창의 커서가 깜빡이게 함.
 			$('.search').focus();
 
-			var oldKwd = 0;
+			// 키워드 검색 부분에서 이전에 선택했던 키워드로 돌아가게 할 수 있도록 함.
+			var oldKwd = [];
+			oldKwd.push(0);
+			var index = 0;
 			$(document).on("click", ".kwd", function(){
 				var kwd = $(this).val();
+				var tagId = $(this).attr('id');
 				$.ajax({
 					type : 'POST',
 					url : '/kwd',
@@ -45,13 +48,30 @@
 					},
 					dataType : 'json',
 					success : function(data) {
-						console.log(data);
+						// 해당 키워드의 keyId를 컨트롤러에 전달하기 위해 사용
+						str2 = "<input type='hidden' name='keyId' value='" + kwd + "' />";
+						$('.kwd-form').html(str2);
+						
+						if(data.length == 0){
+							$('.kwd-form').submit();
+						}
+						
+						if(tagId != null){
+							oldKwd.pop();
+							index--;
+							console.log('pre');
+						}
+						else {
+							oldKwd.push(kwd);
+							index++;
+							console.log('next');
+						}
+						
 						str = "";
-
-						// 추후 수정
+						
 						if(kwd != 0){
-						str = "<button class='kwd' value='"
-						str += oldKwd;
+						str = "<button class='kwd' id='pre' value='"
+						str += oldKwd[index - 1];
 						str += "'><</button>";
 						}
 						for (var i = 0; i < data.length; i++) {
@@ -63,11 +83,8 @@
 						}
 
 						$('.kwd-box').html(str);
+						
 						console.log(str);
-
-						if (kwd > old)
-							oldKwd = kwd;
-						console.log(oldKwd);
 					},
 					error : function() {
 						alert("에러 발생");
@@ -77,8 +94,7 @@
 
 			$('.profile_box').click(
 					function() {
-						var userId = $(this).children(
-								'.profile_name').text();
+						var userId = $(this).children('.profile_name').text();
 						location.href = '/planiter/' + userId;
 					});
 
@@ -101,8 +117,8 @@
 	
 		<div class="search-box">
 			<span>
-				<form>
-					<input id="search" class="search" >
+				<form action="/planit/search" method="get">
+					<input name="term" id="search" class="search" >
 					
 					<span style="font: inherit; font-size: 100%;">를</span>
 				</form>
@@ -122,6 +138,8 @@
 						<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
 					</th:block>
 				</div>
+				<form action="/planit/search/kwd" method="post" class="kwd-form">
+				</form>
 			</div>
 			<!-- end container -->
 		</div>

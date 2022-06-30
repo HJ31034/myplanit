@@ -2,6 +2,9 @@ package com.planit.controller.main;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,18 +22,22 @@ public class MainController {
 	private MainService mainService;
 
 	@GetMapping(value = "/planit")
-	public String main(Model model) {
+	public String main(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String id = null;
+		if (session.getAttribute("id") != null)
+			id = session.getAttribute("id").toString();
+		
 		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0));
-		model.addAttribute("users", mainService.selectUsers(0)); // �α����� �Ǿ� ������ ������ ������ ������ �ٸ� ������ ��õ�ϵ��� �����ϱ�
+		model.addAttribute("users", mainService.selectUsers(id));
 		model.addAttribute("postList", mainService.selectPost());
 		return "main/index";
 	}
-	
- 
+
 	@ResponseBody
 	@PostMapping(value = "/kwd")
 	public List<PlantKeywordDTO> kwd(@RequestParam("keyId") int keyId) {
 		return mainService.selectPlantKeyword(keyId);
 	}
-	
+
 }
