@@ -40,13 +40,14 @@
 <th:block layout:fragment="script">
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var userName = $('.user_name').text();
 			$('.plantName').click(function() {
 				var plantName = $(this).text();
 				$.ajax({
 					type : 'POST',
 					url : '/planiter/plantPosts',
 					data : {
-						userId : 'test',
+						userId : userName,
 						plantsName : plantName.split("#")[1]
 					},
 					dataType : 'json',
@@ -81,7 +82,7 @@
 					type : 'POST',
 					url : '/planiter/userLikes',
 					data : {
-						userId : 'test'
+						userId : userName
 					},
 					dataType : 'json',
 					success : function(data) {
