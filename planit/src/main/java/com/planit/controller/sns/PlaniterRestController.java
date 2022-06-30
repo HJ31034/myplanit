@@ -28,28 +28,26 @@ import com.planit.domain.sns.PostDTO;
 import com.planit.mapper.sns.SnsMapper;
 import com.planit.service.sns.snsService;
 
- 
 @RestController
 @RequestMapping(value = "/planiter")
 public class PlaniterRestController {
 
 	@Autowired
 	private snsService snsservice;
-	
+
 	@Autowired
 	private SnsMapper snsmapper;
-	 
 
- 
-	@RequestMapping(value="/imgList.do")
-	public List<PostDTO> imgList(@RequestParam(value="page") int page , Model model){ //메인 POST IMG리스트
+	// 팔로잉 리스트
+	@RequestMapping(value = "/followingList.do", method = RequestMethod.GET)
+	public List<FollowDTO> follower(Model model, ModelAndView mav,
+			@RequestParam(value="page") int page) {
+		System.out.println("followingList con page: "+page);
 		
-		
-		 int totalCnt = snsmapper.selectImgPostCnt();
 		 int nowPage = page;
 		 int startNum=0;
-		 int endNum=9;
-		 int numPerPage=9; 
+		 int endNum=5;
+		 int numPerPage=5; 
 		 
 		 if (page==1){
 			 
@@ -59,126 +57,110 @@ public class PlaniterRestController {
 		 }else{
 			 startNum = (page * numPerPage)-numPerPage;
 			 endNum = numPerPage;
-			 	}
-			 
-		 PostDTO dto = new PostDTO();
-		
-		 model.addAttribute("totalCnt",snsmapper.selectImgPostCnt());
-		 model.addAttribute("startNum", startNum);
-		 
-		 List<PostDTO> imgList = snsservice.selectImgPost(startNum, endNum);
-		 
-	
-		
-		return imgList;
-	}
-	
-	
-	
-	// 팔로잉 리스트
-	@RequestMapping(value = "/followingList.do", method = RequestMethod.GET)
-	public List<FollowDTO> follower(Model model, ModelAndView mav) {
-		String USERID = "kosta";
-		List<FollowDTO> followerList_TEMP = new ArrayList<FollowDTO>();
-		List<FollowDTO> followerList = snsservice.selectFollowingList(USERID);
-		 
-		
-		for (FollowDTO followDTO : followerList) { //USERID 기준 팔로워리스트 데이터
-			String followID = followDTO.getFollowerId();
-			String ProfileIMG=followDTO.getProfileImg();
-			String ACCdescription=followDTO.getAccDescription();
-			
-			System.out.println("follow followingList: "+ followID);
-			
-			FollowDTO dto = new FollowDTO();
-			dto.setFollowerId(followID);
-			dto.setUserId(USERID);
-			dto.setAccDescription(ACCdescription);
-			dto.setProfileImg(ProfileIMG);
-			
-			List<FollowDTO> fList = snsservice.selectFollowingList(USERID);
-			 
-			if(fList.size() != 0) {
-				dto.setFollowingId("1");
-			}else {
-				dto.setFollowingId("0");
-			} 
-				followerList_TEMP.add(dto);
-				System.out.println("fList: "+fList);
 		}
+		
+		String USERID = "kosta";
+		
+		List<FollowDTO> followingList = snsservice.selectFollowingList(startNum,endNum,USERID);
+		System.out.println("RestCon Service selectFollowingList startNum: "+startNum+" endNum: "+endNum+" userId: "+USERID);
 		 
-		return followerList_TEMP;
+		System.out.println("followingList return: "+followingList);
+
+		return followingList;
 
 	}
-	
+
 	// 팔로워 리스트
 	@RequestMapping(value = "/followerList.do", method = RequestMethod.GET)
 	public List<FollowDTO> Following(Model model, ModelAndView mav) {
-		 
+ 
+//		 int nowPage = page;
+//		 int startNum=0;
+//		 int endNum=5;
+//		 int numPerPage=5; 
+//		 
+//		 if (page==1){
+//			 
+//			 startNum = 1;
+//			 endNum = numPerPage ;
+//			 
+//		 }else{
+//			 startNum = (page * numPerPage)-numPerPage;
+//			 endNum = numPerPage;
+//		}
 		
-		List<FollowDTO> followingList_TEMP = new ArrayList<FollowDTO>();
+		List<FollowDTO> followerList_TEMP = new ArrayList<FollowDTO>();
 		
 		String USERID = "kosta";
-		
-		List<FollowDTO> followingList = snsservice.selectFollowerList(USERID);
-		for (FollowDTO followDTO : followingList) {
-			String followID = followDTO.getUserId();
-			String ProfileIMG=followDTO.getProfileImg();
-			String ACCdescription=followDTO.getAccDescription();
-			System.out.println("followIDIDIDIDIDID: "+ followID);
+
+		 
+		//List<FollowDTO> followerList = snsservice.selectFollowerList(1,5,USERID);
+		List<FollowDTO> followerList = snsservice.selectFollowerList(USERID);
+		for (FollowDTO followDTO : followerList) {
+			String followID = followDTO.getFollowerId();
+			System.out.println("Following followID: " + followID);
+			String ProfileIMG = followDTO.getProfileImg();
+			String ACCdescription = followDTO.getAccDescription();
+			System.out.println("Following followIDIDIDIDIDID: " + followID);
+			
 			FollowDTO dto = new FollowDTO();
-			dto.setFollowerId(followID); 
-			dto.setUserId(USERID);
+			dto.setFollowerId(USERID);
+			dto.setFollowingId(followID);
 			dto.setAccDescription(ACCdescription);
 			dto.setProfileImg(ProfileIMG);
-		 
-			//List<FollowDTO> fList = snsservice.selectFollowerList(followID);
-			List<FollowDTO> fList = snsservice.selectFollowerList2(USERID,followID);//followID기준 
-			System.out.println("followID: "+followID +" flist: "+fList.size());
+
+			List<FollowDTO> fList = snsservice.selectFollowerList2(USERID, followID);// followID기준
+			System.out.println("followID: " + followID + " flist: " + fList.size());
+
+			if (fList.size() == 0) {
+				dto.setFtype(0);
+			} else {
+				dto.setFtype(1);
+			}
 			
-			if(fList.size() != 0) {
-				dto.setFollowingId("1");
-			}else {
-				dto.setFollowingId("0");
-			} 
-			followingList_TEMP.add(dto);
+			followerList_TEMP.add(dto);
 		}
 		
-		
-		
-		return followingList_TEMP;
+		System.out.println("followerList_TEMP: "+followerList_TEMP);
+ 
+		return followerList_TEMP;
 
 	}
-	
-	
-	@RequestMapping(value="/follow.do")
-	public String follow(@RequestParam(value="followID") String followID,@RequestParam(value="USERID") String USERID ) {
+
+	@RequestMapping(value = "/follow.do")
+	public String follow(@RequestParam(value = "followerId") String userId,
+			@RequestParam(value = "followingId") String followingId) {
+		int ftype=1;
 		 
-		 System.out.println("FOLLOW !! followID: "+followID+" USERID: "+USERID);
-		 snsservice.insertFollow(USERID,followID);
-		 
-		 
+		snsservice.insertFollow(userId,userId, followingId,ftype);
+		
+		snsmapper.updateFollowcount(userId, "follower");
+		snsmapper.updateFollowcount(followingId, "following");
+ 
 		return "1";
 	}
-	
-	
-	@RequestMapping(value="/unfollow.do")
-	public String unfollow(@RequestParam(value="followID") String followID,@RequestParam(value="USERID") String USERID) {
-		 System.out.println("UNFOLLOW !! followID: "+followID+" USERID: "+USERID);
-		 snsservice.unfollow(USERID, followID);
-		 
-		 return "1";
-	}
-	
-	
-	
-	//프로필 수정 페이지 이동
-	@GetMapping(value = "/goProfileEdit.do")
-	public ModelAndView goProfileEdit(Model model, ModelAndView mav,AccountDTO dto) {
-		 
-		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo();
-		model.addAttribute("AccInfo", AccInfo);
+
+	@RequestMapping(value = "/unfollow.do")
+	public String unfollow(@RequestParam(value = "followerId") String followerId,
+			@RequestParam(value = "followingId") String followingId) {
+	 
+		snsservice.unfollow(followerId, followingId);
+ 
+		snsmapper.updateFollowcount(followerId, "unfollowing");
+		snsmapper.updateFollowcount(followingId, "unfollower");
 		
+	 
+		return "1";
+	}
+
+	// 프로필 수정 페이지 이동
+	@GetMapping(value = "/goProfileEdit.do")
+	public ModelAndView goProfileEdit(Model model, ModelAndView mav, AccountDTO dto) {
+			String USERID="kosta";
+		
+		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID);
+		model.addAttribute("AccInfo", AccInfo);
+
 		mav.setViewName("sns/profile_edit");
 		return mav;
 	}
@@ -188,11 +170,11 @@ public class PlaniterRestController {
 	public ModelAndView updateBlogInfo(@RequestParam(value = "InfoDes") String InfoDes,
 			@RequestParam(value = "profileIMG") MultipartFile profileIMG, ModelAndView mav) throws IOException {
 		String fileName = new String(profileIMG.getOriginalFilename().getBytes("8859_1"), "UTF-8");
-		
+
 		String saveDir = "C:/Users/illus/Documents/GitHub/KOSTA_Project/planit/src/main/resources/static/imgs/img_section/";
-		
-		if(profileIMG.isEmpty()) {
-			fileName="thumb.png";
+
+		if (profileIMG.isEmpty()) {
+			fileName = "thumb.png";
 		}
 		// 파일업로드
 		try {

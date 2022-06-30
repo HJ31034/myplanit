@@ -1,3 +1,81 @@
+/* body  */
+
+.searchSNS{
+	background-color: #9FCF62;
+	width: 50px;
+	height: 40px;
+	margin-top: 19px;
+	text-align: center;
+	margin-left: 4px;
+}
+
+.searchSNS input{
+	width: 30px;
+	height: 30px;
+	margin-top: 4px;
+}
+
+#keyFieldHTML{
+    padding: 12px;
+    font-size: 14px;
+    width: 29px;
+    margin-top: 22px;
+    margin-left: -387px;
+    color: gray;
+    cursor : pointer;
+}
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.dropdown{
+  position : relative;
+  display : inline-block;
+}
+
+.dropbtn_icon{
+  
+  font-family : 'Material Icons';
+}
+.dropbtn{
+  font-weight: 400;
+  padding : 12px;
+  text-align: left;
+  cursor : pointer;
+  font-size : 12px;
+  width: 23px;
+  margin-top: 22px;
+  margin-left: -387px;
+}
+
+
+.dropdown-content{
+  display : none;
+  position : absolute;
+  z-index : 1; /*다른 요소들보다 앞에 배치*/
+  background-color:white;
+  margin-left: -392px;
+  margin-top: -3px;
+}
+
+.dropdown-content div{
+  display : block;
+  text-decoration : none;
+  color : rgb(37, 37, 37);
+  font-size: 12px;
+  padding : 12px 20px;
+}
+
+.dropdown-content div:hover{
+  background-color : #ececec
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* body END */
+
+
 
 /* index.html start */
 
@@ -39,7 +117,7 @@ body{
    /*  width: 185px; */
     height: 30px;
     background: #FAFAFA;
-    border: 1px solid #70C745;
+    border: 1px solid #9FCF62;
     border-radius: 3px;
     padding: 5px 60px;
     color: #999;
@@ -105,25 +183,29 @@ body{
     padding: 10px 20px;
 }
 
- 
 
-.contents .img_section{
+#searchText{
+	color:gray;
+	height: 22px;
+}
+
+.contents .imgList_section{
     overflow:hidden;
-    text-align: center;
+   
     overflow:scroll;
     -ms-overflow-style: none;
-    height: 550px;
+    height: 528px;
 }
 
  
  
-.contents .img_section::-webkit-scrollbar { 
+.contents .imgList_section::-webkit-scrollbar { 
     display: none;
     width: 0 !important;
 }
 
-.contents .img_section img{
-     width: 200px;
+.contents .imgList_section img{
+     width: 196px;
      height: 180px;
      padding: 2.3px;
      
@@ -224,7 +306,7 @@ margin-left: 150px;
     
      .single-widget-area .popular-tags li a:hover, .single-widget-area .popular-tags li a:focus {
       color: #ffffff;
-      background-color: #70c745; }
+      background-color: #9FCF62; }
 
 @import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500);
 
@@ -240,7 +322,7 @@ margin-left: 150px;
 .blue-hover:hover {
 	transform: translateY(-5px);
 	border: none;
-	border-bottom: 5px solid #74DF00;
+	border-bottom: 5px solid #9FCF62;
 }
 
 #cateList{
@@ -263,6 +345,13 @@ margin-left: 150px;
 	color: black
 }
 
+#searchNull{
+	font-size: 20px;
+    margin-left: 210px;
+    margin-top: 220px;
+    display: block;
+}
+
 /* index.html END */
 
 
@@ -280,7 +369,7 @@ margin-left: 150px;
 
  
  
-.followContents .img_section img{
+.followContents .imgList_section img{
      width: 200px;
      height: 180px;
      padding: 2.3px;
@@ -391,7 +480,8 @@ img.followIMG{
 	width: 200px;
 	height: 200px;
 	border-radius: 50%;
-	margin-top: 40px;  
+	margin-top: 24px;  
+	margin-left: 195px;
 }
 
 #profileIMG{
@@ -403,7 +493,7 @@ img.followIMG{
 	resize: none;
 	margin-top: 30px;
 	height: 16px;
-	margin-left: 20px;
+	margin-left: 119px;
 }
 
 .img_sectionA{
@@ -428,5 +518,6 @@ img.followIMG{
     color: white;
     width: 80px;
     height: 28px;
+    margin-left: 264px;
 }
 

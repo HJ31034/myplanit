@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="sns/layout/basic">
 <th:block layout:fragment="title">
-		<title>list page</title>
+		<title>PLANiT</title>
 </th:block>
  
 
@@ -9,28 +9,36 @@
         <div class="inner">
 
             <div class="contents_box">
-                <article class="contents">
-               <!--인기게시물 리스트 -->
-                    <div class="img_section">
-                        <div class="trans_inner" id="trans_inner">
-                            <div class="list" >
-   
-                        </div>
-                        </div> 
+                        <div id="searchText" th:text="${keyFieldSearch}"></div>
                         
-                       
-				</div> 
-                </article>
+                <article class="contents" >
+                	<input type="hidden" value=${totalPage} name="test" />
+               <!--인기게시물 리스트 -->
                
-                
-
+                    <div class="imgList_section" >
+                         <div class="trans_inner"> 
+                         
+                        
+                         <span th:if="${ImgPost == null} or ${ImgPost.size() == 0}">
+                         	<span id="searchNull">조회된 결과가 없습니다</span>
+                         </span>
+                           
+                          
+                          <span th:each="img : ${ImgPost}" id="list">
+                         	 <a th:href="@{/planiter/post/read(postno=${img.postNo})}" style="text-decoration:none;" >
+                           		 <img th:src="@{${'/imgs/img_section/'+img.fileName}}" alt="imgPost" id="imgPost"
+                           	      class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover">	</a>  
+                          </span>
+                            
+                         	<span id="nextImgPost"></span>
+                          	  <input type="hidden" id="page" value="1">
+                        </div>
+				</div> 
+				 
+                </article>
             </div>
-            
-            
-         
-            
-            <input type="hidden" id="page" value="1">
-
+          
+				<!-- 로그인 계정 정보 -->
             <div class="side_box" th:each="info:${AccInfo}">
                 <div class="user_profile">
                     <div class="profile_thumb">
@@ -39,117 +47,130 @@
                  </div>
                  <div> 
                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
-                  <p th:text="${followerCount}"/></a></div>
+                  <p th:text="${info.followerCount}"/></a></div>
                  <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
-                 <p th:text="${followingCount}"/></a></div>
+                <p th:text="${info.followingCount}"/></a></div>
                 </div>
 <br><br>
 					<!-- ##### Single Widget Area ##### -->
                         <div class="single-widget-area">
                             <!-- Title -->
-                            <div class="widget-title">
+                            <div class="widget-title">  
                                 <h1 style="text-align: center; width: 97%;">My Plants</h1>
                             </div>
                             <!-- Tags -->
                              
-                            <ol th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
+                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
                                <ol style="margin-left: -40px;">
                                		 <li>#<a th:text="${cate.plantsName}" href="#"></a> </li>
                                </ol>
                             </ol>
                             
-                        </div>
-			 	 
+                        </div>			 	 
 		</div>
-				
-				 
-
-
         </div>
         </th:block>
-    <!-- </section> -->
-
-
-
  
-
-
   <th:block layout:fragment="script">
  
 
-  <script th:inline="javascript">
-     
-  jQuery(document).ready(function() {
-	  
-})
+<!-- <script type="text/javascript"> -->
+    
 
+	<script th:inline="javascript">
 
-  var page = 1;
-  
-  $(function(){   
-	       getList(page);
-	       page++;
-	  }); 
-	  
-	  $(window).scroll(function(){
-		        if($(window).scrollTop() >= $(document).height() - $(window).height()){
-			            getList(page);
-			             page++;  
-			 
-		       } 
-		  });
-	  console.log($(window).scrollTop() +' / '+$(document).height()+' / '+$(window).scrollTop());
-	  
-	  /* $('.img_section').scroll(function(){  
-		   if($('.img_section').scrollTop() >= $('.img_section').height() - $('.img_section').height()){
-			            getList(page);
-			             page++;   
-			  } 
-	  console.log($('.img_section').scrollTop() +' / '+$('.img_section').height()+' / '+$('.img_section').height());
-	  }); */
+	
+		
+		
+		 $("body").on("click", "#dropdown-content div", function () {
 		 
-		  
-  function getList(page){
-  $.ajax({
-		type : 'get',
-		url : "/planiter/imgList.do?page="+page,
-		contentType : "application/json; charset=UTF-8",
-		dataType : "json",
-		success : function(data) {
-			console.log(data);
-			
-			 var imgList = "";
-			 if (page==1){   
-				    $(".list").html(""); 
-			  }  
-				 
-			  $.each(data, function(index, item) { // 데이터 =item
-				    
-				  imgList = '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.fileName+'"alt="프로필사진">';
-		           $(".list").append(imgList);
-				 
-					  
-				  
-				  
-			});   
+			 var keyFieldHTML = $(this).html(); 
+			 keyField =  '<h1 id="keyFieldHTML">'+keyFieldHTML+'</h1>';
+			 console.log('#dropdown-content div keyField: '+keyFieldHTML);
+		 
+			 $("#dropdown-content").hide();
+			 $(".dropbtn").hide(); 
 			 
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			console.log(jqXHR.responseText);
-		}
-	});
-  
-  }
-  
- 
-  
- 
-  
-  </script>
+			 $("#keyFieldHTML").remove();
+			 $(".dropbtn_icon").append(keyField);
+			 $("#search-field").val('');
+			 
+			 $("#dropdown-content").show();
+			
+			 $("#keyField").val(keyFieldHTML); 
+			
+	  });
+		
+		 var page = $("#page").val(); 
+		 
+		 console.log('roding page: '+page); 
+		 
+		 $(".imgList_section").scroll(function() {  
+			 
+				var innerHeight = $(this).innerHeight(); 
+				var scroll=$(this).scrollTop() + $(this).innerHeight(); 
+				var height=$(this)[0].scrollHeight; 
 
+				console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+				if(scroll >= height){  
+					 page++; 
+					 scroll=scroll+100; 
+					 nextImgPost(page);
+					 
+				} 
+				 
+			});
+		 
+		 
+		 function nextImgPost(page){
+			 var keyword = $("#search-field").val(); 
+	    	 var keyField = $("#keyField").val();
+	    	 
+			 $.ajax({
+	  				type : 'get',
+	  				url : "/planiter/nextImgPost?page="+page+"&keyword="+keyword+"&&keyField="+keyField,
+	  				contentType : "application/json; charset=UTF-8",
+	  				dataType : "json",
+	  				success : function(data) {
+	  					console.log('페이지 끝');
+	  					$.each(data, function(index, item) {
+	  					console.log('data: '+data)
+	  						
+	  					$("#nextImgPost").after('<a href="/planiter/post/read?postno='+item.postNo+'" style="text-decoration:none;" >'
+	  					+'<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.fileName+'">');	
+	  					});
+	  				},
+	  				error : function(jqXHR, textStatus, errorThrown) {
+	  				console.log(jqXHR.responseText);
+	  			}
+	  		});
+		 }
+		 
+		
+		function onSubmit() {
+			var keyField = document.getElementById('keyField');
+			var keyword = document.getElementById('search-field');
+		
+			if (keyField.value == '' || keyField.value == null) {
+				alert('검색조건을 선택해주세요');
+				return false;
+			}
+			if (keyword.value == '' || keyword.value == null) {
+				alert('키워드를 입력해주세요');
+				return false;
+			}
+			
+			
+			console.log('thisthis: '+ $(e).text());
+			  
+			 
+		}
+
+		/* 메인 검색 */
+	</script>
 
 
 
 
 </th:block> 
-</html>
+</html> 

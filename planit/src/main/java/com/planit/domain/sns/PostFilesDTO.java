@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class PostFilesDTO {
 	
-	private int no;
-	private int postNo;
-	private String fileName;
+	private long no;
+	private long postNo;
 	 
 }
