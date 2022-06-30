@@ -39,16 +39,5 @@ public class MainController {
 	public List<PlantKeywordDTO> kwd(@RequestParam("keyId") int keyId) {
 		return mainService.selectPlantKeyword(keyId);
 	}
-	
-	// 임시
-	@PostMapping("/input/search")
-	public void kwdSearch(@RequestParam("search") String search) {
-		System.out.println("------------------------------" + search);
-	}
-	
-	@PostMapping("/kwd/search")
-	public void kwdSearch(@RequestParam("keyId") int keyId) {
-		System.out.println("------------------------------" + keyId);
-	}
 
 }

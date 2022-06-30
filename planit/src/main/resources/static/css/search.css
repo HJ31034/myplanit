@@ -4,6 +4,15 @@
 	height: 100%;
 }
 
+#main-wrapper{
+	min-height: 700px;
+}
+
+footer {
+	margin-top: 100px;
+	bottom: 0; /* 하단에 여백 없이 */
+}
+
 
 .title{
 	margin-bottom: 50px;
@@ -47,15 +56,15 @@
 	transform: translate(10%, 0);
 }
 .total {
-	margin-left: 20px;
 	font-size: 15px;
 	font-weight: bold;
-	float: left;
+	position: absolute;
+	left: 0;
 }
 .filter {
 	list-style:none;
 	position: absolute;
-	left: 88%;
+	right: 0;
 }
 .filter li {
 	float: left;
@@ -71,9 +80,14 @@
 .plantList{
 	margin: 20px 0;
 	transform: translate(10%, 0);
+	background: #ddd;
+	width: 80%;
+	
 }
 .plant-box{
 	width: 250px;
+	float: left;
+	margin-right: 50px;
 }
 .plant-img {
 	border-radius: 15px;

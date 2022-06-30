@@ -42,6 +42,8 @@ public class ProfileController {
 		model.addAttribute("myUserProfile", profileService.selectUserProfile(id));
 		
 		// 사용자가 키우는 반려식물의 리스트
+		
+		 
 		List<UserToPlantsDTO> userPlantList = profileService.selectUserPlants(id);
 		model.addAttribute("myUserPlants", userPlantList);
 		

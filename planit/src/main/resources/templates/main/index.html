@@ -21,8 +21,6 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
 	<script type="text/javascript">
-		var deleteLog = false;
-
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
 				sectionsColor: ['#fff', '#fff', '#fff', '#fff', '#fff'],
@@ -119,8 +117,8 @@
 	
 		<div class="search-box">
 			<span>
-				<form action="/input/search" method="post">
-					<input name="search" id="search" class="search" >
+				<form action="/planit/search" method="get">
+					<input name="term" id="search" class="search" >
 					
 					<span style="font: inherit; font-size: 100%;">를</span>
 				</form>
@@ -140,7 +138,7 @@
 						<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
 					</th:block>
 				</div>
-				<form action="/kwd/search" method="post" class="kwd-form">
+				<form action="/planit/search/kwd" method="post" class="kwd-form">
 				</form>
 			</div>
 			<!-- end container -->
