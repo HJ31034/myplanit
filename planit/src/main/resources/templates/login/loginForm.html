@@ -20,28 +20,50 @@
 
 
 
-</th:block>
-
+</th:block> 
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script th:inline="javascript">
+
+/* 
+function login(){
+	let login1 = document.login1;
+	let userId = document.getElementById('userId').value;
+	var message='[[${msg}]]';
+	
+	if(userId=="") {
+		
+	} else{
+		login1.submit();
+	}
+	
+} */
+
+
+
 /*<![CDATA[*/
-var message='[[${msg}]]';
-alert(message);
+
+/*  var message='[[${msg}]]';
+alert(message);  */
 /*]]>*/
+
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 
 
 <!-- Custom styles for this template -->
 <link href="/css/signin.css" rel="stylesheet">
 </head>
+
+
 <th:block layout:fragment="content">
+
 <div class="text-center">
 
 
 
 	<main class="form-signin">
+
 
 		<form class="loginchk" method="post" name="login1">
 		
@@ -49,12 +71,13 @@ alert(message);
 
 			<div class="form-floating">
 				<input type="text" class="form-control" id="floatingInput"
-					name="userId" placeholder="please insert your id"> <label
+					name="userId" autocomplete="username"
+					placeholder="please insert your id"> <label
 					for="floatingInput">아이디</label>
 			</div>
 			<div class="form-floating">
 				<input type="password" class="form-control" id="floatingPassword"
-					name="password" placeholder="Password"> <label
+					name="password" placeholder="Password" 	autocomplete="current-password"> <label
 					for="floatingPassword">비밀번호</label>
 			</div>
 
@@ -70,16 +93,19 @@ alert(message);
 
 
 			</div>
-			<button class="w-100 btn btn-lg btn-primary" type="submit"
+			<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()"
 				style="background-color: #9FCF62; border-color: #9FCF62;">Sign
 				in</button>
-			<p class="mt-5 mb-3 text-muted">&copy; KOSTA PLANiT</p>
+			
 		</form>
+		
+		
 	</main>
 
 
 
 </div>
+
 </th:block>
 </html>
 

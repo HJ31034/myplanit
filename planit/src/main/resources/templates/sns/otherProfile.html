@@ -56,7 +56,7 @@
 						console.log(data);
 						str = "<div class='plant_name'>";
 						str += "<a href='javascript:void(0);' class='plantName'>";
-						str += plantsName;
+						str += plantName;
 						str += "</a> </div>";
 						str += "<div class='contents_container'>";
 
@@ -148,7 +148,7 @@
 		<div class="hori_cont">
 			<div class="profile_wrap">
 				<div class="profile_img">
-					<img th:src="@{/imgs/img_section/} + ${userProfile.profileImg}" alt="착한호랑이">
+					<img th:src="@{/imgs/img_section/} + ${userProfile.profileImg}">
 				</div>
 			</div>
 
@@ -193,7 +193,7 @@
 				</div>
 				<div class="contents_container">
 					<div th:each="post : ${userPosts[index.index]}" class="pic">
-						<a href="#"><img th:src="@{/imgs/img_section/} + ${post.fileName}" alt=""></a>
+						<a th:href="@{/planiter/post/read(postno=${post.postNo})}"><img th:src="@{/imgs/img_section/} + ${post.fileName}" alt=""></a>
 					</div>
 				</div>
 			</th:block>

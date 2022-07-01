@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,12 +187,12 @@ public class PlaniterRestController {
 	@RequestMapping(value = "/updateInfo.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	public ModelAndView updateBlogInfo(@RequestParam(value = "InfoDes") String InfoDes,
 			@RequestParam(value = "profileIMG") MultipartFile profileIMG, ModelAndView mav) throws IOException {
-		
+ 
+//		String fileName = new String(profileIMG.getOriginalFilename().getBytes("8859_1"), "UTF-8");
 		String fileName = profileIMG.getOriginalFilename();
-		String saveDir2 = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
-		//Jamaica.substring(1);
-		String saveDir=saveDir2.substring(1);
-		System.out.println("saveDir: " + saveDir);
+		String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
+
+ 
 		if (profileIMG.isEmpty()) {
 			fileName = "thumb.png";
 		}
