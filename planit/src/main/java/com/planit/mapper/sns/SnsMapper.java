@@ -27,8 +27,7 @@ public interface SnsMapper {
 	public int updateInfo(AccountDTO params);
 	
 	public List<FollowDTO> selectFollowingList(@Param("startNum") int startNum, @Param("endNum") int endNum, @Param("userId") String userId);
-	public List<FollowDTO> selectFollowerList(@Param("userId") String userId);
-	//public List<FollowDTO> selectFollowerList(@Param("startNum") int startNum, @Param("endNum") int endNum,@Param("userId") String userId);
+	public List<FollowDTO> selectFollowerList(@Param("startNum") int startNum, @Param("endNum") int endNum,@Param("userId") String userId);
 	public List<FollowDTO> selectFollowerList2(HashMap params);
 	
 	public int insertFollow(HashMap params);

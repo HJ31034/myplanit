@@ -37,11 +37,13 @@ public class PostController {
 	}
 	
 	@PostMapping(value = "/write")
+ 
 	public String writePost (@ModelAttribute("params") PostDetailDTO params,  Model model) {
 		
 		postService.insertPost(params);
 		
 		return "redirect:/planiter/";
+ 
 	}
 	
 	@GetMapping(value = "/read")
