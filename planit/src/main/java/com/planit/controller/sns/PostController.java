@@ -37,11 +37,11 @@ public class PostController {
 	}
 	
 	@PostMapping(value = "/write")
-	public String writePost (@ModelAttribute("params") PostDetailDTO params, MultipartFile[] uploadFiles, Model model) {
+	public String writePost (@ModelAttribute("params") PostDetailDTO params,  Model model) {
 		
 		postService.insertPost(params);
 		
-		return "sns/write-post";
+		return "redirect:/planiter/";
 	}
 	
 	@GetMapping(value = "/read")
