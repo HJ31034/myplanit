@@ -150,24 +150,23 @@
 			
 			
 <!-- followList 팔로워 리스트 출력 f.followerid -->
-			<select id="selectFollowerList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
+			<select id="selectFollowerList"  resultType="com.planit.domain.sns.FollowDTO">
 		<![CDATA[
-	      
- 			    select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
+	       select rn,userId,accdescription,profileimg,followerid,followingid,ftype from(
+ 		select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
         from follow f join account a
         on f.userId=a.userId
-        where f.followingid=#{userId}
-        
+        where f.followingId=#{userId} and rownum < #{startNum} + #{endNum} )
+        WHERE rn >= #{startNum}
  		]]>
 			</select>
 <!-- 			<select id="selectFollowerList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
 		<![CDATA[
-	      select rn,userId,accdescription,profileimg,followerid,followingid,ftype from(
- 		select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
+		 select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
         from follow f join account a
         on f.userId=a.userId
-        where followerid=#{userId} and rownum < #{startNum} + #{endNum} )
-        WHERE rn >= #{startNum}
+        where f.followingid=#{userId}
+	     
  		]]>
 			</select> -->
 			
@@ -178,7 +177,7 @@
 	    select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
         from follow f join account a
         on f.userId=a.userId
-        where f.followingid=#{parameter2} and f.followerid=#{parameter1}
+       where f.followingid=#{parameter2} and f.followerid=#{parameter1}
     
  		]]>	
  		

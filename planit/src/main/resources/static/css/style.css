@@ -187,14 +187,14 @@ body{
 #searchText{
 	color:gray;
 	height: 22px;
+	margin-top: -21px;
 }
 
 .contents .imgList_section{
     overflow:hidden;
-   
     overflow:scroll;
     -ms-overflow-style: none;
-    height: 528px;
+    height: 550px;
 }
 
  
@@ -399,9 +399,9 @@ margin-left: 150px;
 
 .followContents .following_section{
     overflow:hidden;
-    text-align: center;
     overflow:scroll;
     -ms-overflow-style: none;
+    text-align: center;
     height: 550px;
 }
 

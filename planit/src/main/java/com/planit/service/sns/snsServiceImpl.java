@@ -71,18 +71,23 @@ public class snsServiceImpl implements snsService {
 
  	
 	@Override
-	public List<FollowDTO> selectFollowerList(String userId) {
-		 
-		List<FollowDTO> FollowerList = snsmapper.selectFollowerList(userId);
+	public List<FollowDTO> selectFollowerList(int startNum, int endNum,String userId) {
+		System.out.println(" Service selectFollowerList startNum: "+startNum+" endNum: "+endNum+" userId: "+userId);
+		List<FollowDTO> FollowerList = snsmapper.selectFollowerList(startNum,endNum,userId);
 		return FollowerList;
 	}
-//	@Override
-//	public List<FollowDTO> selectFollowerList(int startNum, int endNum,String userId) {
-//		System.out.println(" Service selectFollowerList startNum: "+startNum+" endNum: "+endNum+" userId: "+userId);
-//		List<FollowDTO> FollowerList = snsmapper.selectFollowerList(startNum,endNum,userId);
-//		return FollowerList;
-//	}
 
+	@Override
+	public List<FollowDTO> selectFollowerList2(String USERID, String followerid) {
+		HashMap params = new HashMap();
+		params.put("parameter1", USERID);
+		params.put("parameter2", followerid);
+
+		List<FollowDTO> selectFollowerList2 = snsmapper.selectFollowerList2(params);
+
+		return selectFollowerList2;
+	}
+	
 	@Override
 	public List<FollowDTO> selectFollowingList(int startNum, int endNum,String userId) {
 		 
@@ -117,15 +122,6 @@ public class snsServiceImpl implements snsService {
 		return (unfollow == 1) ? true : false;
 	}
 
-	@Override
-	public List<FollowDTO> selectFollowerList2(String USERID, String followerid) {
-		HashMap params = new HashMap();
-		params.put("parameter1", USERID);
-		params.put("parameter2", followerid);
-
-		List<FollowDTO> selectFollowerList2 = snsmapper.selectFollowerList2(params);
-
-		return selectFollowerList2;
-	}
+	
 
 }

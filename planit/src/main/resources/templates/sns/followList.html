@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="sns/layout/basic">
 <th:block layout:fragment="title">
@@ -12,14 +13,16 @@
 
 		<div class="contents_box">
 			<article class="followContents">
-
+   				<div class="trans_inner"> 
 				<!--팔로워 리스트 -->
 				<div class="follower_section" id="follower_section"></div>
 
 				<!-- 팔로잉 리스트  -->
-			 
-				<div class="following_section" id="following_section"></div>
-			 	 
+					<div class="following_section" id="following_section">
+						 <div id="list"></div>
+					</div>
+				</div>
+
 			</article>
 
 		</div>
@@ -68,35 +71,35 @@
 <th:block layout:fragment="script">
  
  <script th:inline="javascript">
-  
-	 /*<![CDATA[*/
-	 var fol = /*[[ ${fol} ]]*/ 
-	 /*]]*/
-		// 5.
-	 console.log('fol: '+fol);
+ 
+ 
+
+ /*<![CDATA[*/
+ var fol = /*[[ ${fol} ]]*/ 
+ /*]]*/
+	// 5.
+ console.log('fol: '+fol);
+ 
+ var page = $("#page").val(); 
+	  
+ if(fol==1){
+	 followerList(page);
+ }else if(fol==2){
+	 followingList(page);
+ }
+ 
+
+  $(function(){   
 	 
-	 var page = $("#page").val(); 
-		  
-	 if(fol==1){
-		 followerList(page);
-	 }else if(fol==2){
-		 followingList(page);
-	 }
-     
-  
-	 $(function(){   
-		 
-		    if(fol==1){
-			     followerList(page);
-				 page++; 				
-				}else if(fol==2){
-			     followingList(page);
-				 page++;
-				}
-		  }); 
-		  
-	 
-	 
+	    if(fol==1){
+		     followerList(page);
+			 page++; 				
+			}else if(fol==2){
+		     followingList(page);
+			 page++;
+			}
+	  });   
+	  
  $(".following_section").scroll(function() { 
  
 		var innerHeight = $(this).innerHeight(); 
@@ -104,88 +107,26 @@
 		var height=$(this)[0].scrollHeight; 
 
 		
-		if(scroll == height){  
+		if(scroll == height){ 
 			if(fol==1){
-			 followerList(page);
-			 page++; 				
-			}else if(fol==2){
-			 followingList(page);
-			 page++;
-			}
-			 console.log('scroll == height page: '+page);
+				 followerList(page);
+				 page++; 				
+				}else if(fol==2){
+				 followingList(page);
+				 page++;
+				}
 		} 
+		console.log('innerHeigh!!!t: '+ innerHeight +' scroll: '+scroll+' height: '+height);
 	});
  
- 	  
- 	   
- 	 function followingList(page){ //팔로잉 리스트
- 		 
- 		 $(".following_section").empty();
- 		 $(".following_section").show();
- 		 $(".follower_section").hide();
- 		 
- 		 console.log('followingList 메소드 내부 page: '+page);
- 		 
- 		 $.ajax({
- 				type : 'get',
- 				url : "/planiter/followingList.do?page="+page,
- 				contentType : "application/json; charset=UTF-8",
- 				dataType : "json",
- 				success : function(data) {
- 					console.log(data);
- 					 var followingList = "";
- 					 
- 					 if (page==1){   
- 						    $(".following_section").html(""); 
- 					  }  
- 						 
- 					  $.each(data, function(index, item) { // 데이터 =item
- 						  followingList = '<div class="followList" id="followList">'
- 							     +   '<div class="followIMGA">'
- 							     +   '<img class="followIMG" src="/imgs/img_section/'+item.profileImg+'"alt="프로필사진">'
- 				              	 +   '</div>'
- 				              	 +   '<div class="followLIstInfo">'
- 				            	 +   '<P   class="followUserName" >'+item.followingId+'</P>'
- 				            	 +   '<P   class="followDis">'+item.accDescription+'</P>'
- 				            	 +   '</div>'
- 				            	 +	 '<div class="followButtonA">'
- 				            	 +	 '<input onclick="followBTN(\''+item.followerId+'\',\''+item.followingId+'\',\''+item.ftype+'\',2)" id="followButton_'+item.followerId+item.followingId+'" class="followButton" type="button" value="'+ GetType(item.followerId,item.userId,item.followingId,item.ftype)+'"  />'
- 				            	 +   '</div>'
- 				            	 +   '</div>';
- 				            	 
- 				             $(".following_section").append(followingList);
- 				             
- 				             
- 				             var btnID = "#followButton_" + item.followerId+item.followingId ;
- 				             var btnID = "#followButton_" + item.followerId+item.followingId ;
- 				             
- 				             if (item.ftype == 1) { 
- 				 				$(btnID).css("backgroundColor", "white");
- 				 			} else {
- 				 				 $(btnID).css("backgroundColor", "#9FCF62");
- 				 				 $(btnID).css("color", "white");
- 				 			}
- 					});   
- 					 
- 				},
- 				error : function(jqXHR, textStatus, errorThrown) {
- 					console.log(jqXHR.responseText);
- 				}
- 			});
- 		 
-
- 	 }
- 	  
- 	  
 		  
 		 
 		  /* 팔로워 리스트 */	
-		  function followerList(page){
-			  console.log('follower 메소드 내부 page: '+page);
+		  function followerList(){
 		  	$(".follower_section").show();
 		  	 $(".following_section").hide();
 		  	 $(".follower_section").empty();
-		  	 
+		  	 var page=1;
 		  		$.ajax({
 		  			type : 'get',
 		  			url : "/planiter/followerList.do",
@@ -221,6 +162,7 @@
 		  			 				
 		  			             
 		  				});  
+		  				 
 		  			},
 		  			error : function(jqXHR, textStatus, errorThrown) {
 		  				console.log(jqXHR.responseText);
@@ -245,7 +187,69 @@
 		  			
 		  			
 		  		}
+		   
+
+  
+ 
+ function followingList(page){ //팔로잉 리스트
+	 $(".following_section").empty();
+	 $(".following_section").show();
+	 $(".follower_section").hide();
 	 
+	 console.log('followingList page: '+page);
+	 $.ajax({
+			type : 'get',
+			url : "/planiter/followingList.do?page="+page,
+			contentType : "application/json; charset=UTF-8",
+			dataType : "json",
+			success : function(data) {
+				console.log(data);
+				 var followingList = "";
+				 if (page==1){   
+					    $(".following_section").html(""); 
+				  }  
+					 
+				  $.each(data, function(index, item) { // 데이터 =item
+					  followingList = '<div class="followList" id="followList">'
+						     +   '<div class="followIMGA">'
+						     +   '<img class="followIMG" src="/imgs/img_section/'+item.profileImg+'"alt="프로필사진">'
+			              	 +   '</div>'
+			              	 +   '<div class="followLIstInfo">'
+			            	 +   '<P   class="followUserName" >'+item.followingId+'</P>'
+			            	 +   '<P   class="followDis">'+item.accDescription+'</P>'
+			            	 +   '</div>'
+			            	 +	 '<div class="followButtonA">'
+			            	 +	 '<input onclick="followBTN(\''+item.followerId+'\',\''+item.followingId+'\',\''+item.ftype+'\',2)" id="followButton_'+item.followerId+item.followingId+'" class="followButton" type="button" value="'+ GetType(item.followerId,item.userId,item.followingId,item.ftype)+'"  />'
+			            	 +   '</div>'
+			            	 +   '</div>';
+			             $(".following_section").append(followingList);
+			             
+			             
+			             var btnID = "#followButton_" + item.followerId+item.followingId ;
+			             var btnID = "#followButton_" +item.followerId+item.followingId ;
+			             
+			             if (item.ftype == 1) { 
+			 				$(btnID).css("backgroundColor", "white");
+			 			} else {
+			 				 $(btnID).css("backgroundColor", "#9FCF62");
+			 				 $(btnID).css("color", "white");
+			 			}
+				});   
+				 
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR.responseText);
+			}
+		});
+	 
+
+ }
+  
+		
+		
+ 		
+ 
+
 		
 		
 		function followBTN(followerID,followingID, ftype, fol) {//팔로우 언팔로우 처리
@@ -280,7 +284,7 @@
 				  
 				$.ajax({
 					type : 'get',
-					url : "/planiter/unfollow.do?followerId=" +followerID +"&followingId="+followingID,
+					url : "/planiter/unfollow.do?followerId=" +followerID +"&followingId="+followingID+"&page="+page,
 					contentType : "application/json; charset=UTF-8",
 					dataType : "json",
 					success : function(data) {
@@ -289,21 +293,15 @@
 							 followerList();
 						 }else if(fol==2){
 							 followingList();
-						 }
-						
-
+						 } 
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
-						 
 						console.log("followBTN error" );
 						console.log(jqXHR.responseText);
 					}
-				});
-				
-				 
-			}
-			 
-		}
+				}); 
+			}  
+		} 
 	</script>
 
 
