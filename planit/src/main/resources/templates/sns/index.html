@@ -9,13 +9,16 @@
         <div class="inner">
 
             <div class="contents_box">
+            			  
+            			 <div th:if="${keyFieldSearch != null}">
                         <div id="searchText" th:text="${keyFieldSearch}"></div>
+                        </div>
                         
                 <article class="contents" >
                 	<input type="hidden" value=${totalPage} name="test" />
                <!--인기게시물 리스트 -->
                
-                    <div class="imgList_section" >
+                    <div class="imgList_section">
                          <div class="trans_inner"> 
                          
                         
@@ -29,7 +32,7 @@
                            		 <img th:src="@{${'/imgs/img_section/'+img.fileName}}" alt="imgPost" id="imgPost"
                            	      class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover">	</a>  
                           </span>
-                            
+                           
                          	<span id="nextImgPost"></span>
                           	  <input type="hidden" id="page" value="1">
                         </div>
@@ -72,16 +75,9 @@
         </th:block>
  
   <th:block layout:fragment="script">
- 
-
-<!-- <script type="text/javascript"> -->
-    
-
+  
 	<script th:inline="javascript">
-
-	
-		
-		
+ 
 		 $("body").on("click", "#dropdown-content div", function () {
 		 
 			 var keyFieldHTML = $(this).html(); 
@@ -105,6 +101,9 @@
 		 
 		 console.log('roding page: '+page); 
 		 
+		 
+		 
+		
 		 $(".imgList_section").scroll(function() {  
 			 
 				var innerHeight = $(this).innerHeight(); 
@@ -114,9 +113,8 @@
 				console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
 				if(scroll >= height){  
 					 page++; 
-					 scroll=scroll+100; 
-					 nextImgPost(page);
-					 
+					 scroll=scroll
+					 nextImgPost(page); 
 				} 
 				 
 			});
@@ -132,6 +130,7 @@
 	  				contentType : "application/json; charset=UTF-8",
 	  				dataType : "json",
 	  				success : function(data) {
+	  					
 	  					console.log('페이지 끝');
 	  					$.each(data, function(index, item) {
 	  					console.log('data: '+data)
@@ -145,6 +144,7 @@
 	  			}
 	  		});
 		 }
+		
 		 
 		
 		function onSubmit() {
@@ -159,13 +159,8 @@
 				alert('키워드를 입력해주세요');
 				return false;
 			}
-			
-			
-			console.log('thisthis: '+ $(e).text());
-			  
-			 
+ 
 		}
-
 		/* 메인 검색 */
 	</script>
 

@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
@@ -39,69 +41,77 @@ public class PlaniterRestController {
 	private SnsMapper snsmapper;
 
 	// 팔로잉 리스트
-	@RequestMapping(value = "/followingList.do", method = RequestMethod.GET)
-	public List<FollowDTO> follower(Model model, ModelAndView mav,
-			@RequestParam(value="page") int page) {
-		System.out.println("followingList con page: "+page);
-		
-		 int nowPage = page;
-		 int startNum=0;
-		 int endNum=5;
-		 int numPerPage=5; 
-		 
-		 if (page==1){
+		@RequestMapping(value = "/followingList.do", method = RequestMethod.GET)
+		public List<FollowDTO> follower(Model model, ModelAndView mav,
+				@RequestParam(value="page") int page) {
+			System.out.println("followingList con page: "+page);
+			
+			 int nowPage = page;
+			 int startNum=1;
+			 int endNum=5;
+			 int numPerPage=5; 
 			 
-			 startNum = 1;
-			 endNum = numPerPage ;
-			 
-		 }else{
-			 startNum = (page * numPerPage)-numPerPage;
-			 endNum = numPerPage;
+			 if (page==1){
+				 
+				 startNum = 1;
+				 endNum = numPerPage ;
+				 
+			 }else{
+				 startNum = (page * numPerPage)-numPerPage+1;
+				 endNum = numPerPage;
+			}
+			
+			String USERID = "kosta";
+			List<FollowDTO> followingList_TEMP = new ArrayList<FollowDTO>();
+			List<FollowDTO> followingList = snsservice.selectFollowingList(startNum,endNum,USERID);
+			System.out.println("RestCon Service selectFollowingList startNum: "+startNum+" endNum: "+endNum+" userId: "+USERID);
+			
+			System.out.println("con followingList: "+followingList_TEMP);
+			for (FollowDTO followDTO : followingList) {  
+				String followID = followDTO.getFollowerId();
+				String ProfileIMG=followDTO.getProfileImg();
+				String ACCdescription=followDTO.getAccDescription();
+				
+				System.out.println("follow followingList: "+ followID);
+				
+				FollowDTO dto = new FollowDTO();
+				dto.setFollowerId(followID);
+				dto.setUserId(USERID);
+				dto.setAccDescription(ACCdescription);
+				dto.setProfileImg(ProfileIMG);
+				
+				List<FollowDTO> fList = snsservice.selectFollowingList(startNum,endNum,USERID);
+				
+				if (fList.size() == 0) {
+					dto.setFtype(0);
+				} else {
+					dto.setFtype(1);
+				}
+				followingList_TEMP.add(dto);
+				 
+			 }  
+			System.out.println("followingList return: "+followingList);
+
+			return followingList;
+
 		}
-		
-		String USERID = "kosta";
-		
-		List<FollowDTO> followingList = snsservice.selectFollowingList(startNum,endNum,USERID);
-		System.out.println("RestCon Service selectFollowingList startNum: "+startNum+" endNum: "+endNum+" userId: "+USERID);
-		 
-		System.out.println("followingList return: "+followingList);
 
-		return followingList;
-
-	}
 
 	// 팔로워 리스트
 	@RequestMapping(value = "/followerList.do", method = RequestMethod.GET)
 	public List<FollowDTO> Following(Model model, ModelAndView mav) {
- 
-//		 int nowPage = page;
-//		 int startNum=0;
-//		 int endNum=5;
-//		 int numPerPage=5; 
-//		 
-//		 if (page==1){
-//			 
-//			 startNum = 1;
-//			 endNum = numPerPage ;
-//			 
-//		 }else{
-//			 startNum = (page * numPerPage)-numPerPage;
-//			 endNum = numPerPage;
-//		}
-		
+
 		List<FollowDTO> followerList_TEMP = new ArrayList<FollowDTO>();
 		
 		String USERID = "kosta";
-
-		 
-		//List<FollowDTO> followerList = snsservice.selectFollowerList(1,5,USERID);
-		List<FollowDTO> followerList = snsservice.selectFollowerList(USERID);
+ 
+		List<FollowDTO> followerList = snsservice.selectFollowerList(1,5,USERID);
 		for (FollowDTO followDTO : followerList) {
 			String followID = followDTO.getFollowerId();
-			System.out.println("Following followID: " + followID);
+			System.out.println("aaaaaaaaaaaa: " + followID);
 			String ProfileIMG = followDTO.getProfileImg();
 			String ACCdescription = followDTO.getAccDescription();
-			System.out.println("Following followIDIDIDIDIDID: " + followID);
+			System.out.println("followIDIDIDIDIDID: " + followID);
 			
 			FollowDTO dto = new FollowDTO();
 			dto.setFollowerId(USERID);
@@ -112,11 +122,16 @@ public class PlaniterRestController {
 			List<FollowDTO> fList = snsservice.selectFollowerList2(USERID, followID);// followID기준
 			System.out.println("followID: " + followID + " flist: " + fList.size());
 
+			 
+		 
 			if (fList.size() == 0) {
 				dto.setFtype(0);
 			} else {
 				dto.setFtype(1);
 			}
+			
+			
+			
 			
 			followerList_TEMP.add(dto);
 		}
@@ -142,7 +157,7 @@ public class PlaniterRestController {
 
 	@RequestMapping(value = "/unfollow.do")
 	public String unfollow(@RequestParam(value = "followerId") String followerId,
-			@RequestParam(value = "followingId") String followingId) {
+			@RequestParam(value = "followingId") String followingId,@RequestParam(value="page") int page) {
 	 
 		snsservice.unfollow(followerId, followingId);
  
@@ -157,7 +172,9 @@ public class PlaniterRestController {
 	@GetMapping(value = "/goProfileEdit.do")
 	public ModelAndView goProfileEdit(Model model, ModelAndView mav, AccountDTO dto) {
 			String USERID="kosta";
-		
+			String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
+			System.out.println("saveDir: " + saveDir);
+			
 		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID);
 		model.addAttribute("AccInfo", AccInfo);
 
@@ -169,10 +186,12 @@ public class PlaniterRestController {
 	@RequestMapping(value = "/updateInfo.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	public ModelAndView updateBlogInfo(@RequestParam(value = "InfoDes") String InfoDes,
 			@RequestParam(value = "profileIMG") MultipartFile profileIMG, ModelAndView mav) throws IOException {
-		String fileName = new String(profileIMG.getOriginalFilename().getBytes("8859_1"), "UTF-8");
-
-		String saveDir = "C:/Users/illus/Documents/GitHub/KOSTA_Project/planit/src/main/resources/static/imgs/img_section/";
-
+		
+		String fileName = profileIMG.getOriginalFilename();
+		String saveDir2 = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
+		//Jamaica.substring(1);
+		String saveDir=saveDir2.substring(1);
+		System.out.println("saveDir: " + saveDir);
 		if (profileIMG.isEmpty()) {
 			fileName = "thumb.png";
 		}

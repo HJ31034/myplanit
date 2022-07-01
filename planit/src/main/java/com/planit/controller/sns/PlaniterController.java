@@ -33,7 +33,7 @@ public class PlaniterController {
 	 
 	 
 	
-	
+	// SNS메인 게시물리스트 및 검색처리
 	@RequestMapping(value = "/")
 	public String mainSnsPostList(Model model,
 			@RequestParam(value="keyField",required = false) String keyField,
@@ -69,7 +69,8 @@ public class PlaniterController {
 		
 		return "sns/index";
 	}
-
+	
+  
 	@ResponseBody
 	@RequestMapping(value = "/nextImgPost")
 	public  List<PostDTO> nextImgPost(@RequestParam(value="page", required = false) String page,
@@ -81,7 +82,7 @@ public class PlaniterController {
 		System.out.println("nextImgPost page: " +page);
 		  
 		 if(page== null) {
-			 page = "0";
+			 page = "1";
 		 }
 		 
  		  int pageNum=Integer.parseInt(page);
@@ -89,7 +90,7 @@ public class PlaniterController {
  		 
 		 int totalCnt = snsmapper.selectImgPostCnt();
 		 int nowPage = pageNum;
-		 int startNum=0;
+		 int startNum=1;
 		 int endNum=15;
 		 int numPerPage=15; 
 		 int totalPage = (int)Math.ceil((float)totalCnt/(float)numPerPage);
@@ -134,11 +135,9 @@ public class PlaniterController {
 		 
  
 	
-	//팔로워 팔로잉 페이지
+	//팔로우 페이지 이동
 	@RequestMapping(value = "/follower.do")
 	public ModelAndView selectFollow(Model model,@RequestParam(value = "fol") String fol, ModelAndView mav) {
-		
-		
 		
 		String USERID="kosta";
 		//계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리

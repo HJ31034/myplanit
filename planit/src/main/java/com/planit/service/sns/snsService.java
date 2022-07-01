@@ -21,8 +21,7 @@ public interface snsService {
 	public boolean updateInfo(AccountDTO params);
 	
 	public List<FollowDTO> selectFollowingList(int startNum, int endNum, String USERID);
-	//public List<FollowDTO> selectFollowerList(int startNum, int endNum, String USERID);
-	public List<FollowDTO> selectFollowerList(String USERID);
+	public List<FollowDTO> selectFollowerList(int startNum, int endNum, String USERID);
 	public List<FollowDTO> selectFollowerList2(String USERID, String followingid);
 	
 	public boolean insertFollow(String userId,String followerId,String followingId,int ftype);
