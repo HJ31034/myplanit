@@ -1,0 +1,18 @@
+.container {
+  max-width: 960px;
+  background-color: none;
+  position: center;
+  margin-top: 150;
+}
+.needs-validation{ 
+margin-top:150;
+}
+
+.col-md-7 .col-lg-8{
+	margin-top:120;
+	margin-left:120;
+	position:right;
+	
+}
+.id_ok{color:blue; display: none;}
+.id_already{color:#6A82FB; display: none;}
