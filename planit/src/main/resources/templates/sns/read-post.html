@@ -12,7 +12,7 @@
 		
 			<div class="photo_box">
 	            <div class="swiper-wrapper">
-	               <div class="swiper-slide" th:each="fileName, index : ${post.fileNameArr}">
+	               <div class="swiper-slide" th:each="fileName, index : ${post.realFileNameArr}">
 	                  <img class="photo swiper-lazy"  th:src="${'/imgs/img_section/' + fileName}" />
 	               </div>
 	            </div>

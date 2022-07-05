@@ -23,7 +23,8 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public PostDTO getBoardDetail(Long postNo) {
 		PostDTO postDto = postMapper.selectPostDetail(postNo);
-		postDto.setFileNameArr(postDto.getFileName().split(","));
+		postDto.setOrgFileNameArr(postDto.getOrgFileName().split(","));
+		postDto.setRealFileNameArr(postDto.getRealFileName().split(","));
 		return postDto;
 	}
 

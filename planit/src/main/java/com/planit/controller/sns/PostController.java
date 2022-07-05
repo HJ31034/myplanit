@@ -42,8 +42,8 @@ public class PostController {
 		
 		postService.insertPost(params);
 		
-		return "redirect:/planiter/";
- 
+		//return "redirect:/planiter/";
+		return "sns/write-post";
 	}
 	
 	@GetMapping(value = "/read")
