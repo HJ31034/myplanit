@@ -4,10 +4,11 @@
 
 	
 	<select id="selectPostDetail" parameterType="Long" resultType="PostDTO">
-		SELECT p.postno, p.postcontent, p.userid, TO_CHAR(p.createdt, 'yyyy-MM-dd') createdt, p.likescount, u.PLANTSNAME, f.FILENAME, w.WEATHER
+		SELECT p.postno, p.postcontent, p.userid, TO_CHAR(p.createdt, 'yyyy-MM-dd') createdt, p.likescount, u.PLANTSNAME, f.REALFILENAME, f.ORGFILENAME, w.WEATHER, w.address 
 		FROM POST p 
 		FULL OUTER JOIN (
-			SELECT PF.POSTNO, LISTAGG(f.FILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS FILENAME
+			SELECT PF.POSTNO, LISTAGG(f.REALFILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS REALFILENAME,
+	   			   LISTAGG(f.ORGFILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS ORGFILENAME
 			FROM POSTFILES PF
 			INNER JOIN FILES F ON F.NO = PF.NO
 			WHERE PF.POSTNO = #{postNo}
@@ -83,11 +84,13 @@
 		</selectKey>
 		INSERT INTO files (
 			no,
-			fileName
+			orgFileName,
+		    realFileName
 		)
 		VALUES (
 			#{no},
-			#{fileName}
+			#{orgFileName},
+			#{realFileName}
 		)
 	</insert>
 
@@ -125,5 +128,40 @@
 		)	
 	</insert>
 	
+	<insert id="insertLikes" parameterType="LikesDTO">
+		INSERT INTO likes (
+			postno,
+			userid,
+			targetid,
+			regdate
+		)
+		VALUES ( 
+			#{postNo}, 
+			#{userId}, 
+			#{targetId},
+			sysdate
+		)
+	</insert>
+	
+	<select id="getLikes" parameterType="LikesDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM likes
+		WHERE userid = #{userId}
+		AND postno = #{postNo}
+	</select>
+	
+	<delete id="deleteLikes" parameterType="LikesDTO">
+		DELETE FROM likes WHERE userid = #{userId} AND postno = #{postNo}
+	</delete>
+	
+	<select id="getFiles" parameterType="Long" resultType="FilesDTO">
+		SELECT f.no, f.orgfilename, f.realfilename
+		FROM FILES f 
+		INNER JOIN (
+			SELECT p.no 
+			FROM POSTFILES p 
+			WHERE p.postno = #{postNo}
+		) p ON p.no = f.no
+	</select>
 	
 </mapper>

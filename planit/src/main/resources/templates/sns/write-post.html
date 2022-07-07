@@ -20,14 +20,15 @@
 				<div class="hashtag_box">
 					<ul id="file_list">
 						<li th:each="file : ${files}">
+							<img class="file_image" th:src="@{${'/imgs/img_section/'+file.realFileName}}">
 							<input class="file_no" name="no" type="hidden" th:value="${file.no}">
-							<span class="file_name" th:text="${file.fileName}"></span>
+							<span class="file_name" th:text="${file.orgFileName}"></span>
 							<a href="javascript:void(0);" onclick="fileDelete(this)" style="text-decoration: none;">삭제</a>
 						</li>
 					</ul>
 				</div>
 			</div>
-		
+
 			<div class="post_box_right">
 				<div class="write_box">
 					<input type="hidden" id="userId" name="userId" value="test">
@@ -107,13 +108,14 @@
 			let formData = new FormData(); // 업로드 할 파일 저장 객체
 			let fileInput = $("#file_input");
 
-
 			// 불필요한 데이터까지 가져올 필요가 없어서 가져올 데이터만 변수 선언(each 문에 사용)
 			let files = fileInput[0].files;
 
 			$(files).each(function (i, file) { // 여러 개의 파일을 업로드할 때 formData에 저장
 				formData.append("uploadFiles", file);
 			});
+
+			$("#file_input").val("");
 
 			$.ajax({
 				url: "/planiter/post/file/upload",
