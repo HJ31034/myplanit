@@ -13,7 +13,7 @@ public class PostDTO {
 	
 	private int likesCount;
 	private int plantsCateNo;
-	private String fileName;
+	private String orgFilename;
 	private String plantsName;
 	
 	private String[] fileNameArr;
