@@ -25,5 +25,7 @@ public class PostDTO {
 	private String weather;
 	private String address;
 	
+	// 임시
+	private String fileName;
 	
 }
