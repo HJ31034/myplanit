@@ -23,7 +23,7 @@ public class PostDTO {
 	private String deleteYN;
 	
 	private String weather;
-	
+	private String address;
 	
 	
 }

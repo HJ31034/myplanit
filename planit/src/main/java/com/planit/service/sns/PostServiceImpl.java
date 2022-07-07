@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.planit.domain.sns.CommentDTO;
 import com.planit.domain.sns.FilesDTO;
+import com.planit.domain.sns.LikesDTO;
 import com.planit.domain.sns.PostDTO;
 import com.planit.domain.sns.PostDetailDTO;
 import com.planit.domain.sns.PostFilesDTO;
@@ -73,6 +74,41 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<UserToPlantsDTO> selectPlantsCate(String userId) {
 		return postMapper.selectPlantsCate(userId);
+	}
+	
+	@Override
+	public String getLikes(LikesDTO params) {
+		int result = postMapper.getLikes(params);
+		
+		if(result == 0) {
+			return "unlike";	
+		}
+		
+		return "like";
+	}
+
+	@Override
+	public void insertLikes(LikesDTO params) {
+		postMapper.insertLikes(params);
+		
+	}
+
+	@Override
+	public void deleteLikes(LikesDTO params) {
+		postMapper.deleteLikes(params);
+	}
+	
+	public void likeControl(LikesDTO params, String isLike) {
+		if(isLike.equalsIgnoreCase("like")) {
+			this.insertLikes(params);
+		}else {
+			this.deleteLikes(params);
+		}
+	}
+
+	@Override
+	public List<FilesDTO> getFiles(Long postNo) {
+		return postMapper.getFiles(postNo);
 	}
 
 }
