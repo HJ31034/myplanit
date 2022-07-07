@@ -99,3 +99,35 @@ footer {
 	margin-top: 10px;
 }
 
+/* kwd */
+.reset {
+	margin: 5px;
+	border: 1px solid #9FCF62;
+	border-radius: 35px;
+	padding: 5px 20px;
+	background: #9FCF62;
+	color: #888;
+}
+.kwd-box{
+	transform: translate(10%, 0);
+}
+.kwd {
+	margin: 5px;
+	border: 1px solid #888;
+	border-radius: 35px;
+	padding: 5px 20px;
+	background: #fff;
+	color: #888;
+}
+
+.kwd:hover {
+	border: 1px solid #9FCF62;
+	color: #9FCF62;
+}
+.divide {
+	border-top: 1px dashed #ddd;
+	 margin-top: 5px; 
+	 margin-bottom: 5px; 
+	 width: 75%;
+}
+

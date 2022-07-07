@@ -13,6 +13,87 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		$(document).on("click", ".reset", function(){
+			$.ajax({
+				type : 'POST',
+				url : '/kwd',
+				data : {
+					keyId : 0
+				},
+				dataType : 'json',
+				success : function(data) {
+					str = "<button class='reset'>";
+					str += "<svg xmlns='http://www.w3.org/2000/svg' style='color: #fff;' width='16' height='16' fill='currentColor' class='bi bi-arrow-clockwise' viewBox='0 0 16 1'>";
+					str += "<path fill-rule='evenodd' d='M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z'/>";
+					str += "<path d='M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z'/>";
+					str += "</svg></button>";
+					
+					for (var i = 0; i < data.length; i++) {
+						str += "<button class='kwd' value='";
+						str += data[i].keyId;
+						str += "'>";
+						str += data[i].keyName;
+						str += "</button>";
+					}
+					
+					str += "<form action='/planit/search/kwd' method='post' class='kwd-form'></form>";
+	
+					$('.kwd-box').html(str);
+					
+					console.log(str);
+					
+				},
+				error : function() {
+					alert("에러 발생");
+				}
+			});
+		});
+		$(document).on("click", ".kwd", function(){
+			var kwd = $(this).val();
+			var tagId = $(this).attr('id');
+			$.ajax({
+				type : 'POST',
+				url : '/kwd',
+				data : {
+					keyId : kwd
+				},
+				dataType : 'json',
+				success : function(data) {
+					// 해당 키워드의 keyId를 컨트롤러에 전달하기 위해 사용
+					/* str2 = "<input type='hidden' name='keyId' value='" + kwd + "' />";
+					$('.kwd-form').html(str2);
+					
+					
+					$('.kwd-form').submit(); */
+					
+					str = "";
+					if(data.length != 0){
+						str = "<div class='divide'></div>";
+					}
+					
+					for (var i = 0; i < data.length; i++) {
+						str += "<button class='kwd' value='";
+						str += data[i].keyId;
+						str += "'>";
+						str += data[i].keyName;
+						str += "</button>";
+					}
+
+					
+					
+					$('.kwd-box').append(str);
+					
+					console.log(str);
+				},
+				error : function() {
+					alert("에러 발생");
+				}
+			});
+		});
+		
+		$(document).on("click", ".bi-x-lg", function(){
+			$('.search-info').val('');
+		});
 		
 	});
 	</script>
@@ -29,6 +110,23 @@
 					어떤 종류의 <br> 식물을 찾고있나요?
 				</h2>
 			</div>
+			
+			<!--/* <div class="kwd-box">
+				<button class="reset">
+				<svg xmlns="http://www.w3.org/2000/svg" style="color: #fff;" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+				  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+				  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+				</svg>
+				</button>
+				<th:block th:each="plantKwd : ${plantKwdList}">
+					<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
+				</th:block>
+				
+				
+				<form action="/planit/search/kwd" method="post" class="kwd-form">
+				</form>
+			</div> */-->
+			<!-- end container -->
 
 			<div class="search-box">
 				<svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="16"
@@ -37,7 +135,7 @@
 					<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
 				</svg>
 				<form action="/planit/search" method="get">
-					<input type="text" name="term" placeholder="식물 이름을 검색해주세요." class="search-info">
+					<input type="text" th:value="${term}" name="term" placeholder="식물 이름을 검색해주세요." class="search-info">
 				</form>
 				<svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="16"
 					height="16" fill="currentColor" class="bi bi-x-lg"
