@@ -13,7 +13,7 @@ public class PostDTO {
 	
 	private int likesCount;
 	private int plantsCateNo;
-	private String fileName;
+	private String realFileName;
 	private String plantsName;
 	
 	private String[] fileNameArr;
@@ -23,6 +23,7 @@ public class PostDTO {
 	
 	private String weather;
 	
-	
+	// 임시
+	private String fileName;
 	
 }
