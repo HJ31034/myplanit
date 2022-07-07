@@ -6,9 +6,9 @@
 <!--메인 좋아요순 이미지 정렬   -->
 		<select id="selectImgPost" resultType="com.planit.domain.sns.PostDTO">
 	<![CDATA[
-	select rn,postno,filename,likescount,postcontent from
+	select rn,postno,orgfilename,likescount,postcontent from
 	(select /*+ INDEX_DESC(seq_POSTNO_no) */
-	rownum rn,p.postno,pf.no,fs.filename,p.likescount,p.postcontent
+	rownum rn,p.postno,pf.no,fs.orgfilename,p.likescount,p.postcontent
  	from postfiles pf join post p
  	on p.postno=pf.postno
  	and no in
@@ -31,9 +31,9 @@
 		<choose>
 			<when test='keyField.equals("plantsname")'>
 		<![CDATA[ 
-		 select rn,no,filename,likescount,postno,postcontent,plantscateno from
+		 select rn,no,orgfilename,likescount,postno,postcontent,plantscateno from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-			rownum rn, pf.no,fs.filename,p.likescount,p.postno, p.postcontent,p.plantscateno
+			rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.plantscateno
  			from post p join postfiles pf 
  			on p.postno=pf.postno
  			and no in
@@ -52,9 +52,9 @@
 			</when>
 			<when test='keyField.equals("userId")'>
 		<![CDATA[ 
-			 select rn,no,filename,likescount,postno,postcontent from
+			 select rn,no,orgfilename,likescount,postno,postcontent from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-		    rownum rn, pf.no,fs.filename,p.likescount,p.postno, p.postcontent
+		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent
  		    from postfiles pf join post p
  		    on p.postno=pf.postno
  		    and no in
@@ -71,9 +71,9 @@
 			</when>
 			<when test='keyField.equals("postcontent")'>
 		<![CDATA[ 
-			 select rn,no,filename,likescount,postno,postcontent from
+			 select rn,no,orgfilename,likescount,postno,postcontent from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-		    rownum rn, pf.no,fs.filename,p.likescount,p.postno, p.postcontent
+		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent
  		    from postfiles pf join post p
  		    on p.postno=pf.postno
  		    and no in
@@ -100,6 +100,7 @@
     from post
     ]]>
 </select>
+
 	 
 	 
 <!--메인 계정정보 출력 (팔로잉,팔로워,프로필사진)-->
@@ -134,6 +135,14 @@
 	]]>	
 		</update>
 		
+		
+		<!-- 전체 팔로잉 수  -->
+<select id="followingCnt" resultType="int">
+	<![CDATA[
+	 select count(followingid)
+    from follow where followingid=#{userId};
+    ]]>
+</select>
 		
 <!-- followList 팔로잉 리스트 출력  -->
 			<select id="selectFollowingList" resultType="com.planit.domain.sns.FollowDTO">
