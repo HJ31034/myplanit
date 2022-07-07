@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.planit.domain.main.PlantsDTO;
+import com.planit.service.main.MainService;
 import com.planit.service.main.SearchService;
 
 @Controller
@@ -19,16 +20,22 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
+	@Autowired
+	private MainService mainService;
+	
 	@GetMapping("/search")
 	public String search(@RequestParam(value = "term", required = false) String term, Model model) {
 		List<PlantsDTO> plantList;
 		if (term != null) {
 			plantList = searchService.selectPlants(term);
+			model.addAttribute("term", term);
 			System.out.println(term);
 		}
 		else {
 			plantList = searchService.selectPlants("all");
 		}
+		
+		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0));
 		model.addAttribute("plantList", plantList);
 		return "main/search";
 	}
