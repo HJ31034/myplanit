@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="sns/layout/basic">
-<th:block layout:fragment="title">
+<th:block layout:fragment="title"> 
 	<title>list page</title>
 </th:block>
 
@@ -44,40 +44,19 @@
 
 
 			</article>
-
-
-
-		</div>
-
-
+         </div> 
 	</div>
-
-
-
-
+ 
 </th:block>
-
-
-
-
-
-
-
-
-
-
-
-<th:block layout:fragment="script">
+<th:block layout:fragment="script">  
 	<script type="text/javascript">
-	
 	function fileDel(){
 		$(".dataDeleteIMG").click(function() {
 			$(".followerPro").attr("src","/imgs/img_section/thumb.png");
 			 
 		});
 	}
-	
-	
+	 
 		jQuery(document).ready(function() {
 			$("#proFileUpdate").click(function() {
 				if ($("#InfoDes").val() == "") {
@@ -86,13 +65,10 @@
 				}
 			});
 
-			$(".dataDelete").click(function() {
+			$(".dataDeleteINFO").click(function() {
 				$('#InfoDes').val('');
 			});
-			
 		 
-			
-
 		});
 
 	
@@ -113,5 +89,5 @@
 			}
 		}
 	</script>
-</th:block>
+ </th:block>
 </html>

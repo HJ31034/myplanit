@@ -90,7 +90,7 @@ public class PlaniterController {
  		 
 		 int totalCnt = snsmapper.selectImgPostCnt();
 		 int nowPage = pageNum;
-		 int startNum=1;
+		 int startNum=0;
 		 int endNum=15;
 		 int numPerPage=15; 
 		 int totalPage = (int)Math.ceil((float)totalCnt/(float)numPerPage);
@@ -113,8 +113,7 @@ public class PlaniterController {
 				System.out.println("next: "+totalPage+" "+nowPage);
 				
 				if(totalPage>=nowPage) {
-				nextImgPost = snsservice.selectImgPost(startNum,endNum);
-				
+				nextImgPost = snsservice.selectImgPost(startNum,endNum);  
 				}
 				return nextImgPost;
 				
@@ -127,7 +126,7 @@ public class PlaniterController {
 					model.addAttribute("keyField", keyField);
 					 
 					nextImgPost = snsservice.searchSNS(keyField, keyword,startNum,endNum);
-					 return nextImgPost;
+				    return nextImgPost;
 				}
 			
 			 
@@ -137,17 +136,16 @@ public class PlaniterController {
 	
 	//팔로우 페이지 이동
 	@RequestMapping(value = "/follower.do")
-	public ModelAndView selectFollow(Model model,@RequestParam(value = "fol") String fol, ModelAndView mav) {
+	public ModelAndView selectFollow(Model model, @RequestParam(value = "fol") String fol,  ModelAndView mav) {
 		
-		String USERID="kosta";
-		//계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리
-		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID);
-		model.addAttribute("AccInfo", AccInfo);
-		List<PlantsCateDTO> CateList = snsservice.selectMainCate(USERID);
-		model.addAttribute("CateList",CateList);
- 
-		model.addAttribute("fol",fol);
 		
+		  String USERID="kosta"; //계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리 
+		  List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID); 
+		  model.addAttribute("AccInfo", AccInfo); List<PlantsCateDTO> CateList = snsservice.selectMainCate(USERID);
+		  model.addAttribute("CateList",CateList);
+		  
+		  model.addAttribute("fol",fol);
+		  
 		 
 		
 		mav.setViewName("sns/followList");

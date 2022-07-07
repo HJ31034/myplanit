@@ -207,18 +207,22 @@
 					
 					th:each="post : ${postList}">
 					<div class="member">
-						<div class="member-img">
-							<!-- <img th:src="@{/imgs/img_section/} + ${post.fileName}" class="img-fluid" alt=""> -->
-							<img th:src="@{/imgs/img_section/마란타.jpg}" class="img-fluid"
-								alt="">
-						</div>
-						<div class="member-info">
-							<!-- <h4>Walter White</h4> -->
-							<span>#내 반려식물</span> <span>#키우기</span>
-						</div>
+						<a th:href="@{/planiter/post/read(postno=${post.postNo})}">
+							<div class="member-img">
+								<img th:if="${not #strings.isEmpty(post.realFileName)}"
+									th:src="@{/imgs/img_section/} + ${post.realFileName}"
+									class="img-fluid"> <img
+									th:unless="${not #strings.isEmpty(post.realFileName)}"
+									th:src="@{/imgs/img_section/마란타.jpg}" class="img-fluid">
+							</div>
+							<div class="member-info">
+								<!-- <h4>Walter White</h4> -->
+								<span>#[[${post.plantsName}]]</span> <span>#[[${post.createDt.split(" ")[0]}]]</span>
+							</div>
+						</a>
 					</div>
 				</div>
-			</div>
+			</div>	
 			<!-- end row -->
 		</div>
 		<!-- end container -->

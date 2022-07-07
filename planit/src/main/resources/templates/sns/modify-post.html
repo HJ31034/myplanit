@@ -7,7 +7,7 @@
 
 <th:block layout:fragment="write-post">
 	<div>
-		<form class="post_inner" id="post_form" th:action=@{/planiter/post/write} method="post">
+		<form class="post_inner" id="post_form" th:action=@{/planiter/post/modify} method="post" >
 			<div class="post_box_left">
 				<div class="photo_box_insert">
 				    <label for="file_input">
@@ -30,19 +30,19 @@
 			</div>
 
 			<div class="post_box_right">
-				<div class="write_box">
+				<div class="write_box" th:object="${post}">
 					<input type="hidden" id="userId" name="userId" value="test">
 					<input type="hidden" id="latitude" name="latitude">
 					<input type="hidden" id="longitude" name="longitude">
 					<input type="hidden" id="address" name="address">
 					<input type="hidden" id="current_weather" name="weather">
 					
-					<textarea id="post_content" name="postContent" placeholder="글 작성하기"></textarea>
+					<textarea id="post_content" name="postContent" th:text="*{postContent}"></textarea>
 				</div>
 				<div class="select_box">
 					<div class="category" th:each="u : ${userToPlantList}">
 					<select name="plantsCateNo">
-						<option value="">내 식물 선택하기</option>
+						<option th:text="${post.plantsName}" th:value="${post.plantsCateNo}" ></option>
 						<option th:text="*{u.plantsName}" th:value="*{u.plantsCateNo}"></option>
 					</select>
 					</div>
@@ -73,7 +73,7 @@
 		let openWin;
 
 		$(function() {
-			getLatAndLong();
+			setLatAndLong();
 		});
 
 		//kakaoMap click event 추가

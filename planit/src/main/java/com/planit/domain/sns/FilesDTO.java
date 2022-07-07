@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class FilesDTO {
     private long no;
-    private String fileName;
+    private String orgFileName;
+    private String realFileName;
 }

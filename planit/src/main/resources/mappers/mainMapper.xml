@@ -36,10 +36,14 @@
 	<select id="selectPost" resultType="PostDTO">
 		SELECT *
 		FROM (
-		SELECT ROW_NUMBER() OVER (ORDER BY p.createdt DESC) NUM, p.*, f.FILENAME
-		FROM post p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
-					LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
-					LEFT OUTER JOIN FILES f ON p2.NO = f.NO 
+			SELECT ROW_NUMBER() OVER (ORDER BY a.createdt DESC) NUM, a.*
+			FROM (
+			SELECT p.*,u.PLANTSNAME , f.*, RANK () OVER (PARTITION BY p.POSTNO ORDER BY p2.NO) AS rank
+			FROM post p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
+						LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+						LEFT OUTER JOIN FILES f ON p2.NO = f.NO
+					) a
+			WHERE RANK = 1
 		)
 		WHERE NUM BETWEEN 1 AND 4
 	</select>

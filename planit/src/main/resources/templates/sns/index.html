@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="sns/layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="sns/layout/basic">
 <th:block layout:fragment="title">
-		<title>PLANiT</title>
+    <title>list page</title>
 </th:block>
- 
-
-		<th:block layout:fragment="content">
+<th:block layout:fragment="content">
         <div class="inner">
-
             <div class="contents_box">
-            			  
-            			 <div th:if="${keyFieldSearch != null}">
+                          
+                         <div th:if="${keyFieldSearch != null}">
                         <div id="searchText" th:text="${keyFieldSearch}"></div>
                         </div>
                         
                 <article class="contents" >
-                	<input type="hidden" value=${totalPage} name="test" />
+                    <input type="hidden" value=${totalPage} name="test" />
                <!--인기게시물 리스트 -->
                
                     <div class="imgList_section">
@@ -23,149 +22,113 @@
                          
                         
                          <span th:if="${ImgPost == null} or ${ImgPost.size() == 0}">
-                         	<span id="searchNull">조회된 결과가 없습니다</span>
+                            <span id="searchNull">조회된 결과가 없습니다</span>
                          </span>
                            
                           
                           <span th:each="img : ${ImgPost}" id="list">
-                         	 <a th:href="@{/planiter/post/read(postno=${img.postNo})}" style="text-decoration:none;" >
-                           		 <img th:src="@{${'/imgs/img_section/'+img.fileName}}" alt="imgPost" id="imgPost"
-                           	      class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover">	</a>  
+                             <a th:href="@{/planiter/post/read(postno=${img.postNo})}" style="text-decoration:none;" >
+                                 <img th:src="@{${'/imgs/img_section/'+img.orgFileName}}" alt="imgPost" id="imgPost"
+                                  class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover">    </a>   
                           </span>
                            
-                         	<span id="nextImgPost"></span>
-                          	  <input type="hidden" id="page" value="1">
+                           
+                         
+                             
+                              <input type="hidden" id="page" value="1">
                         </div>
-				</div> 
-				 
+                            <span id="nextImgPost"></span>
+                </div> 
+                 
                 </article>
             </div>
           
-				<!-- 로그인 계정 정보 -->
+                <!-- 로그인 계정 정보 -->
             <div class="side_box" th:each="info:${AccInfo}">
+          
                 <div class="user_profile">
                     <div class="profile_thumb">
                         <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
                     </div>
                  </div>
-                 <div> 
+               
+                 
+                 <div style="margin-top: -22px;">  
                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
                   <p th:text="${info.followerCount}"/></a></div>
                  <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
                 <p th:text="${info.followingCount}"/></a></div>
                 </div>
 <br><br>
-					<!-- ##### Single Widget Area ##### -->
+                    <!-- ##### Single Widget Area ##### -->
                         <div class="single-widget-area">
                             <!-- Title -->
                             <div class="widget-title">  
-                                <h1 style="text-align: center; width: 97%;">My Plants</h1>
+                                <h1 class="MyPlants" style="text-align: center; width: 97%; font-family: 'Exo 2', sans-serif; font-size: 23px;">My Plants</h1>
                             </div>
                             <!-- Tags -->
-                             
-                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
-                               <ol style="margin-left: -40px;">
-                               		 <li>#<a th:text="${cate.plantsName}" href="#"></a> </li>
+                          
+                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList"   >
+                               <ol style="margin-left: -40px;  margin-top: -14px;" >
+                                     <li>#<a th:text="${cate.plantsName}" class="testt" style="font-family: 'Jua', sans-serif;  text-decoration: none; " href="#"></a> </li>
+                              
                                </ol>
                             </ol>
                             
-                        </div>			 	 
-		</div>
+                            
+                            
+                        </div>
+                        </div>             
+                               
         </div>
+        
         </th:block>
  
-  <th:block layout:fragment="script">
-  
-	<script th:inline="javascript">
+ <th:block layout:fragment="script">  
+    <script type="text/javascript">
+   
+     var page = 2;
+         $(".imgList_section").scroll(function() {  
+             
+                var innerHeight = $(this).innerHeight(); 
+                var scroll=$(this).scrollTop() + $(this).innerHeight(); 
+                var height=$(this)[0].scrollHeight; 
+                //console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+                if(scroll == height){
+                     console.log('페이지 끝');
+                     nextImgPost(page);
+                     page++;
+                } 
+                 
+            });
+        
+        
+         function nextImgPost(page){
+             var keyword = $("#search-field").val(); 
+             var keyField = $("#keyField").val();
+             
+             $.ajax({
+                    type : 'get',
+                    url : "/planiter/nextImgPost?page="+page+"&keyword="+keyword+"&&keyField="+keyField,
+                    contentType : "application/json; charset=UTF-8",
+                    dataType : "json",
+                    success : function(data) {
+                    $.each(data, function(index, item) {
+                        $("#nextImgPost").append('<a href="/planiter/post/read?postno='+item.postNo+'" style="text-decoration:none;" >'
+                        +'<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.orgFileName+'">');  
+                     
+                    });
+                    
+                    },
+                    error : function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseText);
+                }
+            });
+             
+             
+         }
  
-		 $("body").on("click", "#dropdown-content div", function () {
-		 
-			 var keyFieldHTML = $(this).html(); 
-			 keyField =  '<h1 id="keyFieldHTML">'+keyFieldHTML+'</h1>';
-			 console.log('#dropdown-content div keyField: '+keyFieldHTML);
-		 
-			 $("#dropdown-content").hide();
-			 $(".dropbtn").hide(); 
-			 
-			 $("#keyFieldHTML").remove();
-			 $(".dropbtn_icon").append(keyField);
-			 $("#search-field").val('');
-			 
-			 $("#dropdown-content").show();
-			
-			 $("#keyField").val(keyFieldHTML); 
-			
-	  });
-		
-		 var page = $("#page").val(); 
-		 
-		 console.log('roding page: '+page); 
-		 
-		 
-		 
-		
-		 $(".imgList_section").scroll(function() {  
-			 
-				var innerHeight = $(this).innerHeight(); 
-				var scroll=$(this).scrollTop() + $(this).innerHeight(); 
-				var height=$(this)[0].scrollHeight; 
-
-				console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
-				if(scroll >= height){  
-					 page++; 
-					 scroll=scroll
-					 nextImgPost(page); 
-				} 
-				 
-			});
-		 
-		 
-		 function nextImgPost(page){
-			 var keyword = $("#search-field").val(); 
-	    	 var keyField = $("#keyField").val();
-	    	 
-			 $.ajax({
-	  				type : 'get',
-	  				url : "/planiter/nextImgPost?page="+page+"&keyword="+keyword+"&&keyField="+keyField,
-	  				contentType : "application/json; charset=UTF-8",
-	  				dataType : "json",
-	  				success : function(data) {
-	  					
-	  					console.log('페이지 끝');
-	  					$.each(data, function(index, item) {
-	  					console.log('data: '+data)
-	  						
-	  					$("#nextImgPost").after('<a href="/planiter/post/read?postno='+item.postNo+'" style="text-decoration:none;" >'
-	  					+'<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.fileName+'">');	
-	  					});
-	  				},
-	  				error : function(jqXHR, textStatus, errorThrown) {
-	  				console.log(jqXHR.responseText);
-	  			}
-	  		});
-		 }
-		
-		 
-		
-		function onSubmit() {
-			var keyField = document.getElementById('keyField');
-			var keyword = document.getElementById('search-field');
-		
-			if (keyField.value == '' || keyField.value == null) {
-				alert('검색조건을 선택해주세요');
-				return false;
-			}
-			if (keyword.value == '' || keyword.value == null) {
-				alert('키워드를 입력해주세요');
-				return false;
-			}
+    </script>
+</th:block>
  
-		}
-		/* 메인 검색 */
-	</script>
-
-
-
-
-</th:block> 
 </html> 
