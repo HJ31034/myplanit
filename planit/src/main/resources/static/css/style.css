@@ -17,9 +17,9 @@
 
 #keyFieldHTML{
     padding: 12px;
-    font-size: 14px;
-    width: 29px;
-    margin-top: 22px;
+    font-size: 15px;
+    width: 30px;
+    margin-top: 21px;
     margin-left: -387px;
     color: gray;
     cursor : pointer;
@@ -258,7 +258,7 @@ body{
 
 
 .follower{
-margin-top: 300px;
+margin-top: 310px;
 margin-left: 50px;
 width: 100px;
 text-align: center;
@@ -295,10 +295,10 @@ margin-left: 150px;
   .single-widget-area .popular-tags li a {
     display: inline-block;
     margin: -5;
-    padding: 10px 15px;
+    padding: 14px 15px;
     line-height: 1;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 18px;
     color: #707070;
     background-color: #f9f9f91f; 
     
@@ -342,7 +342,8 @@ margin-left: 150px;
 
 .followerAtag{
 	text-decoration: none;
-	color: black
+	color: black;
+	
 }
 
 #searchNull{
@@ -351,7 +352,7 @@ margin-left: 150px;
     margin-top: 220px;
     display: block;
 }
-
+ 
 /* index.html END */
 
 
@@ -376,18 +377,14 @@ margin-left: 150px;
      
 }
 
+/*-------------  */
 .followContents .follower_section{
-    overflow:hidden;
+    
     text-align: center;
-    overflow:scroll;
-    -ms-overflow-style: none;
+     
     height: 550px;
 }
-
-.followContents .follower_section::-webkit-scrollbar { 
-    display: none;
-    width: 0 !important;
-}
+ 
  
 
 .followContents .followList{
@@ -397,15 +394,22 @@ margin-left: 150px;
 	width: 550px;
 }
 
-.followContents .following_section{
-    overflow:hidden;
+.followContents #follow_section{
+	 overflow:hidden;
     overflow:scroll;
     -ms-overflow-style: none;
     text-align: center;
     height: 550px;
 }
 
-.followContents .following_section::-webkit-scrollbar { 
+
+.followContents .following_section{
+    
+    text-align: center;
+    height: 550px;
+}
+
+.followContents #follow_section::-webkit-scrollbar { 
     display: none;
     width: 0 !important;
 }

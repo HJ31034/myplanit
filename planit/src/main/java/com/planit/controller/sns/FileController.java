@@ -13,13 +13,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class FileController {
-    @Value("${planit.upload.path}")
-    private String uploadPath;
+//    @Value("${planit.upload.path}")
+//    private String uploadPath;
 
 	@Autowired
 	private PostService postService;
@@ -27,16 +30,20 @@ public class FileController {
 	@PostMapping("/planiter/post/file/upload")
     public String uploadFile(@RequestParam("uploadFiles") MultipartFile[] files, Model model) throws IllegalStateException, IOException {
 		List<FilesDTO> list = new ArrayList<>();
+		String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section/";
 
 		for (MultipartFile file : files) {
 			if(!file.isEmpty()) {
 				FilesDTO dto = new FilesDTO();
+				String realFileName = UUID.randomUUID().toString();
 
-				File file1 = new File(file.getOriginalFilename());
+				File file1 = new File(saveDir + realFileName);
 				file.transferTo(file1); // 받아온 파일을 업로드
 
-				String fileName = file.getOriginalFilename(); // 업로드한 파일 명만 저장
-				dto.setFileName(fileName);
+				String orgFileName = file.getOriginalFilename(); // 업로드한 파일 명만 저장
+
+				dto.setRealFileName(realFileName);
+				dto.setOrgFileName(orgFileName);
 
 				dto = postService.insertFiles(dto);
 

@@ -22,6 +22,15 @@ function getLatAndLong() {
     }
 }
 
+function setLatAndLong() {
+    let lat = document.getElementById('latitude').value;
+	let lng = document.getElementById('longitude').value;
+
+	setLatAndLong(lat, lng);
+    setLocation();
+    setWeather();
+}
+
 function setLatAndLong(lat, lng) {
     if (lat !== undefined) { // GPS를 지원하면
     	let latitudeElement = document.getElementById('latitude');
@@ -31,7 +40,7 @@ function setLatAndLong(lat, lng) {
         longitude = lng;
         
         latitudeElement.value = latitude;
-       longitudeElement.value = longitude;
+       	longitudeElement.value = longitude;
     }
 }
 

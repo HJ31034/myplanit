@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-
+	 
 <body th:fragment="main-body">
 	<div id="container">
 	
@@ -20,10 +19,15 @@
 				</div>
 					<div>
 					<div class="dropdown">
-						 
 							<span class="dropbtn_icon"> 
+					    <span th:if="${keyField == null}">  
 							<img alt="dropDown" src="/imgs/img_section/dropDown2.png" class="dropbtn">
-							</span>
+						  </span>  
+ 						</span>
+ 						  
+ 						   <span th:if="${keyField != null}">
+ 						  <h1 id="keyFieldHTML" th:text="${keyField}"></h1>
+ 						  </span>
  						  
 							<div class="dropdown-content" id="dropdown-content" >
 								<div>식물</div>
@@ -31,8 +35,8 @@
 								<div>내용</div> 
 							</div>
 						 
-							<input type="hidden" id="keyField" name="keyField" th:value="${keyField}"/>
 						</div>
+							<input type="hidden" id="keyField" name="keyField" th:value="${keyField}"/>
 					</div>
  
 				 	<span  class="searchSNS" >
@@ -59,13 +63,43 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
-	<th:block layout:fragment="script">
-	 <script type="text/javascript">
-	 
-	 
-	 </script>
- 
-	</th:block>
+<script type="text/javascript">
+  
+	 function onSubmit() {
+			var keyField = document.getElementById('keyField');
+			var keyword = document.getElementById('search-field');
+		
+			if (keyField.value == '' || keyField.value == null) {
+				alert('검색조건을 선택해주세요');
+				return false;
+			}
+			if (keyword.value == '' || keyword.value == null) {
+				alert('키워드를 입력해주세요');
+				return false;
+			}
+
+		}
+		
+		 $("body").on("click", "#dropdown-content div", function () {
+			 
+			 var keyFieldHTML = $(this).html(); 
+			 keyField =  '<h1 id="keyFieldHTML">'+keyFieldHTML+'</h1>';
+			 
+		 
+			 $("#dropdown-content").hide();
+			 $(".dropbtn").hide(); 
+			 
+			 $("#keyFieldHTML").remove();
+			 $(".dropbtn_icon").append(keyField);
+			 $("#search-field").val('');
+			 
+			 $("#dropdown-content").show();
+			 $("#keyField").val(keyFieldHTML); 
+		 	
+	  });
+		 </script>
+
+	 <th:block layout:fragment="script"></th:block>
 </body>
 
 </html>

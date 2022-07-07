@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "multipart.maxFileSiz",
-  "type": "java.lang.String",
-  "description": "A description for 'multipart.maxFileSiz'"
-}]}
+{"properties": [
+  {
+    "name": "multipart.maxFileSiz",
+    "type": "java.lang.String",
+    "description": "A description for 'multipart.maxFileSiz'"
+  },
+  {
+    "name": "planit.upload.path",
+    "type": "java.lang.String",
+    "description": "A description for 'planit.upload.path'"
+  }
+]}
