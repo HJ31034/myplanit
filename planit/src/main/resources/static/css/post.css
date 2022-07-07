@@ -365,7 +365,7 @@ followList start
     flex-direction: column;
     align-items: center;
     justify-content: center;
-	}
+}
 
 .photo_box_insert{
 	height: 350px;
@@ -410,6 +410,17 @@ followList start
 
 .hashtag_box span{
 	line-height: 1.5;
+}
+
+.file_image {
+	width: 20px;
+	height: 20px;
+}
+
+.file_image:hover {
+	/*width: 70px;
+	height: 70px;*/
+	transform: scale(5);
 }
 
 .photo{
@@ -607,9 +618,10 @@ followList start
 	height: 100%;
 }
 
-#comment_table tr td{
+#comment_table tr td {
 	vertical-align: middle !important;
 	height: 30px !important;
+}
 
 #comment_table tr td:nth-child(1){
 	text-align: left;

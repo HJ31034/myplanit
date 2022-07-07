@@ -13,15 +13,17 @@ public class PostDTO {
 	
 	private int likesCount;
 	private int plantsCateNo;
+	private String orgFileName;
 	private String realFileName;
 	private String plantsName;
 	
-	private String[] fileNameArr;
-	
+	private String[] orgFileNameArr;
+	private String[] realFileNameArr;
 	
 	private String deleteYN;
 	
 	private String weather;
+	private String address;
 	
 	// 임시
 	private String fileName;

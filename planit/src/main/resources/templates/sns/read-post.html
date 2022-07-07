@@ -5,14 +5,14 @@
 	<title>read post page</title>
 </th:block>
 
-<th:block layout:fragment="write-post">
+<span layout:fragment="write-post">
 	<div class="post_inner" th:object="${post}">
 
 		<div class="post_box_left"> 
 		
 			<div class="photo_box">
 	            <div class="swiper-wrapper">
-	               <div class="swiper-slide" th:each="fileName, index : ${post.fileNameArr}">
+	               <div class="swiper-slide" th:each="fileName, index : ${post.realFileNameArr}">
 	                  <img class="photo swiper-lazy"  th:src="${'/imgs/img_section/' + fileName}" />
 	               </div>
 	            </div>
@@ -24,6 +24,7 @@
 			<div class="hashtag_box">
 				<span th:text="'#' + *{plantsName}"></span><br/>
 				<span th:text="'#' + *{weather}"></span><br/>
+				<span th:text="'#' + *{address}"></span><br/>
 				<span th:text="'#' + *{createDt}"></span>
 			</div>
 		</div>
@@ -32,8 +33,14 @@
 			<div class="read_box">
 				<p th:text="*{postContent}">글읽기</p>
 			</div>
-			<div class="icon_box">
-				<img src="/imgs/img_section/leaves.png">
+			<div id="icon_box" class="icon_box" th:object="${isLike}">
+				<span th:if="${isLike == 'unlike'}">
+					<img src="/imgs/img_section/unlike.png" onclick= "return getLikeInfo('like')">
+				</span>
+				<span th:if="${isLike == 'like'}">
+					<img src="/imgs/img_section/like.png" onclick= "return getLikeInfo('unlike')">
+				</span>
+				
 				<img src="/imgs/img_section/comment.png">
 			</div>
 			
@@ -59,14 +66,15 @@
 							<td href="#">삭제</td>
 						</th:block>
 					</tr>
-				</tabl>
+				</table>
 			</div>
 		</div>
 	</div>
 </th:block>
 
 <th:block layout:fragment="script">
-
+	<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+	
 	<script th:inline="javascript">
 		function getComment(){
 			let userId = document.getElementById('user_id');
@@ -87,6 +95,33 @@
 				data: data,
 				success : function(data) {			
 					$("#comment_table").replaceWith(data);
+				},
+				error : function(XHR, status, errosr) {
+					console.error(status + " : " + error);
+				}
+			});
+		 	
+		 	return false;
+		}
+		
+		function getLikeInfo(isLike){
+			let userId = document.getElementById('user_id');
+			let postNo = document.getElementById('post_no');
+			
+			let data = {
+				'targetId': userId.value,
+				'postNo': postNo.value,
+				'isLike': isLike
+			};
+			
+			$.ajax({
+				url : "/planiter/post/like",
+				type : "post",
+				data: data,
+				success : function(data) {
+					
+					$("#icon_box").replaceWith(data);	
+						
 				},
 				error : function(XHR, status, errosr) {
 					console.error(status + " : " + error);
