@@ -27,6 +27,8 @@
         <script src="https://code.jquery.com/jquery-latest.min.js"></script>          
 <script th:inline="javascript" >
 
+
+
 function checkId(){
     var userId = $('#userId').val();
 $.ajax({
@@ -76,6 +78,7 @@ $("input").keyup(function(){
             $("#alert-danger").show();
             $("#alert-info").hide();
             $("#submit").attr("disabled", "disabled");
+            
         } 
     }
 });
@@ -98,6 +101,7 @@ $(function(){
 	            
 	           
 	            $("#submit").attr("disabled", "disabled");
+
 	        } 
 	    }
 	});
@@ -119,7 +123,7 @@ $(function(){
     
     
 <div class="container">
-  <main>
+  <main class="centering2">
   <div class="py-5 text-center">
       <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="57">
       <h2>Register form</h2>
@@ -129,7 +133,7 @@ $(function(){
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">회원가입</h4>
         
-        
+        <div class="centering">
         <form class="needs-validation" action="" id="regForm" name="regForm"
          method="post" modelAttribute="user" onsubmit="return validation();">
           
@@ -227,6 +231,8 @@ $(function(){
           <button class="w-100 btn btn-lg btn-primary" type="submit"
 				id="submit" style="background-color: #9FCF62; border-color: #9FCF62;">회원가입</button>
         </form>
+        </div>
+        
      </div>
     
  
