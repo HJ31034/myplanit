@@ -7,7 +7,12 @@
 
 <body>
 	<th:block th:replace="main/fragments/header :: headerFragment"></th:block>
+	
+	<div>
 	<th:block layout:fragment="content"></th:block>
+	</div>
+	
+	
 	<th:block th:replace="main/fragments/footer :: footerFragment"></th:block>
 </body>
 
