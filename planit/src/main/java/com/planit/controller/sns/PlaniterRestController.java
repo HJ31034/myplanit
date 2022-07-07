@@ -201,12 +201,14 @@ public class PlaniterRestController {
 	// 프로필 수정
 	@RequestMapping(value = "/updateInfo.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	public ModelAndView updateBlogInfo(@RequestParam(value = "InfoDes") String InfoDes,
+
 			@RequestParam(value = "profileIMG") MultipartFile profileIMG, ModelAndView mav 
 			 ) throws IOException {
 		
 		String fileName = profileIMG.getOriginalFilename();
 		String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
 		 
+
 		if (profileIMG.isEmpty()) {
 			fileName = "thumb.png";
 		}
