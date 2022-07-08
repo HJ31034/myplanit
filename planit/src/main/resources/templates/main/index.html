@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="main/layout/basic">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Callback function - fullPage.js</title>
+	<meta name="author" content="Alvaro Trigo Lopez" />
+	<meta name="description" content="fullPage callback function." />
+	<meta name="keywords"  content="fullpage,jquery,demo,callback,function,event" />
+	<meta name="Resource-type" content="Document" />
+
+
+	<link rel="stylesheet" type="text/css" href="../../assets/css/jquery.fullPage.css" />
+
+
+<th:block layout:fragment="css">
+	<link href="../../assets/css/main.css" rel="stylesheet">
+</th:block>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.fullPage.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#fullpage').fullpage({
+				sectionsColor: ['#fff', '#fff', '#fff', '#fff', '#fff'],
+				anchors: ['section1', 'section2', 'section3', 'section4', 'section5'],
+				menu: '#menu',
+				navigation:true,
+				navigationPosition: 'right',
+			});
+			
+			// 페이지가 로드되면 검색창의 커서가 깜빡이게 함.
+			$('.search').focus();
+
+			// 키워드 검색 부분에서 이전에 선택했던 키워드로 돌아가게 할 수 있도록 함.
+			var oldKwd = [];
+			oldKwd.push(0);
+			var index = 0;
+			$(document).on("click", ".kwd", function(){
+				var kwd = $(this).val();
+				var tagId = $(this).attr('id');
+				$.ajax({
+					type : 'POST',
+					url : '/kwd',
+					data : {
+						keyId : kwd
+					},
+					dataType : 'json',
+					success : function(data) {
+						// 해당 키워드의 keyId를 컨트롤러에 전달하기 위해 사용
+						str2 = "<input type='hidden' name='keyId' value='" + kwd + "' />";
+						$('.kwd-form').html(str2);
+						
+						if(data.length == 0){
+							$('.kwd-form').submit();
+						}
+						
+						if(tagId != null){
+							oldKwd.pop();
+							index--;
+							console.log('pre');
+						}
+						else {
+							oldKwd.push(kwd);
+							index++;
+							console.log('next');
+						}
+						
+						str = "";
+						
+						if(kwd != 0){
+						str = "<button class='kwd' id='pre' value='"
+						str += oldKwd[index - 1];
+						str += "'><</button>";
+						}
+						for (var i = 0; i < data.length; i++) {
+							str += "<button class='kwd' value='";
+							str += data[i].keyId;
+							str += "'>";
+							str += data[i].keyName;
+							str += "</button>";
+						}
+
+						$('.kwd-box').html(str);
+						
+						console.log(str);
+					},
+					error : function() {
+						alert("에러 발생");
+					}
+				});
+			});
+
+			$('.profile_box').click(
+					function() {
+						var userId = $(this).children('.profile_name').text();
+						location.href = '/planiter/' + userId;
+					});
+
+			$('.member').click(function() {
+				location.href = '#';
+			});
+
+
+		});
+	</script>
+
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+<div id="fullpage">
+
+	<section class="section" style="position: relative; ">
+	
+		<div class="search-box">
+			<span>
+				<form action="/planit/search" method="get">
+					<input name="term" id="search" class="search" >
+					
+					<span style="font: inherit; font-size: 100%;">를</span>
+				</form>
+			</span>
+			<p style="margin-top: 30px;">잘키우는 방법이</p>
+			<p>궁금하다.</p>
+		</div>
+	
+	</section>
+	
+	<section class="section">
+	<div class="footer-newsletter">
+			<div class="container">
+				<h4>키워드로 관심있는 식물을 찾아보세요!</h4>
+				<div class="kwd-box">
+					<th:block th:each="plantKwd : ${plantKwdList}">
+						<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
+					</th:block>
+				</div>
+				<form action="/planit/search/kwd" method="post" class="kwd-form">
+				</form>
+			</div>
+			<!-- end container -->
+		</div>
+	</section>
+	<section class="section">
+	<div class="container">
+
+			<div class="section-title">
+				<!-- <h2>Contact</h2> -->
+				<h3>
+					<span>추천 식물 리스트</span>
+				</h3>
+				<p>당신의 식물을 찾아보세요. 어쩌구~~</p>
+			</div>
+
+			<div class="box">
+				<div 
+					th:each="num, index : ${#numbers.sequence(1,6)}" class="plant_box">
+					<div class="plant_img_box">
+						<img src="imgs/img_section/싱고니움.jpg" class="plant_img" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end container -->
+	</section>
+	<section class="section">
+	<div class="container">
+
+			<div class="section-title">
+				<!-- <h2>Contact</h2> -->
+				<h3>
+					<span>추천 계정</span>
+				</h3>
+				<p>다른 사용자들과 소통해보세요. 어쩌구~~</p>
+			</div>
+
+			<div class="box">
+				<div
+					th:each="user : ${users}" class="profile_box">
+					<div class="profile_img_box">
+						<!-- <img th:src="@{imgs/} + ${user.profileImg}" class="profile_img" alt=""> -->
+						<img th:src="@{imgs/img_section/박쥐란.jpg}" class="profile_img"
+							alt="">
+					</div>
+					<h3 class="profile_name">[[${user.userId}]]</h3>
+				</div>
+			</div>
+		</div>
+		<!-- end container -->
+	</section>
+	<section class="team section-bg section">
+	<div class="container">
+
+			<div class="section-title">
+				<!-- <h2>Contact</h2> -->
+				<h3>
+					<span>최신 포스트</span>
+				</h3>
+				<p>다른 사용자들의 식물 성장과정을 어쩌구~~</p>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3 col-md-6 d-flex align-items-stretch"
+					
+					th:each="post : ${postList}">
+					<div class="member">
+						<a th:href="@{/planiter/post/read(postno=${post.postNo})}">
+							<div class="member-img">
+								<img th:if="${not #strings.isEmpty(post.realFileName)}"
+									th:src="@{/imgs/img_section/} + ${post.realFileName}"
+									class="img-fluid"> <img
+									th:unless="${not #strings.isEmpty(post.realFileName)}"
+									th:src="@{/imgs/img_section/마란타.jpg}" class="img-fluid">
+							</div>
+							<div class="member-info">
+								<!-- <h4>Walter White</h4> -->
+								<span>#[[${post.plantsName}]]</span> <span>#키우기</span>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>	
+			<!-- end row -->
+		</div>
+		<!-- end container -->
+	</section>
+</div>
+
+</th:block>
+</body>
+</html>

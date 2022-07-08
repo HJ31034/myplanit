@@ -1,192 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="sns/layout/basic">
+<th:block layout:fragment="title">
+	<title>list page</title>
+</th:block>
 
-    <!-- Facebook Meta Tags / 페이스북 오픈 그래프 -->
-    <meta property="og:url" content="http://kindtiger.dothome.co.kr/insta">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="instagram">
-    <meta property="og:description" content="instagram clone">
-    <meta property="og:image" content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
-    .
-    <!-- Twitter Meta Tags / 트위터 -->
-    <meta name="twitter:card" content="instagram clone">
-    <meta name="twitter:title" content="instagram">
-    <meta name="twitter:description" content="instagram clone">
-    <meta name="twitter:image" content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
+<th:block layout:fragment="sub-head">
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    <!-- Google / Search Engine Tags / 구글 검색 엔진 -->
-    <meta itemprop="name" content="instagram">
-    <meta itemprop="description" content="instagram clone">
-    <meta itemprop="image" content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
+	<!-- Facebook Meta Tags / 페이스북 오픈 그래프 -->
+	<meta property="og:url" content="http://kindtiger.dothome.co.kr/insta">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="instagram">
+	<meta property="og:description" content="instagram clone">
+	<meta property="og:image"
+		content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
 
+	<!-- Twitter Meta Tags / 트위터 -->
+	<meta name="twitter:card" content="instagram clone">
+	<meta name="twitter:title" content="instagram">
+	<meta name="twitter:description" content="instagram clone">
+	<meta name="twitter:image"
+		content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
 
-    <title>instagram</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/profile.css">
-    <link rel="shortcut icon" href="imgs/instagram.png">
+	<!-- Google / Search Engine Tags / 구글 검색 엔진 -->
+	<meta itemprop="name" content="instagram">
+	<meta itemprop="description" content="instagram clone">
+	<meta itemprop="image"
+		content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
 
+	<link rel="stylesheet" href="/css/profile.css">
+	<link rel="shortcut icon" href="/imgs/instagram.png">
 
-</head>
-<body>
+</th:block>
 
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var userName = $('.user_name').text();
+			$('.plantName').click(function() {
+				var plantName = $(this).text();
+				$.ajax({
+					type : 'POST',
+					url : '/planiter/plantPosts',
+					data : {
+						userId : userName,
+						plantsName : plantName.split("#")[1]
+					},
+					dataType : 'json',
+					success : function(data) {
+						console.log(data);
+						str = "<div class='plant_name'>";
+						str += "<a href='javascript:void(0);' class='plantName'>";
+						str += plantName;
+						str += "</a> </div>";
+						str += "<div class='contents_container'>";
 
-<section id="container">
+						for (var i = 0; i < data.length; i++) {
+							str += "<div class='pic'>";
+							str += "<a href='#'><img src='/imgs/img_section/";
+							str += data[i].fileName;
+							str += "' alt=''></a>";
+							str += "</div>";
+						}
+						str += "</div>";
 
-    <header id="header">
-        <section class="h_inner">
+						$('.contents_box').html(str);
+						console.log(str);
+					},
+					error : function() {
+						alert("에러 발생");
+					}
+				});
+			});
+			
+			$('.likes').click(function() {
+				$.ajax({
+					type : 'POST',
+					url : '/planiter/userLikes',
+					data : {
+						userId : userName
+					},
+					dataType : 'json',
+					success : function(data) {
+						console.log(data);
+						str = "<div class='plant_name'>";
+						str += "<a href='javascript:void(0);' class='plantName'>";
+						str += "#좋아요 누른 게시물";
+						str += "</a> </div>";
+						str += "<div class='contents_container'>";
 
-            <h1 class="logo">
-                <a href="index.html">
-                    <div class="sprite_insta_icon"></div>
-                    <div>
-                        <div class="sprite_write_logo"></div>
-                    </div>
-                </a>
-            </h1>
+						for (var i = 0; i < data.length; i++) {
+							str += "<div class='pic'>";
+							str += "<a href='#'><img src='/imgs/img_section/";
+							str += data[i].fileName;
+							str += "' alt=''></a>";
+							str += "</div>";
+						}
+						str += "</div>";
 
-            <div class="search_field">
-                <input type="text" placeholder="검색" tabindex="0">
+						$('.contents_box').html(str);
+						console.log(str);
+					},
+					error : function() {
+						alert("에러 발생");
+					}
+				});
+			});
+			
+		});
+	</script>
+</th:block>
 
-                <div class="fake_field">
-                    <span class=sprite_small_search_icon></span>
-                    <span>검색</span>
-                </div>
-            </div>
+<th:block layout:fragment="content">
+	<section class="b_inner">
 
+		<div class="hori_cont">
+			<div class="profile_wrap">
+				<div class="profile_img">
+					<img th:src="@{/imgs/img_section/} + ${myUserProfile.profileImg}">
+				</div>
+			</div>
 
-            <div class="right_icons">
-                <a href="new_post.html"><div class="sprite_camera_icon"></div></a>
-                <a href="login.html"><div class="sprite_compass_icon"></div></a>
-                <a href="follow.html"><div class="sprite_heart_icon_outline"></div></a>
-                <a href="profile.html"><div class="sprite_user_icon_outline"></div></a>
-            </div>
-        </section>
-    </header>
+			<div class="detail">
+				<div class="top">
+					<div class="user_name">[[${myUserProfile.userId}]]</div>
+					<button type="button" class="profile_modify" style="margin-right: 10px;"
+						onclick="location.href='/planiter/goProfileEdit.do'">프로필 수정</button>
+					<button type="button" class="write_btn" onclick="location.href='/planiter/post/write'">글쓰기</button>
+				</div>
 
+				<ul class="middle plant_name">
+					<li>
+						<a href="/planiter/follower.do">
+							<div class="label">팔로워</div>
+							<div>[[${myUserProfile.followerCount}]]</div>
+						</a>
+					</li>
+					<li>
+						<a href="/planiter/follower.do">
+							<div class="label">팔로우</div>
+							<div>[[${myUserProfile.followingCount}]]</div>
+						</a>
+					</li>
+					<li>
+						<a href="/planiter/profile.do">
+							<div class="label">게시물</div>
+							<div>[[${myPostCount}]]</div>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0);" class="likes">
+							<div class="label">좋아요 누른 게시물</div>
+							<div>[[${userLikes}]]</div>
+						</a>
+					</li>
+				</ul>
 
-    <div id="main_container">
+				<div>
+					<span>[[${myUserProfile.accDescription}]]</span>
+				</div>
 
-        <section class="b_inner">
+			</div>
+		</div>
 
-            <div class="hori_cont">
-                <div class="profile_wrap">
-                    <div class="profile_img">
-                        <img src="imgs/thumb.jpeg" alt="착한호랑이">
-                    </div>
-                </div>
+		<div class="contents_box">
 
-                <div class="detail">
-                    <div class="top">
-                        <div class="user_name">KindTiger</div>
-                        <a href="profile_edit.html" class="profile_edit">프로필편집</a>
-                        <a href="#" class="logout">로그아웃</a>
-                    </div>
+			<th:block th:each="plant, index : ${myUserPlants}">
+				<div class="plant_name">
+					<a href="javascript:void(0);" class="plantName">#[[${plant.plantsName}]]</a>
+				</div>
+				<div class="contents_container">
+					<div th:each="post : ${myUserPosts[index.index]}" class="pic">
+						<a th:href="@{/planiter/post/read(postno=${post.postNo})}" ><img th:src="@{/imgs/img_section/} + ${post.fileName}" alt=""></a>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</section>
+</th:block>
 
-                    <ul class="middle">
-                        <li>
-                            <span>게시물</span>
-                            3
-                        </li>
-                        <li>
-                            <span>팔로워</span>
-                            3
-                        </li>
-                        <li>
-                            <span>팔로우</span>
-                            3
-                        </li>
-                    </ul>
-                    <p class="about">
-                        <span class="nick_name">kindtigerrr</span>
-                        <span class="book_mark">bookmark</span>
-                    </p>
-
-                </div>
-            </div>
-
-            <div class="mylist_contents contents_container active">
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-            </div>
-
-
-            <div class="bookmark_contents contents_container">
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-            </div>
-
-
-
-
-        </section>
-    </div>
-
-
-</section>
-
-
-<!--<script src="js/insta.js"></script>-->
-<script src="js/profile.js"></script>
-<script>
-
-
-
-</script>
-</body>
 </html>

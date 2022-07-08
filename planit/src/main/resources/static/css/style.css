@@ -1,3 +1,81 @@
+/* body  */
+
+.searchSNS{
+	background-color: #9FCF62;
+	width: 50px;
+	height: 40px;
+	margin-top: 19px;
+	text-align: center;
+	margin-left: 4px;
+}
+
+.searchSNS input{
+	width: 30px;
+	height: 30px;
+	margin-top: 4px;
+}
+
+#keyFieldHTML{
+    padding: 12px;
+    font-size: 15px;
+    width: 30px;
+    margin-top: 21px;
+    margin-left: -387px;
+    color: gray;
+    cursor : pointer;
+}
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.dropdown{
+  position : relative;
+  display : inline-block;
+}
+
+.dropbtn_icon{
+  
+  font-family : 'Material Icons';
+}
+.dropbtn{
+  font-weight: 400;
+  padding : 12px;
+  text-align: left;
+  cursor : pointer;
+  font-size : 12px;
+  width: 23px;
+  margin-top: 22px;
+  margin-left: -387px;
+}
+
+
+.dropdown-content{
+  display : none;
+  position : absolute;
+  z-index : 1; /*다른 요소들보다 앞에 배치*/
+  background-color:white;
+  margin-left: -392px;
+  margin-top: -3px;
+}
+
+.dropdown-content div{
+  display : block;
+  text-decoration : none;
+  color : rgb(37, 37, 37);
+  font-size: 12px;
+  padding : 12px 20px;
+}
+
+.dropdown-content div:hover{
+  background-color : #ececec
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* body END */
+
+
 
 /* index.html start */
 
@@ -39,7 +117,7 @@ body{
    /*  width: 185px; */
     height: 30px;
     background: #FAFAFA;
-    border: 1px solid #70C745;
+    border: 1px solid #9FCF62;
     border-radius: 3px;
     padding: 5px 60px;
     color: #999;
@@ -105,39 +183,31 @@ body{
     padding: 10px 20px;
 }
 
- 
 
-.contents .img_section{
-    overflow:hidden;
-     text-align: center;
+#searchText{
+	color:gray;
+	height: 22px;
+	margin-top: -21px;
 }
 
-.contents .img_section img{
-     width: 200px;
+.contents .imgList_section{
+    overflow:hidden;
+    overflow:scroll;
+    -ms-overflow-style: none;
+    height: 550px;
+}
+
+ 
+ 
+.contents .imgList_section::-webkit-scrollbar { 
+    display: none;
+    width: 0 !important;
+}
+
+.contents .imgList_section img{
+     width: 196px;
      height: 180px;
      padding: 2.3px;
-     
-}
-
-.contents .follower_section{
-    overflow:hidden;
-     text-align: center;
-}
-
-.contents .follower_section img{
-     width: 200px;
-     height: 180px;
-     
-}
-
-.contents .following_section{
-    overflow:hidden;
-     text-align: center;
-}
-
-.contents .following_section img{
-     width: 200px;
-     height: 180px;
      
 }
 
@@ -176,7 +246,7 @@ body{
 .side_box .user_profile{
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 16px;
     color:#262626;
     position: absolute;
     left: 50%;
@@ -188,7 +258,7 @@ body{
 
 
 .follower{
-margin-top: 300px;
+margin-top: 310px;
 margin-left: 50px;
 width: 100px;
 text-align: center;
@@ -207,9 +277,8 @@ margin-left: 150px;
   position: relative;
   z-index: 1;
   margin-bottom: 50px;
-  background-color: #e5f9dc;
-margin-left: 40px;
-    width: 210px;
+  margin-left: 40px;
+  width: 210px;
     }
   
    .single-widget-area .widget-title {
@@ -226,10 +295,10 @@ margin-left: 40px;
   .single-widget-area .popular-tags li a {
     display: inline-block;
     margin: -5;
-    padding: 10px 15px;
+    padding: 14px 15px;
     line-height: 1;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 18px;
     color: #707070;
     background-color: #f9f9f91f; 
     
@@ -237,7 +306,7 @@ margin-left: 40px;
     
      .single-widget-area .popular-tags li a:hover, .single-widget-area .popular-tags li a:focus {
       color: #ffffff;
-      background-color: #70c745; }
+      background-color: #9FCF62; }
 
 @import url(https://fonts.googleapis.com/css?family=Lora|Roboto:400,500);
 
@@ -253,50 +322,206 @@ margin-left: 40px;
 .blue-hover:hover {
 	transform: translateY(-5px);
 	border: none;
-	border-bottom: 5px solid #74DF00;
+	border-bottom: 5px solid #9FCF62;
 }
 
+#cateList{
+	margin-left: 90px;
+	width: 210px;
+	
+}
+
+.follower{
+	text-decoration: none;
+	color: black
+}
+.following{
+	text-decoration: none;
+	color: black
+}
+
+.followerAtag{
+	text-decoration: none;
+	color: black;
+	
+}
+
+#searchNull{
+	font-size: 20px;
+    margin-left: 210px;
+    margin-top: 220px;
+    display: block;
+}
+ 
 /* index.html END */
 
 
 
 
 /* followList start   */
-.contents .followList{
-    overflow:hidden;
-    text-align: center;
-	margin: 30px;
-	width: 550px;
+
+.followContents{
+    max-width: 580px;
+    border: 1px solid rgba(0,0,0,0.09);
+    border-radius: 3px;
+    margin-bottom: 60px;
+    background: white;
 }
 
  
-.followerButton{
+ 
+.followContents .imgList_section img{
+     width: 200px;
+     height: 180px;
+     padding: 2.3px;
+     
+}
+
+/*-------------  */
+.followContents .follower_section{
+    
+    text-align: center;
+     
+    height: 550px;
+}
+ 
+ 
+
+.followContents .followList{
+    overflow:hidden;
+    text-align: center;
+	margin: 20px -30px -30px;
+	width: 550px;
+}
+
+.followContents #follow_section{
+	 overflow:hidden;
+    overflow:scroll;
+    -ms-overflow-style: none;
+    text-align: center;
+    height: 550px;
+}
+
+
+.followContents .following_section{
+    
+    text-align: center;
+    height: 550px;
+}
+
+.followContents #follow_section::-webkit-scrollbar { 
+    display: none;
+    width: 0 !important;
+}
+ 
+
+.followContents .followList{
+    overflow:hidden;
+    text-align: center;
+	margin: 20px -30px -30px;
+	width: 550px;
+}
+
+.followButtonA{
+	width: 0px;
+}
+
+ 
+.followButton{
 	width: 70px; 
 	height: 35px; 
-	background-color:transparent; 
-	border-color: #70c745;
-	margin-left: 300px;
-	margin-top: 70px;
+	background-color:background; 
+	border-color: #9FCF62;
+	margin: 40px 300px;
+	 
+	 
+	 
 }
 
-.followerUserName{
-	font-size: 18px;
+.followUserName{
+	font-size: 16px;
 	height: 50px;
-	line-height: 60px;
-	margin-left: 20px;
+	/* line-height: 60px; */
+	margin-left: 30px;
 	text-align: left;
+	font-weight: bold;
 }
 
-.followerDis{
-	margin-top: 20px;
-	height: 40px;
-	width: 250px;
-	text-align: left;
+.followDis{
+	margin: -10px 20px;
+    height: 40px;
+    width: 250px;
+    text-align: left;
+    font-size: 14px;
 } 
+
+.followIMGA{
+	width: 180px;
+	float: left;
+}
+
+img.followIMG{
+	width: 90px; 
+	height: 90px; 
+    border-radius: 70%;
+    display:block;
+    margin: 15px 100px;
+}
+
+.followLIstInfo{
+	width: 250px;
+	float: right;
+	margin-top: 30px;
+	margin-right: 110px;
+}
 
 /* followList END */
 
 
+/* profile_edit START  */
 
+.followerPro{
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	margin-top: 24px;  
+	margin-left: 195px;
+}
 
+#profileIMG{
+	margin-left: 220px;
+	display: block;
+}
+
+#InfoDes{
+	resize: none;
+	margin-top: 30px;
+	height: 16px;
+	margin-left: 119px;
+}
+
+.img_sectionA{
+	margin-top: 35px;
+}
+ 
+.contents .img_sectionA .dataDeleteIMG {
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	margin-top: 35px;
+}
+
+.contents .img_sectionA .dataDeleteINFO {
+	width: 18px;
+	height: 18px;
+}
+
+#proFileUpdate{
+    background-color: #9FCF62;
+    border: none;
+    color: white;
+    width: 80px;
+    height: 28px;
+    margin-left: 264px;
+}
 

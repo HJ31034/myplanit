@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.main.MainMapper">
+
+	<select id="selectPlantKeyword" parameterType="Integer" resultType="PlantKeywordDTO">
+		SELECT keyid, keyname, nvl(pid, 0)
+		FROM
+			plantkeyword
+		<choose>
+			<when test="keyId == 0">
+			WHERE
+				pid IS NULL
+			</when>
+			<when test="keyId != 0">
+			WHERE
+				pid = #{keyId}
+			</when>
+		</choose>
+	</select>
+	
+	<select id="selectUsers" parameterType="String" resultType="AccountDTO">
+		SELECT *
+		FROM (
+			SELECT ROWNUM NUM, a.*
+			FROM
+				account a
+		)
+		WHERE 
+		<if test="userId != null">
+			NOT userId IN (#{userId}) AND
+		</if>
+			NUM BETWEEN 1 AND 6
+		
+	</select>
+	
+	<select id="selectPost" resultType="PostDTO">
+		SELECT *
+		FROM (
+			SELECT ROW_NUMBER() OVER (ORDER BY a.createdt DESC) NUM, a.*
+			FROM (
+			SELECT p.*,u.PLANTSNAME , f.*, RANK () OVER (PARTITION BY p.POSTNO ORDER BY p2.NO) AS rank
+			FROM post p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
+						LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+						LEFT OUTER JOIN FILES f ON p2.NO = f.NO
+					) a
+			WHERE RANK = 1
+		)
+		WHERE NUM BETWEEN 1 AND 4
+	</select>
+	
+	
+	
+	
+
+	
+</mapper>

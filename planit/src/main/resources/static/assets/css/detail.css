@@ -1,0 +1,13 @@
+.plantDetail__page #plantDetail__page .plantDetail__page-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+
+ 
+.plantDetail__page#plantDetail__page .plantDetail__page-flex {
+    display: flex;
+    flex-direction: row;
+    padding-top: 60px;
+    margin-bottom: 80px;
+}

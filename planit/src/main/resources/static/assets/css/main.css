@@ -1,0 +1,127 @@
+.container {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.box {
+	display: flex; 
+	justify-content: center;
+}
+
+/* search */
+.search-box {
+	font-weight: bold; 
+	font-size: 70px; 
+	line-height: 1.45; 
+	padding-top: 80px; 
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); 
+	text-align: center;
+}
+
+.search {
+	caret-color: #9FCF62; 
+	border: none; 
+	border-bottom: solid 3px #000; 
+	outline:none; 
+	width: 25%;
+}
+
+.footer-newsletter {
+  padding: 200px 0;
+  background: #fff;
+  text-align: center;
+  font-size: 15px;
+}
+.footer-newsletter h4 {
+  font-size: 24px;
+  margin: 0 0 20px 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 600;
+}
+.footer-newsletter form {
+  margin-top: 30px;
+  background: #fff;
+  padding: 6px 10px;
+  position: relative;
+  border-radius: 4px;
+  text-align: left;
+}
+.footer-newsletter form input[type=email] {
+  border: 0;
+  padding: 4px 8px;
+  width: calc(100% - 100px);
+}
+.footer-newsletter form input[type=submit] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 0;
+  background: none;
+  font-size: 16px;
+  padding: 0 20px;
+  background: #9FCF62;
+  color: #fff;
+  transition: 0.3s;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}
+.footer-newsletter form input[type=submit]:hover {
+  background: #8BBB4E;
+}
+
+/* kwd */
+.kwd-box {
+	display: inline-block;
+	justify-content	: center;
+	width: 70%;
+	margin-top: 50px;
+}
+.kwd {
+	margin: 5px;
+	border: 1px solid #888;
+	border-radius: 35px;
+	padding: 10px 25px;
+	background: #fff;
+	color: #888;
+}
+
+.kwd:hover {
+	border: 1px solid #9FCF62;
+	color: #9FCF62;
+}
+
+/* plant */
+.plant_img_box{
+	margin: 10px;
+}
+.plant_img {
+	width: 200px; 
+	height: 200px; 
+}
+
+
+/* user profile */
+.box .profile_box {
+	margin: 30px;
+	text-align: center;
+}
+.profile_img_box {
+	width: 100px; 
+	height: 100px; 
+	border-radius: 70%; 
+	overflow: hidden;
+}
+.profile_img {
+	width: 100%; 
+	height: 100%; 
+	object-fit: cover;
+}
+.profile_name {
+	font-size: 20px; 
+	margin-top: 20px;
+}

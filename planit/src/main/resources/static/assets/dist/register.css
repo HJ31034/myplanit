@@ -1,0 +1,43 @@
+.container {
+
+  max-width: 1200px;
+  background-color: none;
+  position: center;
+  margin-top: 150;
+  margin-bottom:100;
+  
+}
+.needs-validation{ 
+
+margin-top:150;
+margin-left:150;
+position:center;
+}
+
+.col-md-7 .col-lg-8{
+	margin-top:120;
+	margin-left:120;
+	position:right;
+	
+}
+.id_ok{color:blue; display: none;}
+.id_already{color:#6A82FB; display: none;}
+
+.w-100 btn btn-lg btn-primary {
+	background-color:  #9FCF62;
+	border-color:  #9FCF62;
+	
+}
+
+.blank{
+	height: 100%;
+	padding-top:100px;
+	padding-bottom:150px;
+}
+
+.centering{
+	padding-left:150px;
+}
+.centering2{
+	padding-left:150px;
+}

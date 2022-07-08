@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.sns.PostMapper">
+
+	
+	<select id="selectPostDetail" parameterType="Long" resultType="PostDTO">
+		SELECT p.postno, p.postcontent, p.userid, TO_CHAR(p.createdt, 'yyyy-MM-dd') createdt, p.likescount, u.PLANTSNAME, f.REALFILENAME, f.ORGFILENAME, w.WEATHER, w.address 
+		FROM POST p 
+		FULL OUTER JOIN (
+			SELECT PF.POSTNO, LISTAGG(f.REALFILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS REALFILENAME,
+	   			   LISTAGG(f.ORGFILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS ORGFILENAME
+			FROM POSTFILES PF
+			INNER JOIN FILES F ON F.NO = PF.NO
+			WHERE PF.POSTNO = #{postNo}
+			GROUP BY PF.POSTNO
+		) f ON (p.POSTNO = f.POSTNO)
+		FULL OUTER JOIN USERTOPLANTS u 
+		ON (p.PLANTSCATENO = u.PLANTSCATENO)
+		FULL OUTER JOIN WEATHERLOCATION w 
+		ON (p.POSTNO = w.POSTNO)
+		WHERE p.POSTNO = #{postNo}
+	</select>
+	
+	<select id="commentList" parameterType="Long" resultType="CommentDTO">
+		SELECT p.userid, p.content, TO_CHAR(regdate, 'yyyy.MM.dd') regdate
+		FROM (
+			SELECT p.userid, p.content, p.regdate
+			FROM PCOMMENT p 
+			WHERE POSTNO = #{postNo}
+			ORDER BY regdate desc
+		) p
+	</select>
+	
+	<select id="selectPlantsCate" parameterType="String" resultType="UserToPlantsDTO">
+		SELECT userid, plantsname, plantscateno
+		FROM usertoplants
+		WHERE userid = #{userId}
+	</select>
+	
+	<insert id="insertComment" parameterType="CommentDTO">
+		INSERT INTO pcomment (
+			no,
+			postno, 
+			userid, 
+			regdate, 
+			content 
+		)
+		VALUES (
+			seq_pcommentno_no.nextval, 
+			#{postNo}, 
+			#{userId}, 
+			sysdate, 
+			#{content}
+		)
+	</insert>
+	
+	<insert id="insertPost" parameterType="PostDetailDTO">
+		<selectKey resultType="Long" keyProperty="postNo" order="BEFORE">
+        	SELECT seq_postno_no.nextval FROM DUAL
+    	</selectKey> 
+	    INSERT INTO post (
+	    	postno,
+	    	postcontent,
+	    	userid,
+	    	createdt,
+	    	likescount,
+	    	plantscateno,
+	    	delete_yn
+	    )
+	    VALUES (
+	    	#{postNo},
+	    	#{postContent},
+	    	#{userId},
+	    	sysdate,
+	    	0,
+	    	#{plantsCateNo},
+	    	'N'
+	    )       
+	</insert>
+	
+	<insert id="insertFiles" parameterType="FilesDTO">
+		<selectKey resultType="Long" keyProperty="no" order="BEFORE">
+			SELECT seq_postfiles_no.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO files (
+			no,
+			orgFileName,
+		    realFileName
+		)
+		VALUES (
+			#{no},
+			#{orgFileName},
+			#{realFileName}
+		)
+	</insert>
+
+	<delete id="deleteFile" parameterType="long">
+		DELETE FROM files WHERE no = #{no}
+	</delete>
+
+	<insert id="insertPostFiles" parameterType="PostFilesDTO">
+		INSERT INTO postfiles (
+			no,
+			postno
+		)
+		VALUES (
+			#{no},
+			#{postNo}
+		)	
+	</insert>
+	
+	<insert id="insertWeatherLocation" parameterType="PostDetailDTO">
+		INSERT INTO weatherlocation (
+			postno,
+			latitude,
+			longitude,
+			basedate,
+			weather,
+			address
+		)
+		VALUES (
+			#{postNo},
+			#{latitude},
+			#{longitude},
+			sysdate,
+			#{weather},
+			#{address}
+		)	
+	</insert>
+	
+	<insert id="insertLikes" parameterType="LikesDTO">
+		INSERT INTO likes (
+			postno,
+			userid,
+			targetid,
+			regdate
+		)
+		VALUES ( 
+			#{postNo}, 
+			#{userId}, 
+			#{targetId},
+			sysdate
+		)
+	</insert>
+	
+	<select id="getLikes" parameterType="LikesDTO" resultType="int">
+		SELECT COUNT(*)
+		FROM likes
+		WHERE userid = #{userId}
+		AND postno = #{postNo}
+	</select>
+	
+	<delete id="deleteLikes" parameterType="LikesDTO">
+		DELETE FROM likes WHERE userid = #{userId} AND postno = #{postNo}
+	</delete>
+	
+	<select id="getFiles" parameterType="Long" resultType="FilesDTO">
+		SELECT f.no, f.orgfilename, f.realfilename
+		FROM FILES f 
+		INNER JOIN (
+			SELECT p.no 
+			FROM POSTFILES p 
+			WHERE p.postno = #{postNo}
+		) p ON p.no = f.no
+	</select>
+	
+</mapper>

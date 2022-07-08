@@ -1,64 +1,93 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
- <th:block layout:fragment="title">
-		<title>list page</title>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="sns/layout/basic">
+<th:block layout:fragment="title"> 
+	<title>list page</title>
 </th:block>
 
- <th:block layout:fragment="content">
+<th:block layout:fragment="content">
 
 
-    <!-- HEADER -->
-  
+	<!-- HEADER -->
 
-    
+
+
+
+	<div class="inner" style="margin-left: 300px;">
+
+		<div class="contents_box">
+			<article class="contents">
+				<!--인기게시물 리스트 -->
+				<form action="upload" th:action="@{/planiter/updateInfo.do}"
+					method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+
+
+					<div class="img_section" th:each="info:${AccInfo}">
+						<div class="img_sectionA">
+							<img class="followerPro"
+								th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
+				 	    <img onclick='fileDel()' class="dataDeleteIMG" src="/imgs/img_section/dataDelete.png"> <br>
  
-        <div class="inner" style="margin-left: 300px;">
+						<br><br> <input type="file" id="profileIMG" name="profileIMG">
 
-            <div class="contents_box">
-                <article class="contents">
-               <!--인기게시물 리스트 -->
-                  <div class="img_section"> 
-                 <img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="../../imgs/img_section/싱고니움.jpg" 
-                 style=" width: 200px;  height: 200px;  border-radius: 50%; margin-top: 40px;"><br><br>
-                 <input type="file" style="margin-left: 220px; display: block;" > 
-                
-                 <textarea rows="3" cols="50" placeholder="50자이내로 적어주세요." style="resize: none; margin-top: 20px;"></textarea><br><br><br><br>
-               <div style="height: 50px;">  <input type="button" value="수정하기"> </div> 
-                  
-                    </div>
-                    
-                    
-               
-                </article>
-               
-                
-
-            </div>
-         
-
-        </div>
-     
+							<textarea th:text="${info.accDescription}" id="InfoDes"
+								name="InfoDes" rows="3" cols="50"></textarea>
+							<img class="dataDeleteINFO" src="/imgs/img_section/dataDelete.png"> <br> <br> <br>
+							<br>
+							<div style="height: 50px;">
+								<button type="submit" id="proFileUpdate">수정하기</button><br>
+							</div>
+						</div>
+					</div>
+				</form>
 
 
+			</article>
+         </div> 
+	</div>
+ 
+</th:block>
+<th:block layout:fragment="script">  
+	<script type="text/javascript">
+	function fileDel(){
+		$(".dataDeleteIMG").click(function() {
+			$(".followerPro").attr("src","/imgs/img_section/thumb.png");
+			 
+		});
+	}
+	 
+		jQuery(document).ready(function() {
+			$("#proFileUpdate").click(function() {
+				if ($("#InfoDes").val() == "") {
+					alert("프로필 설명을 작성해주세요");
+					return false;
+				}
+			});
 
+			$(".dataDeleteINFO").click(function() {
+				$('#InfoDes').val('');
+			});
+		 
+		});
+
+	
+		
+		$(function() {
+			$("#profileIMG").on('change', function() {
+				readURL(this);
+			});
+		});
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('.followerPro').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+	</script>
  </th:block>
-
-
-
-
-
-
-
- 
- 
-
-
-<th:block layout:fragment="script">
-<script type="text/javascript">
-
-jQuery(document).ready(function() {
-     
-});
-</script>
-</th:block>
 </html>
