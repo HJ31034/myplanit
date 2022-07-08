@@ -13,42 +13,68 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$(document).on("click", ".reset", function(){
-			$.ajax({
-				type : 'POST',
-				url : '/kwd',
-				data : {
-					keyId : 0
-				},
-				dataType : 'json',
-				success : function(data) {
-					str = "<button class='reset'>";
-					str += "<svg xmlns='http://www.w3.org/2000/svg' style='color: #fff;' width='16' height='16' fill='currentColor' class='bi bi-arrow-clockwise' viewBox='0 0 16 1'>";
-					str += "<path fill-rule='evenodd' d='M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z'/>";
-					str += "<path d='M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z'/>";
-					str += "</svg></button>";
-					
-					for (var i = 0; i < data.length; i++) {
-						str += "<button class='kwd' value='";
-						str += data[i].keyId;
-						str += "'>";
-						str += data[i].keyName;
-						str += "</button>";
-					}
-					
-					str += "<form action='/planit/search/kwd' method='post' class='kwd-form'></form>";
-	
-					$('.kwd-box').html(str);
-					
-					console.log(str);
-					
-				},
-				error : function() {
-					alert("에러 발생");
-				}
-			});
-		});
+		
+		// 키워드 초기화
+		var secondFilter = ["잎모양","초보자용","선물하기 좋은","공기정화","빛이 적어도 되는", "향기나는", "반려동물 안전한", "목대있는", "흙이 필요없는", "덩굴로 자라는"];
+		btn_2 = "";
+		for(var i = 0; i < secondFilter.length; i++){
+			btn_2 += "<button class='kwd' value='${plantKwd.keyId}'>" + secondFilter[i] + "</button>";
+		}
+		$('#second-filter').append(btn_2);
+		
+		// secondFilter의 잎묘양에 대한 필터
+		var thirdFilter = ["둥근모양","하트모양", "별모양","바늘모양","길쭉한","갈라진","무늬가 있는","구멍이 있는","잎 끝이 뾰족한", "잎이 두꺼운","잎이 뻣뻣한"];
+		btn_3 = "";
+		for(var i = 0; i < thirdFilter.length; i++){
+			btn_3 += "<button class='kwd' value='${plantKwd.keyId}'>" + thirdFilter[i] + "</button>";
+		}
+		$('#third-filter').append(btn_3);
+		
+		// 키워드 클릭 시
 		$(document).on("click", ".kwd", function(){
+			// 이미 선택했던 버튼을 클릭했을 경우
+			if($(this).is(".btn_active") === true){
+				$(this).removeClass('btn_active'); // 선택한 키워드 취소
+				
+				if($(this).closest("div").attr('class') == "first-filter"){ // 선택한 키워드가 첫 번째 필터이면 두 번째, 세 번째 필터 영역 지우기
+					$("#second-filter").removeClass('active');
+					$("#third-filter").removeClass('active');
+				}
+				
+				if($(this).closest("div").is(".second-filter") === true){ // 선택한 키워드가 두 번째 필터이면 세 번째 필터 영역 지우기
+						$("#third-filter").removeClass('active');
+				}
+			} else { // 선택하지 않았던 버튼을 클릭했을 경우
+				$(this).parent().children('.kwd').removeClass('btn_active'); // 같은 영역의 선택된 키워드를 취소 
+				$(this).addClass('btn_active'); // 선택한 키워드 활성화
+
+				if($(this).closest("div").attr('class') == "first-filter"){ // 첫 번째 필터 영역의 키워드를 클릭했을 경우
+					$("#second-filter").addClass('active'); // 두 번째 필터 영역 나타내기
+					$("#second-filter").children('.kwd').removeClass('btn_active'); // 두 번째 필터 영역에서 선택된 키워드를 리셋
+					$("#third-filter").removeClass('active'); // 세 번째 필터 영역 지우기
+				}
+				
+				if($(this).closest("div").is(".second-filter") === true){ // 두 번째 필터 영역의 키워드를 클릭했을 경우
+					if($(this).text() == "잎모양"){ // 두 번째 필터의 키워드 중 "잎모양"을 선택했을 때
+						$("#third-filter").addClass('active'); // 세 번째 영역 활성화
+						$("#third-filter").children('.kwd').removeClass('btn_active');
+					}
+					else { // 두 번째 필터의 키워드 중 "잎모양"을 선택하지 않았을 때
+						$("#third-filter").removeClass('active'); // 세 번째 필터 영역 비활성
+						$("#third-filter").children('.kwd').removeClass('btn_active');
+					}
+				}
+			}
+		});
+		
+		
+		$(document).on("click", ".reset", function(){
+			$(".first-filter").children('.kwd').removeClass('btn_active');
+			$("#second-filter").removeClass('active');
+			$("#third-filter").removeClass('active');
+		});
+		
+		/* $(document).on("click", ".kwd", function(){
 			var kwd = $(this).val();
 			var tagId = $(this).attr('id');
 			$.ajax({
@@ -60,11 +86,11 @@
 				dataType : 'json',
 				success : function(data) {
 					// 해당 키워드의 keyId를 컨트롤러에 전달하기 위해 사용
-					/* str2 = "<input type='hidden' name='keyId' value='" + kwd + "' />";
+					str2 = "<input type='hidden' name='keyId' value='" + kwd + "' />";
 					$('.kwd-form').html(str2);
 					
 					
-					$('.kwd-form').submit(); */
+					$('.kwd-form').submit();
 					
 					str = "";
 					if(data.length != 0){
@@ -89,7 +115,8 @@
 					alert("에러 발생");
 				}
 			});
-		});
+		}); */
+		
 		
 		$(document).on("click", ".bi-x-lg", function(){
 			$('.search-info').val('');
@@ -111,21 +138,33 @@
 				</h2>
 			</div>
 			
-			<!--/* <div class="kwd-box">
-				<button class="reset">
-				<svg xmlns="http://www.w3.org/2000/svg" style="color: #fff;" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-				  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-				  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-				</svg>
-				</button>
-				<th:block th:each="plantKwd : ${plantKwdList}">
-					<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
-				</th:block>
+			<div class="kwd-box">
+				<div class="first-filter">
+					<button class="reset">
+					<svg xmlns="http://www.w3.org/2000/svg" style="color: #fff;" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+					  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+					  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+					</svg>
+					</button>
 				
+					<th:block th:each="plantKwd : ${plantKwdList}">
+						<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
+					</th:block>
+				</div>
+				
+				<div id="second-filter" class="second-filter">
+					<div class='divide'></div>
+					
+				</div>
+				
+				<div id="third-filter" class="third-filter">
+					<div class='divide'></div>
+					
+				</div>
 				
 				<form action="/planit/search/kwd" method="post" class="kwd-form">
 				</form>
-			</div> */-->
+			</div>
 			<!-- end container -->
 
 			<div class="search-box">
@@ -137,7 +176,7 @@
 				<form action="/planit/search" method="get">
 					<input type="text" th:value="${term}" name="term" placeholder="식물 이름을 검색해주세요." class="search-info">
 				</form>
-				<svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="16"
+				<svg id="x-icon" xmlns="http://www.w3.org/2000/svg" width="16"
 					height="16" fill="currentColor" class="bi bi-x-lg"
 					viewBox="0 0 16 16">
 					<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
