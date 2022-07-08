@@ -15,6 +15,13 @@
 	$(document).ready(function() {
 		
 		// 키워드 초기화
+		var firstFilter = ["잎을 감상하는", "꽃을 감상하는", "열매를 감상하는", "다육/선인장"];
+		btn_1 = "";
+		for(var i = 0; i < firstFilter.length; i++){
+			btn_1 += "<button class='kwd' value='${plantKwd.keyId}'>" + firstFilter[i] + "</button>";
+		}
+		$('.first-filter').append(btn_1);
+		
 		var secondFilter = ["잎모양","초보자용","선물하기 좋은","공기정화","빛이 적어도 되는", "향기나는", "반려동물 안전한", "목대있는", "흙이 필요없는", "덩굴로 자라는"];
 		btn_2 = "";
 		for(var i = 0; i < secondFilter.length; i++){
@@ -146,10 +153,6 @@
 					  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
 					</svg>
 					</button>
-				
-					<th:block th:each="plantKwd : ${plantKwdList}">
-						<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
-					</th:block>
 				</div>
 				
 				<div id="second-filter" class="second-filter">
