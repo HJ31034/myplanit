@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <!-- saved from url=(0048)file:///Users/johndoe/Downloads/user-update.html -->
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	 lang="en"
+	 layout:decorate="main/layout/basic2">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,22 +54,24 @@
 <!-- Custom styles for this template -->
 <link href="../assets/dist/sidebars.css" rel="stylesheet">
 <link href="../assets/dist/register.css" rel="stylesheet">
-
+<link href="../assets/dist/signin.css" rel="stylesheet">
 
 
 </head>
-<body>
+ <th:block layout:fragment="content">
 
 
 	<th:block th:if="${session.userdto !=null}">
-		<main>
+		<main class="form-register">
+<div class="container">
+
 
 			<h1 class="visually-hidden">Sidebars examples</h1>
 
 
 
 
-
+<!-- 
 			<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
 				<a href="file:///"
 					class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
@@ -115,7 +119,10 @@
 						</div>
 					</li>
 				</ul>
-			</div>
+			</div> 
+			
+			
+			-->
 
 
 
@@ -124,9 +131,23 @@
 
 
 
-			<div class="row g-5">
+
+
+
+			
 				<br>
-				<div class="col-md-7 col-lg-8">
+				<br>
+				<br>
+				<br>
+				
+				
+				
+				<div class="hi">
+				
+				<div class="blank2"></div>
+				<div class="blank2"></div>
+				<div class="blank2"></div>
+				
 					<h4 class="mb-3"></h4>
 					
 
@@ -137,13 +158,12 @@
 
 
 
-
-
-						<form class="needs-validation" novalidate="">
-
 						
 
-							<div class="row g-3" >
+						<form class="needs-validation">
+
+						
+					<div class="row g-3" >
 							
 								<div class="col"><h4>회원정보</h4></div>
 								<div class="col"></div>
@@ -215,28 +235,36 @@
 
 
 
+<div class="blank2"></div>
 
 
-
-
+<div class="col-12">
+            <label class="form-check-label" for="same-address">관심식물</label><br>
+       <p>  <span  th:text[]="${session.userdto.keyId}">  </span> </p>
+            
+          </div>
 
 
 
 
 							<hr class="my-4">
 
+<div class="blank2"></div>
+<div class="blank3"></div>
+<div class="blank2"></div>
+<div class="blank3"></div>
 
-
-
+	
 						</form>
 				</div>
-			</div>
+			
 
-
+</div>
 
 		</main>
 
 	</th:block>
+	
 	<th:block th:if="${session.userdto == null}">
 		<h1>올바르지 않은 접근입니다. 로그인 화면으로 이동해 주세요</h1>
 		<a th:href="@{/login}">로그인 하러가기</a>
@@ -246,5 +274,5 @@
 	<script src="/js/sidebars.js"></script>
 	<script src="/js/register.js"></script>
 
-</body>
+</th:block>
 </html>
