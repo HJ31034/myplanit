@@ -6,9 +6,11 @@
 <!--메인 좋아요순 이미지 정렬   -->
 		<select id="selectImgPost" resultType="com.planit.domain.sns.PostDTO">
 	<![CDATA[
+ 
 	select rn,postno,orgfilename,likescount,postcontent from
 	(select /*+ INDEX_DESC(seq_POSTNO_no) */
 	rownum rn,p.postno,pf.no,fs.orgfilename,p.likescount,p.postcontent
+ 
  	from postfiles pf join post p
  	on p.postno=pf.postno
  	and no in
@@ -18,7 +20,9 @@
  	group by postno)
     join files fs
     on pf.no=fs.no
+ 
     and rownum <= #{parameter1} + #{parameter2}
+ 
  	order by likescount desc)
     WHERE rn > #{parameter1}
 	]]>
@@ -31,9 +35,11 @@
 		<choose>
 			<when test='keyField.equals("plantsname")'>
 		<![CDATA[ 
+ 
 		 select rn,no,orgfilename,likescount,postno,postcontent,plantscateno from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
 			rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.plantscateno
+ 
  			from post p join postfiles pf 
  			on p.postno=pf.postno
  			and no in
@@ -45,16 +51,29 @@
             on pf.no=fs.no
             join usertoplants u
        	    on u.plantscateno=p.plantscateno
-            where u.plantsname=#{keyword} and rownum <= #{startNum} + #{endNum}
+ 
+            where u.plantsname=#{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
+ 
  		    order by likescount desc)
             WHERE rn > #{startNum}
  		]]>
 			</when>
 			<when test='keyField.equals("userId")'>
 		<![CDATA[ 
-			 select rn,no,orgfilename,likescount,postno,postcontent from
+ 
+		 select rn,userid,profileimg from
+        (select  rownum rn,a.userid,a.profileimg
+         from account a
+         where a.userid like #{keyword} and rownum <= #{startNum} + #{endNum})
+         WHERE rn > #{startNum}
+ 		 
+		]]>
+			</when>
+			<when test='keyField.equals("postcontent")'>
+		<![CDATA[ 
+			 select rn,no,orgfilename,likescount,postno,postcontent,delete_yn from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent
+		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.delete_yn
  		    from postfiles pf join post p
  		    on p.postno=pf.postno
  		    and no in
@@ -62,7 +81,9 @@
  		    min(no)
  		    from postfiles
  		    group by postno)
-   		    and userId=#{keyword} and rownum <= #{startNum} + #{endNum}
+   		    and p.postcontent LIKE #{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
+ 
+   		  
              join files fs
             on pf.no=fs.no
  		    order by likescount desc)
@@ -81,7 +102,9 @@
  		    min(no)
  		    from postfiles
  		    group by postno)
-   		    and p.postcontent=#{keyword} and rownum <= #{startNum} + #{endNum}
+   		    and p.postcontent=#{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
+ 
+ 
              join files fs
             on pf.no=fs.no
  		    order by likescount desc)

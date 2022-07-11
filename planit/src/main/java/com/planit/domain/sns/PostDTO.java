@@ -14,8 +14,8 @@ public class PostDTO {
 	private int likesCount;
 	private int plantsCateNo;
  
-	 
  
+	 
 	private String orgFileName;
 	private String realFileName;
  

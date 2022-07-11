@@ -31,8 +31,12 @@
                            
                           
                           <span th:each="img : ${ImgPost}" id="list">
-                         	 <a th:href="@{/planiter/post/read(postno=${img.postNo})}" style="text-decoration:none;" >
+ 
+ 
+                         	 <a th:href="@{/planiter/post/read(postno=${img.postNo},page=${page},keyField=${keyField},keyword=${keyword})}" style="text-decoration:none;" >
                            		 <img th:src="@{${'/imgs/img_section/'+img.orgFileName}}" alt="imgPost" id="imgPost"
+
+ 
                            	      class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover">	</a>   
                           </span>
                            
@@ -48,9 +52,15 @@
             </div>
           
 				<!-- 로그인 계정 정보 -->
+ 
+				<div class="side_box" th:if="${session.userdto == null}">
+                <h1>로그인이필요합니다</h1>
+                </div>
+            
             <div class="side_box" th:each="info:${AccInfo}">
-          
-                <div class="user_profile">
+            
+               <div class="user_profile">
+  
                     <div class="profile_thumb">
                         <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
                     </div>
@@ -60,10 +70,12 @@
                  <div style="margin-top: -22px;">  
                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
                   <p th:text="${info.followerCount}"/></a></div>
-                 <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
-                <p th:text="${info.followingCount}"/></a></div>
-                </div>
-<br><br>
+ 
+                  <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
+                  <p th:text="${info.followingCount}"/></a></div>
+                </div><br><br>
+                
+ 
 					<!-- ##### Single Widget Area ##### -->
                         <div class="single-widget-area">
                             <!-- Title -->
@@ -72,17 +84,15 @@
                             </div>
                             <!-- Tags -->
                           
-                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList"   >
+ 
+                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
                                <ol style="margin-left: -40px;  margin-top: -14px;" >
-                               		 <li>#<a th:text="${cate.plantsName}" class="testt" style="font-family: 'Jua', sans-serif;  text-decoration: none; " href="#"></a> </li>
+                               		 <li>#<a th:text="${cate.plantsName}" class="testt" style="font-family: 'Jua', sans-serif;  text-decoration: none; " href="/planiter/profile.do"></a> </li>
                               
                                </ol>
                             </ol>
-                            
-                            
-                        	
-                        </div>
-                        </div>		 	 
+                      </div>
+          
                                
 		</div>
         
@@ -92,18 +102,25 @@
 	<script type="text/javascript">
    
 	 var page = 2;
+ 
+	 
 		 $(".imgList_section").scroll(function() {  
 			 
 				var innerHeight = $(this).innerHeight(); 
-				var scroll=$(this).scrollTop() + $(this).innerHeight(); 
+				var scroll=$(this).scrollTop() + $(this).innerHeight()+0.5; 
 				var height=$(this)[0].scrollHeight; 
-			 	//console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
-				if(scroll == height){
+                console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+				if(scroll >= height){
 					 console.log('페이지 끝');
 					 nextImgPost(page);
 					 page++;
-				} 
-		 		 
+				}  
+				
+				 
+				if (history.scrollRestoration) {
+					  history.scrollRestoration = 'manual';
+					}
+ 
 			});
 		
 		
@@ -118,9 +135,12 @@
 	  				dataType : "json",
 	  				success : function(data) {
 	  				$.each(data, function(index, item) {
-	  					$("#nextImgPost").append('<a href="/planiter/post/read?postno='+item.postNo+'" style="text-decoration:none;" >'
+ 
+ 
+	  					$("#nextImgPost").append('<a href="/planiter/post/read?postno='+item.postNo+'&page='+page+'&keyField='+keyField+'&keyword='+keyword+'" style="text-decoration:none;" >'
 	  					+'<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.orgFileName+'">');	
-	  				 
+ 
+ 
 	  				});
 	  				
 	  				},
@@ -131,6 +151,7 @@
 			 
 			 
 		 }
+ 
  
 	</script>
 </th:block>
