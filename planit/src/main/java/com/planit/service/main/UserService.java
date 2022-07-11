@@ -15,15 +15,18 @@ import org.springframework.validation.FieldError;
 import com.planit.domain.main.UserDTO;
 import com.planit.mapper.main.UserMapper;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Transactional
 public class UserService implements UserDetailsService {
 	@Autowired
 	private UserMapper userMapper;
-
+ 
+	//private UserMapper2 userMapper2;
 	// 회원가입 시큐리티 처리
 
 	public void joinUser(UserDTO userdto) {
@@ -33,7 +36,14 @@ public class UserService implements UserDetailsService {
 		userdto.setUserAuth("USER");
 		// userdto.setUserAuth("USER");
 		userMapper.saveUser(userdto);
+		
 	}
+	
+//	public void joinUser2(UserDTO2 userdto2) {
+//		userMapper2.saveUser2(userdto2);
+//	}
+	
+	
 
 	// 회원가입 시, 유효성 체크
 	public Map<String, String> validateHandling(Errors errors) {
@@ -47,51 +57,34 @@ public class UserService implements UserDetailsService {
 		return validatorResult;
 	}
 
+	
+	//로그인 처리
 	@Override
 	public UserDTO loadUserByUsername(String userId) throws UsernameNotFoundException {
 		
 		
 		
 		UserDTO authUser = userMapper.findByUsername(userId);
+
+			
+//		for(int i=0; i < authUser.getKeyId().length; i++) {
+//			
+//		}
+		
 		if (authUser == null) {
 			System.out.println("service: 정보 불러들일 수 없음");
 			throw new UsernameNotFoundException("userId"+userId+"not found");
+		
 		} 
 		
-
+		
+		
+		//return (UserDTO) dto;
 		return authUser;
 	}
 	
-	// 로그인 메서드 수정본 before security
-//	public UserDTO userLogin(UserDTO userdto) throws Exception {
-//		
-//		
-//		
-//		UserDTO authUser = userMapper.loginUser(userdto);
-//		if (authUser == null) {
-//			System.out.println("service: 정보 불러들일 수 없음");
-//
-//		} else {
-//			System.out.println("service: 로그인 정보 불러오기 정상작동 ");
-//
-//		}
-//		return authUser;
-//	}	
 
-	// 로그인 메서드 after security
-//	public UserDTO userLogin(String userId, String password) {
-//
-//		
-//		UserDTO authUser = userMapper.loginUser(userId, password);
-//		if (authUser == null) {
-//			System.out.println("service: 정보 불러들일 수 없음");
-//
-//		} else {
-//			System.out.println("service: 로그인 정보 불러오기 정상작동 ");
-//
-//		}
-//		return authUser;
-//	}
+
 
 //아이디 중복 체크용 테스트
 
@@ -102,14 +95,8 @@ public class UserService implements UserDetailsService {
 		return cnt;
 	}
 
-	// 현재 비밀번호 확인
-//	public int pwdCheck(String password, String userId) {
-//
-//		int count = userMapper.pwdCheck(password, userId);
-//		System.out.println("현재 비밀번호 확인" + count);
-//		return count;
-//	}
 
+	//비밀번호 변경
 	public void pwdCh(UserDTO userdto) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		userdto.setPassword(passwordEncoder.encode(userdto.getPassword()));

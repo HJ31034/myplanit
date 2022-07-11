@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <!-- saved from url=(0048)file:///Users/johndoe/Downloads/user-update.html -->
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="main/layout/basic2"
+	lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -57,188 +59,28 @@
 <!-- Custom styles for this template -->
 <link href="../assets/dist/sidebars.css" rel="stylesheet">
 <link href="../assets/dist/register.css" rel="stylesheet">
+<link href="../assets/dist/signin.css" rel="stylesheet">
 
-
-
-</head>
-<body>
-
-
-	<th:block th:if="${session.userdto !=null}">
-		<main>
-
-			<h1 class="visually-hidden">Sidebars examples</h1>
-
-
-
-
-
-			<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
-				<a href="file:///"
-					class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-					<svg class="bi me-2" width="30" height="24">
-						<use xlink:href="#bootstrap"></use></svg> <span class="fs-5 fw-semibold">PLANIT</span>
-				</a>
-				<ul class="list-unstyled ps-0">
-					<li class="mb-1">
-						<button
-							class="btn btn-toggle align-items-center rounded collapsed"
-							data-bs-toggle="collapse" data-bs-target="#home-collapse"
-							aria-expanded="true">Home</button>
-						<div class="collapse show" id="home-collapse">
-							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-								<li><a href="/planit" class="link-dark rounded">홈으로
-										돌아가기</a></li>
-								<li><a href="/planiter/" class="link-dark rounded">SNS
-										페이지 이동</a></li>
-								<li><a
-									href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#"
-									class="link-dark rounded">쇼핑몰 보러가기</a></li>
-							</ul>
-						</div>
-					</li>
-
-
-					<li class="border-top my-3"></li>
-					<li class="mb-1">
-						<button
-							class="btn btn-toggle align-items-center rounded collapsed"
-							data-bs-toggle="collapse" data-bs-target="#account-collapse"
-							aria-expanded="false">Account</button>
-						<div class="collapse" id="account-collapse">
-							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-								<li><a href="/planit/userInfo" class="link-dark rounded">기본정보
-										보기</a></li>
-								<li><a href="" class="link-dark rounded">비밀번호 변경</a></li>
-								<li><a href="" class="link-dark rounded">......</a></li>
-								<li><a href="/logout" class="link-dark rounded">로그아웃</a></li>
-							</ul>
-						</div>
-					</li>
-				</ul>
-			</div>
-
-
-
-
-
-
-
-
-			<div class="row g-5">
-				<br>
-				<div class="col-md-7 col-lg-8">
-					<h4 class="mb-3">비밀번호 수정</h4>
-
-
-					<form class="needs-validation" method="post" action=""
-						novalidate="">
-						<div class="row g-3">
-
-
-
-
-
-
-
-							<div class="col-12" style="display: none;">
-								<label for="username" class="form-label">아이디</label>
-								<div class="input-group has-validation">
-									<span class="input-group-text">@</span> <input type="text"
-										class="form-control" name="userId"
-										th:value="${session.userdto.userId}" id="userId"
-										placeholder="아이디">
-
-								</div>
-							</div>
-
-							<!-- <div class="col-12" style="display:none;">
-              <label for="password" class="form-label">현재 비밀번호 </label>
-              <input type="password" class="form-control" name="curpwd" id="curpwd" 
-              
-              autocomplete="new-password" placeholder="PASSWORD" onchange="checkPwd()" required />
-              <span th:text="${valid_password}"></span>
-              <div>
-                <p class="id_ok">일치합니다</p>
-				<p class="id_already">현재 비밀번호를 다시 확인해 주세요</p>
-                </div>
-            </div> -->
-
-							<div class="col-12">
-								<label for="password" class="form-label">새 비밀번호 </label> <input
-									type="password" class="form-control" name="password" id="pwd1"
-									onchange="valid()" autocomplete="new-password"
-									placeholder="PASSWORD" required /> <span
-									th:text="${valid_password}"></span>
-								<div>
-									<p class="pass_ok">사용 가능한 비밀번호 입니다.</p>
-									<p class="pass_no">비밀번호 형식을 다시 확인해 주세요.</p>
-								</div>
-							</div>
-
-							<div class="col-12">
-								<label for="password" class="form-label">새 비밀번호 확인</label> <input
-									type="password" class="form-control" name="password2" id="pwd2"
-									autocomplete="new-password" placeholder="RE-PASSWORD" required />
-								<div class="alert alert-success" id="alert-success">비밀번호가
-									일치합니다.</div>
-								<div class="alert alert-danger" id="alert-danger">비밀번호가
-									일치하지 않습니다. 다시한번 확인하여 주세요.</div>
-								<div class="alert alert-info" id="alert-info">비밀번호 영문 대소문자
-									특수문자 최소 1개 포함 8-20자리 조합으로 만드시오</div>
-							</div>
-
-
-
-
-
-						</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-						<hr class="my-4">
-
-
-						<button class="w-100 btn btn-primary btn-lg" id="submit" onclick="passedit()"
-							style="background-color: #9FCF62; border-color: #9FCF62;"
-							type="submit">수정하기</button>
-
-					</form>
-
-				</div>
-			</div>
-
-
-
-		</main>
-
-	</th:block>
-
-	<th:block th:if="${session.userdto == null}">
-		<h1>올바르지 않은 접근입니다. 로그인 화면으로 이동해 주세요</h1>
-		<a th:href="@{/login}">로그인 하러가기</a>
-	</th:block>
-
-	<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script th:inline="javascript">
 //비밀번호 확인 스크릡트 
 
 function passedit(){
-	alert("비밀번호가 성공적으로 변경되었습니다.")
+	var pwd1 = $("#pwd1").val();
+	var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
+	var pwd2 = $("#pwd2").val();
+	if(pwd1 =="" && !reg.test(pwd1)){
+		 $("#submit").attr("disabled", "disabled");
+	} else if(pwd1 != pwd2){
+		$("#submit").attr("disabled", "disabled");
+		
+	} else{
+		$("#submit").removeAttr("disabled");
+		alert("비밀번호가 성공적으로 변경되었습니다.");
+	}
+	
 }
 	
 
@@ -347,6 +189,137 @@ function passedit(){
 </script>
 	<script src="/js/sidebars.js"></script>
 	<script src="/js/register.js"></script>
+</head>
+<th:block layout:fragment="content">
 
-</body>
+
+	<th:block th:if="${session.userdto !=null}">
+		<div class="blank"></div>
+		<main class="form-register">
+<div class="container">
+			<h1 class="visually-hidden">Sidebars examples</h1>
+
+
+
+
+
+
+
+
+
+				
+
+
+			<div class="row g-5">
+				<br>
+				<div class="hi">
+					<h4 class="mb-3">비밀번호 수정</h4>
+
+
+					<form class="needs-validation" method="post" action=""
+						novalidate="">
+						<div class="row g-3">
+
+
+
+
+
+
+
+							<div class="col-12" style="display: none;">
+								<label for="username" class="form-label">아이디</label>
+								<div class="input-group has-validation">
+									<span class="input-group-text">@</span> <input type="text"
+										class="form-control" name="userId"
+										th:value="${session.userdto.userId}" id="userId"
+										placeholder="아이디">
+
+								</div>
+							</div>
+
+							<!-- <div class="col-12" style="display:none;">
+              <label for="password" class="form-label">현재 비밀번호 </label>
+              <input type="password" class="form-control" name="curpwd" id="curpwd" 
+              
+              autocomplete="new-password" placeholder="PASSWORD" onchange="checkPwd()" required />
+              <span th:text="${valid_password}"></span>
+              <div>
+                <p class="id_ok">일치합니다</p>
+				<p class="id_already">현재 비밀번호를 다시 확인해 주세요</p>
+                </div>
+            </div> -->
+
+							<div class="col-12">
+								<label for="password" class="form-label">새 비밀번호 </label> <input
+									type="password" class="form-control" name="password" id="pwd1"
+									onchange="valid()" autocomplete="new-password"
+									placeholder="PASSWORD" required /> <span
+									th:text="${valid_password}"></span>
+								<div>
+									<p class="pass_ok">사용 가능한 비밀번호 입니다.</p>
+									<p class="pass_no">비밀번호 형식을 다시 확인해 주세요.</p>
+								</div>
+							</div>
+
+							<div class="col-12">
+								<label for="password" class="form-label">새 비밀번호 확인</label> <input
+									type="password" class="form-control" name="password2" id="pwd2"
+									autocomplete="new-password" placeholder="RE-PASSWORD" required />
+								<div class="alert alert-success" id="alert-success">비밀번호가
+									일치합니다.</div>
+								<div class="alert alert-danger" id="alert-danger">비밀번호가
+									일치하지 않습니다. 다시한번 확인하여 주세요.</div>
+								<div class="alert alert-info" id="alert-info">비밀번호 영문 대소문자
+									특수문자 최소 1개 포함 8-20자리 조합으로 만드시오</div>
+							</div>
+
+
+
+
+
+						</div>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						<button class="w-100 btn btn-primary btn-lg" id="submit" onclick="passedit()"
+							style="background-color: #9FCF62; border-color: #9FCF62;"
+							type="submit">수정하기</button>
+
+					</form>
+
+<div class="blank"></div>
+
+
+				</div>
+			</div>
+
+
+</div>
+		</main>
+
+	</th:block> <!--  로그인 관련  -->
+</th:block>
+	<th:block th:if="${session.userdto == null}">
+		<h1>올바르지 않은 접근입니다. 로그인 화면으로 이동해 주세요</h1>
+		<a th:href="@{/login}">로그인 하러가기</a>
+	</th:block>
+
+	
+
+
 </html>

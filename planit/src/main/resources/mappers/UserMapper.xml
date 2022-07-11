@@ -3,30 +3,48 @@
 <mapper namespace="com.planit.mapper.main.UserMapper">
 
 	<!-- 회원가입시 입력 내용 -->
-	<insert id="saveUser">
-		INSERT INTO
+	<insert id="saveUser" parameterType="java.util.ArrayList"  >
+		<!--  INSERT INTO
 		USERS(USERID, PASSWORD, USERNAME, EMAIL,
 		PHONE, REGDATE, USERAUTH)
 		VALUES(#{userId}, #{password}, #{userName}, #{email}, #{phone}, SYSDATE, #{userAuth})
+  -->
 
+
+	INSERT ALL
+	
+	INTO USERS(userid, password, username, regdate, phone, email, userauth)
+	VALUES (#{userId}, #{password}, #{userName}, SYSDATE, #{phone},
+	#{email}, #{userAuth})
+	
+	Into account(userid)
+	values (#{userId})
+	
+	
+	<foreach collection="keyId" item="item">
+	INTO USERKEYWORD (USERID, KEYID)
+	values(#{userId}, #{item})
+	</foreach>
+	
+	
+	SELECT * FROM dual 
+	
 	</insert>
 
-
-	<!-- 로그인 without security -->
-	<select id="loginUser" resultType="UserDTO">
-		SELECT USERNAME, USERID, EMAIL, PHONE
-		FROM USERS
-		WHERE USERID=#{userId}
-		AND PASSWORD=#{password}
-
-
-	</select>
 
 
 	<!-- login with security -->
 	<select id="findByUsername" resultType="UserDTO">
-		SELECT * FROM USERS
+		
+		SELECT u.*
+		 FROM USERS u
 		WHERE USERID = #{userId} 
+		
+		<!-- SELECT a.*, b.keyid
+ 		FROM (SELECT u.*
+		 FROM USERS u
+		WHERE USERID = #{userId}) a, userkeyword b -->
+		
 	</select>
 
 	<!-- 아이디 중복체크 -->
