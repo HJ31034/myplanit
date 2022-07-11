@@ -50,7 +50,7 @@ public class snsServiceImpl implements snsService {
 	@Override
 	public List<AccountDTO> selectMainAccINfo(String USERID) {
 		List<AccountDTO> AccInfo = snsmapper.selectMainAccINfo(USERID);
-
+ 
 		return AccInfo;
 	}
 
