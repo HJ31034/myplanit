@@ -11,10 +11,9 @@
     <title>Checkout example · Bootstrap v5.1</title>
  	<th:block layout:fragment="css">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
-	<link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+	
 	<link href="assets/dist/bootstrap.min.css" rel="stylesheet">
-     <link href="assets/dist/register.css" rel="stylesheet">
-	 <link href="assets/dist/signin.css" rel="stylesheet">
+     
          
     <style>
     .id_ok{color:green; display: none;}
@@ -148,20 +147,17 @@ $(function(){
     
     
 <div class="container">
-
-  <main class="form-register">
+  <main class="centering2">
   <div class="py-5 text-center">
-      
+      <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="57">
+      <h2>Register form</h2>
+      <p class="lead"> Plsease fill up the spaces below</p>
     </div>
       
-      
-      <div class="blank2"></div>
-     <div class="blank2"></div>
-     
-      
+      <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">회원가입</h4>
         
-        
+        <div class="centering">
         <form class="needs-validation" action="" id="regForm" name="regForm"
          method="post" modelAttribute="user" onsubmit="return validation();">
           
@@ -237,99 +233,21 @@ $(function(){
               <span th:text="${valid_phone}"></span>
             </div>
 
-             
+             <hr class="my-4">
              
 			<div class="col-12">
-			
-            <label class="form-check-label" for="same-address">관심식물(필수)</label><br>
+            <label class="form-check-label" for="same-address">관심식물</label><br>
+            <input type="checkbox" class="form-check-input" id="same-address1" name="keyId" value="1" >식물1
+            <input type="checkbox" class="form-check-input" id="same-address2" name="keyId" value="2" >식물2 
+            <input type="checkbox" class="form-check-input" id="same-address3" name="keyId" value="3">식물3
+            <input type="checkbox" class="form-check-input" id="same-address4" name="keyId" value="4">식물 4
+            <input type="checkbox" class="form-check-input" id="same-address5" name="keyId" value="5">식물 5
             
-        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios0" value="0" >
-  		<label class="form-check-label" >
-    	잘 모르겠음 
-  		</label>   
-  		<br> 
-            
-           
-             
-        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios1" value="1" >
-  		<label class="form-check-label" >
-    	잎을 감상하는  
-  		</label>
-            
-        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios2" value="2" >
-  		<label class="form-check-label" >
-    	꽃을 감상하는  
-  		</label>
-  		
-         <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios3" value="3">
-  		<label class="form-check-label">
-    	열매를 감상하는  
-  		</label>   
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios4" value="4">
-  		<label class="form-check-label" >    	다육/선인장 
-  		</label>
-          <br>
-        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  초보자용  
-  		</label>  
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  선물하기 좋은
-  		</label>  
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  공기정화
-  		</label>  
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  빛이적어도 되는
-  		</label>  
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  향기나는
-  	
-  		</label>  
-  		
-  		  <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  반려동물이 안전한
-  		</label>  
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  목대있는
-  		</label>  
-  		
-  		
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  흙이 필요없는
-  		</label>  
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  덩굴로 자라는
-  		</label>  
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  늘어져 자라는
-  		</label>  
-            
-                    <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  몸통이 납작한
-  		</label>  
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
-  		<label class="form-check-label" >  가시가 없는
-  		</label>  
-  		
-  		
-  		
           </div>
            
-           
-           
-           
+
           
           </div>
-          
-          
 
           <hr class="my-4">
 
@@ -346,10 +264,9 @@ $(function(){
           <button class="w-100 btn btn-lg btn-primary" type="submit"
 				id="submit" style="background-color: #9FCF62; border-color: #9FCF62;">회원가입</button>
         </form>
-        <div class="blank2"></div>
+        </div>
         
-        
-     
+     </div>
     
  
   </main>
@@ -357,8 +274,6 @@ $(function(){
           </div>
 
      </div>
-     
-     
 </th:block>
 
 
