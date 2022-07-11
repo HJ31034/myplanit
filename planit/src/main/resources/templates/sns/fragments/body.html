@@ -5,7 +5,7 @@
 <body th:fragment="main-body">
 	<div id="container">
 	
-<form action="/planiter/" method="post" onsubmit="return onSubmit()">
+<form action="/planiter/" method="get" onsubmit="return onSubmit()">
 		<div id="header">
 			<div class="inner">
 				<h1 class="lsogo">
@@ -40,11 +40,24 @@
 					</div>
  
 				 	<span  class="searchSNS" >
-					<input type="image" src="/imgs/magnifying-glass.png"  >
+					<input type="image" src="/imgs/Img_SNS/searchIcon.png"  >
 				   </span> 
 				   
 				
 				<a th:href="@{/planiter/goProfileEdit.do}">프로필수정</a>
+				
+  <th:block th:if="${session.userdto == null}">
+<a th:href="@{/login}">로그인 </a>
+<a th:href="@{/join}">회원가입</a>
+
+</th:block>
+
+<th:block th:if="${session.userdto !=null}">
+<span th:text="|${session.userdto.userId} 님|"></span>
+
+<a href="/planit/userInfo">회원정보 수정</a>
+<a href="/logout">로그아웃</a>
+</th:block>  
 
 			</div>
 		</div>
@@ -97,6 +110,8 @@
 			 $("#keyField").val(keyFieldHTML); 
 		 	
 	  });
+		 
+		
 		 </script>
 
 	 <th:block layout:fragment="script"></th:block>

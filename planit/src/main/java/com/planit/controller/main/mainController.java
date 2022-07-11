@@ -24,9 +24,12 @@ public class MainController {
 	@GetMapping(value = "/planit")
 	public String main(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		
 		String id = null;
-		if (session.getAttribute("id") != null)
+		if (session.getAttribute("info") != null)
 			id = session.getAttribute("id").toString();
+		 
+		System.out.println("main id: "+id);
 		
 		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0));
 		model.addAttribute("users", mainService.selectUsers(id));

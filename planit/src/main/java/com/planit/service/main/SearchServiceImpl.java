@@ -39,4 +39,7 @@ public class SearchServiceImpl implements SearchService {
 		List<PlantsDTO> plantImgs=searchMapper.plantImgs(plantsId);
 		return plantImgs;
 	}
+	public int ImgsCnt(int plantsId) {
+		return searchMapper.ImgsCnt(plantsId);
+	}
 }

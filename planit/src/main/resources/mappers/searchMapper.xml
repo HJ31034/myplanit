@@ -37,9 +37,12 @@
 	</select>
 	
 	<select id="plantImgs" resultType="PlantsDTO">
-	 SELECT F.FILENAME FROM
-	 PLANTS P JOIN PLANTFILE F
-	 ON P.PLANTSID=#{plantsId} 
+	 SELECT FILENAME FROM PLANTFILE
+	 WHERE PLANTSID=#{plantsId} 
 	</select>
 	
+	<select id="ImgsCnt" resultType="int">
+	 SELECT count(FILENAME) FROM PLANTFILE
+	 WHERE PLANTSID=#{plantsId} 
+	</select>
 </mapper>

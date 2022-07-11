@@ -13,5 +13,6 @@ public interface SearchService {
 	public List<PlantsDTO> plantDetail(int plantsId);
 	public List<PlantsDTO> plantDes(int plantsId);
 	public List<PlantsDTO> plantImgs(int plantsId);
-	
+	public int ImgsCnt(int plantsId);
+
 }

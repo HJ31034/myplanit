@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
  
 import com.planit.domain.main.PlantsDTO;
+import com.planit.domain.sns.FollowDTO;
 import com.planit.service.main.MainService;
 import com.planit.service.main.SearchService;
+import com.planit.service.sns.snsService;
 
 @Controller
 @RequestMapping("/planit")
@@ -55,47 +58,27 @@ public class SearchController {
 	
 	
 	
-	//detail
-	@RequestMapping(value = "/산세베리아")
-	public String plantDetail(Model model, HttpServletRequest request) {
-		int plantsId=1;
+	/* plants_detail */
+	@RequestMapping(value = "/{plantsId}")
+	public String plantDetail(Model model, HttpServletRequest request,@PathVariable int plantsId) {
+		 
+		 model.addAttribute("plantsId", plantsId);
 		 List<PlantsDTO> plantDetail = searchService.plantDetail(plantsId);
 		 model.addAttribute("plantDetail", plantDetail);
-		 
-		 List<PlantsDTO> plantDes = searchService.plantDes(plantsId);	 
-		 model.addAttribute("plantDes", plantDes);
- 
-		 
 		 List<PlantsDTO> plantImgs = searchService.plantImgs(plantsId);
-		 for(int i=0; i<=plantImgs.size(); i++) {
-			 System.out.println("imgs" + i);
-		 }
-		 System.out.println("plantImgs"+ plantImgs );
-		// model.addAttribute("plantImgs", plantImgs);
-		 
+	     model.addAttribute("plantImgs", plantImgs);
+		 int imgsCnt=searchService.ImgsCnt(plantsId);
+		 model.addAttribute("imgsCnt", imgsCnt);
 		 
 		return "main/plant_detail";
 	}
 	
-	//식물 상세정보 출력
+	//식물 상세 설명 출력
 	@ResponseBody
 	@RequestMapping(value = "/plantDes")
-	public List<PlantsDTO> plantDes(Model model, HttpServletRequest request) {
-		int plantsId=1;
+	public List<PlantsDTO> plantDes(Model model, @RequestParam(value="plantsId") int plantsId) {
 		return searchService.plantDes(plantsId);	
 	}
-	//식물 이미지 출력
-	 
-//	@RequestMapping(value = "/plantDes")
-//	public List<PlantsDTO> plantImgs(Model model, HttpServletRequest request) {
-//		int plantsId=1;
-//		 List<PlantsDTO> plantImgs = searchService.plantImgs(plantsId);
-//		 for(int i=0; i<=plantImgs.size(); i++) {
-//			 System.out.println(i);
-//		 }
-//		 model.addAttribute("plantImgs", plantImgs);
-//		return searchService.plantImgs(plantsId);	
-//	}
-	
+ 
 	
 }

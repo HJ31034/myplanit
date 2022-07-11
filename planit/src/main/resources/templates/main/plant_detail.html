@@ -9,64 +9,6 @@
 	<link href="/css/search.css" rel="stylesheet">
 </th:block>
 
-<th:block layout:fragment="script">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-	 
-	window.dataLayer = window.dataLayer || [];
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	gtag('js', new Date());
-	gtag('config', 'UA-148463141-1');
- 
-	
-	 $.ajax({
-			type : 'get',
-			url : "/planit/plantDes",
-			contentType : "application/json; charset=UTF-8",
-			dataType : "json",
-			success : function(data) {
-				 var plantDes = '';
-				 
-		  	$.each(data, function(index, item) {
-		  		console.log('data: '+JSON.stringify(item)+' '+index);
-		  		if(index==0){
-	       var plantDes ='<div class="table-items-flex">'
-						 +'<li class="table-item"><img class="table-item-img"src="/assets/detail/imgs/ico-water-sprinkler@3x.png">'
-						 +'<h1 class="table-item-title">'+item.desTitle+'</h1>'
-						 +'<h2 class="table-item-desc">'+item.des+'</h2></li>'
-						 +'<li class="table-item"><img class="table-item-img"src="../assets/detail/imgs/ico-sun@3x.png">'
-				 $(".table-items").append(plantDes);
-		  	    }else if(index==1){
-		   var plantDes ='<h1 class="table-item-title">'+item.desTitle+'</h1>'
-					     +'<h2 class="table-item-desc">'+item.des+'</h2></li></div>';
-			     $(".table-item:nth-child(2)").append(plantDes);
-		  	    }else if(index==2){
-		   var plantDes ='<div class="table-items-flex">'
-						 +'<li class="table-item"><img class="table-item-img" src="../assets/detail/imgs/icon-water-drop@3x.png">'
-						 +'<h1 class="table-item-title">'+item.desTitle+'</h1>'
-						 +'<h2 class="table-item-desc">'+item.des+'</h2></li>'
-						 +'<li class="table-item" id="lastDes"><img class="table-item-img" src="../assets/detail/imgs/icon-pen@3x.png">';
-				 $(".table-items").append(plantDes);    	
-		  	    }else if(index==3){
-		   var plantDes ='<h1 class="table-item-title">'+item.desTitle+'</h1>'
-				        +'<h2 class="table-item-desc">'+item.des+'</h2></li></div>';
-		         $("#lastDes").append(plantDes);
-		  	    }
-			});  
-			
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-			console.log(jqXHR.responseText);
-		}
-	});
-	
-	</script>
-</th:block>
-
-
-<!-- <th:block th:fragment="headerFragment"></th:block> -->
 
 
 <th:block layout:fragment="content">
@@ -125,7 +67,7 @@
 						<div class="swiper-wrapper" id="swiper-wrapper-5ec6dfc4f4c55de3"
 							aria-live="off"
 							style="transform: translate3d(-3801.56px, 0px, 0px); transition-duration: 0ms;">
-							<div
+						<!-- 	<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate"
 								data-swiper-slide-index="0" role="group" aria-label="1 / 3">
 								<input class="image_current_number" type="hidden" value="1"><img
@@ -154,23 +96,19 @@
 									src="/assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
-								<a class="plant__image-link2"
-									href="https://www.instagram.com/p/B99HKLRg4vX/?utm_source=ig_web_copy_link"
-									target="_blank"></a>
-							</div>
-							<input class="image_total_number" type="hidden" value="3">
-							<div
+								
+							</div> -->
+							<input class="image_total_number" type="hidden" th:value="${imgsCnt}">
+							<div   th:each="imgs : ${plantImgs}"
 								class="swiper-slide plant__image-item swiper-slide-duplicate-active"
-								data-swiper-slide-index="0" role="group" aria-label="1 / 3">
+								data-swiper-slide-index="0" role="group">
 								<input class="image_current_number" type="hidden" value="1"><img
-									src="/assets/detail/imgs/1590393690857coosigner_92567911_146187826906443_248297367443387629_n.jpg"
+									th:src="@{${imgs.fileName}}"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
-								<a class="plant__image-link"
-									href="https://www.instagram.com/p/B-xzqFMhJVB/?utm_source=ig_web_copy_link"
-									target="_blank"></a>
+								
 							</div>
-							<div
+							<!-- <div
 								class="swiper-slide plant__image-item swiper-slide-duplicate-next"
 								data-swiper-slide-index="1" role="group" aria-label="2 / 3">
 								<input class="image_current_number" type="hidden" value="2"><img
@@ -223,7 +161,7 @@
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B99HKLRg4vX/?utm_source=ig_web_copy_link"
 									target="_blank"></a>
-							</div>
+							</div> -->
 						</div>
 						
 						
@@ -259,7 +197,6 @@
 					<!-- 식물 상세설명  -->
 					<div class="simpleinfo-table" >
 						<ul class="table-items">
-							 
 						</ul>
 					</div>
 				</section>
@@ -437,5 +374,75 @@
 		</div>
 	</div>
 </th:block>
+
+
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:inline="javascript">
+	 
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+	gtag('config', 'UA-148463141-1');
+ 
+	
+	 
+	/*<![CDATA[*/
+    var plantsId = /*[[${plantsId}]]*/ 'default';
+      /*]]>*/
+		 
+		 $.ajax({
+				type : 'get',
+				url : "/planit/plantDes?plantsId="+plantsId,
+				contentType : "application/json; charset=UTF-8",
+				dataType : "json",
+				success : function(data) {
+					 var plantDes = '';
+					 
+			  	$.each(data, function(index, item) {
+			  		console.log('data: '+JSON.stringify(item)+' '+index);
+			  		if(index==0){
+		       var plantDes ='<div class="table-items-flex">'
+							 +'<li class="table-item"><img class="table-item-img"src="/assets/detail/imgs/ico-water-sprinkler@3x.png">'
+							 +'<h1 class="table-item-title">'+item.desTitle+'</h1>'
+							 +'<h2 class="table-item-desc">'+item.des+'</h2></li>'
+							 +'<li class="table-item"><img class="table-item-img"src="../assets/detail/imgs/ico-sun@3x.png">'
+					 $(".table-items").append(plantDes);
+			  	    }else if(index==1){
+			   var plantDes ='<h1 class="table-item-title">'+item.desTitle+'</h1>'
+						     +'<h2 class="table-item-desc">'+item.des+'</h2></li></div>';
+				     $(".table-item:nth-child(2)").append(plantDes);
+			  	    }else if(index==2){
+			   var plantDes ='<div class="table-items-flex">'
+							 +'<li class="table-item"><img class="table-item-img" src="../assets/detail/imgs/icon-water-drop@3x.png">'
+							 +'<h1 class="table-item-title">'+item.desTitle+'</h1>'
+							 +'<h2 class="table-item-desc">'+item.des+'</h2></li>'
+							 +'<li class="table-item" id="lastDes"><img class="table-item-img" src="../assets/detail/imgs/icon-pen@3x.png">';
+					 $(".table-items").append(plantDes);    	
+			  	    }else if(index==3){
+			   var plantDes ='<h1 class="table-item-title">'+item.desTitle+'</h1>'
+					        +'<h2 class="table-item-desc">'+item.des+'</h2></li></div>';
+			         $("#lastDes").append(plantDes);
+			  	    }
+				});  
+				
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR.responseText);
+			}
+		});
+		
+ 
+	
+	
+	</script>
+</th:block>
+
+ 
+
+
+
 
 </html>
