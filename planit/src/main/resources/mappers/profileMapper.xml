@@ -16,33 +16,32 @@
 	</select>
 	
 	<select id="selectUserPost" parameterType="map" resultType="PostDTO">
- 		<if test='page.equals("main")'>
 		SELECT *
 		FROM (
-		</if>
-		SELECT * 
-		FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY p2.NO) NUM, p.*, f.REALFILENAME, u.PLANTSNAME 
-			FROM (SELECT *
-				FROM post
-				WHERE USERID = #{params.userId}) p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
-													LEFT OUTER JOIN POSTFILES p2 ON (p.POSTNO = p2.POSTNO)
-													LEFT OUTER JOIN FILES f ON p2.NO = f.NO 
+			SELECT ROW_NUMBER() OVER (ORDER BY a.createdt DESC) NUM, a.*
+			FROM (
+			SELECT p.*,u.PLANTSNAME , f.*, RANK () OVER (PARTITION BY p.POSTNO ORDER BY p2.NO) AS rank
+			FROM post p LEFT OUTER JOIN USERTOPLANTS u ON (p.plantscateno = u.plantscateno)
+						LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
+						LEFT OUTER JOIN FILES f ON p2.NO = f.NO
+					) a
+			WHERE RANK = 1 AND USERID = #{params.userId} AND PLANTSNAME = #{params.plantsName} AND DELETE_YN = 'N'
 		)
-		WHERE NUM = 1 AND PLANTSNAME = #{params.plantsName}
- 		<if test='page.equals("main")'>
-		)
+		<if test='page.equals("main")'>
 		WHERE NUM BETWEEN 1 AND 4
 		</if>
 	</select>
 	
 	
 	<select id="selectUserLikes" parameterType="String" resultType="PostDTO">
-		SELECT p.*, f.REALFILENAME  
-		FROM POST p RIGHT OUTER JOIN (SELECT * FROM LIKES WHERE USERID = #{userId}) l ON p.POSTNO = l.POSTNO
+		SELECT  * 
+		FROM (
+		SELECT p.*, f.*, RANK () OVER (PARTITION BY p.POSTNO ORDER BY p2.NO) AS rank
+		FROM POST p RIGHT OUTER JOIN (SELECT * FROM LIKES WHERE USERID = #{params.userId}) l ON p.POSTNO = l.POSTNO
 					LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
 					LEFT OUTER JOIN FILES f ON p2.NO = f.NO
-		ORDER BY p.createdt DESC
+					)
+		WHERE RANK = 1
 	</select>
 	
 	<select id="selectFollow" parameterType="FollowDTO" resultType="Integer">

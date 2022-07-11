@@ -31,6 +31,11 @@ public class PostServiceImpl implements PostService {
  
 		return postDto;
 	}
+	
+	@Override
+	public void deleteYN(Long postNo) {
+		postMapper.deleteYN(postNo);
+	}
 
 	@Override
 	public List<CommentDTO> getCommentDetail(Long postNo) {
@@ -113,5 +118,7 @@ public class PostServiceImpl implements PostService {
 	public List<FilesDTO> getFiles(Long postNo) {
 		return postMapper.getFiles(postNo);
 	}
+
+	
 
 }

@@ -14,6 +14,7 @@ import com.planit.domain.sns.WeatherLocationDTO;
 public interface PostService {
 	
 	public PostDTO getBoardDetail(Long postNo);
+	public void deleteYN(Long postNo);
 	public List<CommentDTO> getCommentDetail(Long postNo);
 	public void insertComment(CommentDTO parmas);
 	public FilesDTO insertFiles(FilesDTO params);
