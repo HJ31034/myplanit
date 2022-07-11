@@ -62,8 +62,8 @@
 
 						for (var i = 0; i < data.length; i++) {
 							str += "<div class='pic'>";
-							str += "<a href='#'><img src='/imgs/img_section/";
-							str += data[i].fileName;
+							str += "<a href='/planiter/post/read?postno=" + data[i].postNo + "' ><img src='/imgs/img_section/";
+							str += data[i].orgFileName;
 							str += "' alt=''></a>";
 							str += "</div>";
 						}
@@ -96,8 +96,8 @@
 
 						for (var i = 0; i < data.length; i++) {
 							str += "<div class='pic'>";
-							str += "<a href='#'><img src='/imgs/img_section/";
-							str += data[i].fileName;
+							str += "<a href='/planiter/post/read?postno=" + data[i].postNo + "' ><img src='/imgs/img_section/";
+							str += data[i].orgFileName;
 							str += "' alt=''></a>";
 							str += "</div>";
 						}
@@ -176,7 +176,7 @@
 				</div>
 				<div class="contents_container">
 					<div th:each="post : ${myUserPosts[index.index]}" class="pic">
-						<a th:href="@{/planiter/post/read(postno=${post.postNo})}" ><img th:src="@{/imgs/img_section/} + ${post.fileName}" alt=""></a>
+						<a th:href="@{/planiter/post/read(postno=${post.postNo})}" ><img th:src="@{/imgs/img_section/} + ${post.orgFileName}" alt=""></a>
 					</div>
 				</div>
 			</th:block>

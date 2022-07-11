@@ -37,9 +37,14 @@ footer {
 	margin: 5px 10px 0 10px;
 	color: #aaa;
 }
+#x-icon {
+	float: right;
+	margin: 5px 10px 0 10px;
+	color: #aaa;
+}
 .search-info {
 	float: left;
-	width: 95%;
+	width: 90%;
 	border: none;
 	outline: none;
 }
@@ -128,6 +133,26 @@ footer {
 	border-top: 1px dashed #ddd;
 	 margin-top: 5px; 
 	 margin-bottom: 5px; 
-	 width: 75%;
+	 width: 100%;
+}
+.first-filter {
+	width: 75%;
+}
+.second-filter{
+	width: 75%;
+	display: none;
+}
+.third-filter{
+	width: 75%;
+	display: none;
 }
 
+.active {
+	width: 75%;
+	display: block;
+}
+
+.btn_active {
+	border: 1px solid #9FCF62;
+	color: #9FCF62;
+}
