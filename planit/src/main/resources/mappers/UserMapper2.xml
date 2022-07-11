@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.main.UserMapper2">
+
+	<!-- 회원가입시 입력 내용 -->
+	<insert id="saveUser2"   parameterType="java.util.ArrayList">
+	
+
+	INSERT ALL
+	<foreach collection="keyId" item="item">
+	INTO USERKEYWORD (USERID, KEYID)
+	values(#{userId}, #{item})
+	</foreach>
+	
+	
+	SELECT * FROM dual
+	
+	</insert>
+
+
+
+</mapper>

@@ -7,12 +7,43 @@
   margin-bottom:100;
   
 }
+
+.container2{
+	max-width: 650px;
+  background-color: none;
+  position: center;
+  margin-top: 150;
+  margin-bottom:100;
+}
+
+.hi{
+max-width:auto;
+position:center;
+}
+
+.userinfo {
+
+  max-width: 1200px;
+  background-color: none;
+  position: center;
+  margin-top: 150;
+  margin-bottom:100;
+  
+}
 .needs-validation{ 
 
 margin-top:150;
 margin-left:150;
 position:center;
 }
+
+.needs-validation2{ 
+max-width:800px;
+margin-top:150;
+margin-left:150;
+position:center;
+}
+
 
 .col-md-7 .col-lg-8{
 	margin-top:120;
@@ -35,6 +66,16 @@ position:center;
 	padding-bottom:150px;
 }
 
+.blank2{
+	height: 100%;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.blank3{
+height: 100%;
+	padding-top:30px;
+	padding-bottom:30px;	
+}
 .centering{
 	padding-left:150px;
 }
