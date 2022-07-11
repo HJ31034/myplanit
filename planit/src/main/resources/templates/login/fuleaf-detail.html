@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="main/layout/basic">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+ 
 
 <meta charset="UTF-8">
 
@@ -10,6 +10,24 @@
 </th:block>
 
 <th:block layout:fragment="script">
+ 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="title" content="플립 fuleaf">
+<meta name="description" content="누구나 식물을 쉽게, 플립">
+<meta property="og:title" content="fuleaf">
+<meta property="og:type" content="website">
+<meta property="og:image"
+	content="https://huga.s3.ap-northeast-2.amazonaws.com/v3.1/images/public/og_image.png">
+<meta property="og:description" content="누구나 식물을 쉽게, 플립">
+<meta name="facebook-domain-verification"
+	content="z306y4gfbexatpne5yiz2jhoqz9ap6">
+<meta name="naver-site-verification"
+	content="5d4b56a3a62e1b5ec68c80c2bd729e7b799caf17">
+	
+	
+ 
 <script type="text/javascript" async=""
 	src="../assets/detail/analytics.js"></script>
 <script src="../assets/detail/js"></script>
@@ -21,11 +39,43 @@
 	gtag('js', new Date());
 	gtag('config', 'UA-148463141-1');
 </script>
+ 
 </th:block>
 
 </head>
 
 <th:block layout:fragment="content">
+ 
+ 
+<link rel="stylesheet" href="../assets/detail/jquery-ui.css">
+<link rel="shortcut icon" href="https://fuleaf.com/images/favicon.ico">
+<link rel="icon" href="https://fuleaf.com/images/favicon.ico">
+<link rel="stylesheet" href="../assets/detail/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../assets/detail/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="../assets/detail/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script src="../assets/detail/jquery.min.js"></script>
+<script src="../assets/detail/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script src="../assets/detail/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+<link href="../assets/detail/css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/detail/swiper-bundle.min.css">
+<script src="../assets/detail/jquery-1.12.4.js"></script>
+<script src="../assets/detail/jquery-ui.js"></script>
+<title>PLANiT</title>
+<link rel="stylesheet" href="../assets/detail/styles.css">
+</head>
+
+
+<body style="overflow-y: visible;">
  
 	<div id="curation__alarm-popup">
 		<div class="popup__dimed-flex">
@@ -402,7 +452,11 @@
 	
 	<script src="../assets/detail/swiper-bundle.min.js"></script>
 	<script src="../assets/detail/main.js"></script>
+ 
 </th:block>
+ 
+</body>
+ 
 
 
 </html>

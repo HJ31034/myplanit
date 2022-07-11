@@ -18,8 +18,7 @@
 			AND p2.PLANTSID = p3.PLANTSID
 	</select>
 	
-	
-	
+ 
 	
 		
 	<!-- plants Detail -->
@@ -45,4 +44,5 @@
 	 SELECT count(FILENAME) FROM PLANTFILE
 	 WHERE PLANTSID=#{plantsId} 
 	</select>
+ 
 </mapper>

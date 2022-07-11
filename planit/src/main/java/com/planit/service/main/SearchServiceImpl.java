@@ -23,7 +23,7 @@ public class SearchServiceImpl implements SearchService {
 		return searchMapper.selectKwdSearch(kwdId);
 	}
 
-	
+ 
 	
 	
 	/*	plants Detail */
@@ -42,4 +42,5 @@ public class SearchServiceImpl implements SearchService {
 	public int ImgsCnt(int plantsId) {
 		return searchMapper.ImgsCnt(plantsId);
 	}
+ 
 }

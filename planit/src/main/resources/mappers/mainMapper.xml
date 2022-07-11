@@ -48,9 +48,5 @@
 		WHERE NUM BETWEEN 1 AND 4
 	</select>
 	
-	
-	
-	
-
-	
+ 
 </mapper>

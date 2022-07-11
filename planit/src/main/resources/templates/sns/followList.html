@@ -40,9 +40,11 @@
                  
                  <div style="margin-top: -22px;">  
                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
+ 
                   <p class="followerCount" th:text="${info.followerCount}"/></a></div>
                  <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
                 <p class="followingCount" th:text="${info.followingCount}"/></a></div>
+ 
                 </div>
 <br><br>
 					<!-- ##### Single Widget Area ##### -->
@@ -55,7 +57,9 @@
                           
                             <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList"   >
                                <ol style="margin-left: -40px;  margin-top: -14px;" >
+ 
                                		 <li>#<a th:text="${cate.plantsName}" class="testt" style="font-family: 'Jua', sans-serif;  text-decoration: none; " href="/planiter/profile.do"></a> </li>
+ 
                               
                                </ol>
                             </ol>
@@ -83,7 +87,7 @@
  
  var page = 1;
 	  
-
+ 
 
      $(function(){  
 	    if(fol==1){
@@ -93,9 +97,7 @@
 			}
 	    page++;
 	  });   
-	    
-	   
-	    
+    
  $("#follow_section").scroll(function() { 
  
 		var innerHeight = $(this).innerHeight(); 
@@ -114,7 +116,7 @@
 			 page++;
 			
 		} 
-		 console.log('innerHeigh!!!t: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+ 
 		
 	});
  
@@ -132,7 +134,7 @@
 		  			contentType : "application/json; charset=UTF-8",
 		  			dataType : "json",
 		  			success : function(data) {
-		  				 console.log('following List: '+data);
+ 
 		  				 var followerList = "";
 		  				  $.each(data, function(index, item) { // 데이터 =item
 		  					 

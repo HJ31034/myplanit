@@ -25,6 +25,7 @@ public class PostServiceImpl implements PostService {
 	public PostDTO getBoardDetail(Long postNo) {
 		PostDTO postDto = postMapper.selectPostDetail(postNo);
  
+ 
 		postDto.setOrgFileNameArr(postDto.getOrgFileName().split(","));
 		postDto.setRealFileNameArr(postDto.getRealFileName().split(","));
  

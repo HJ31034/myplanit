@@ -23,7 +23,10 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.6' /* Gson */
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1' /*json*/
 	
-	implementation 'org.springframework.session:spring-session-core' /*세션처리*/
+ 
+ 
+	implementation 'org.springframework.session:spring-session-core' /*세션처리*/ 
+ 
 	implementation 'org.springframework.boot:spring-boot-starter-security' /*보안처리*/
 	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.springframework.boot:spring-boot-starter-validation' /*validation*/
@@ -41,4 +44,11 @@ dependencies {
 }
 tasks.named('test') {
 	useJUnitPlatform()
+ 
 }
+ 
+}
+
+ 
+
+ 

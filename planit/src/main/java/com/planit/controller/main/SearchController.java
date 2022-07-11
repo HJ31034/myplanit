@@ -2,12 +2,15 @@ package com.planit.controller.main;
 
 import java.util.List;
 
+ 
 import javax.servlet.http.HttpServletRequest;
-
+ 
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+ 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,15 @@ import com.planit.domain.sns.FollowDTO;
 import com.planit.service.main.MainService;
 import com.planit.service.main.SearchService;
 import com.planit.service.sns.snsService;
+ 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.planit.domain.main.PlantsDTO;
+import com.planit.service.main.MainService;
+import com.planit.service.main.SearchService;
+ 
 
 @Controller
 @RequestMapping("/planit")
@@ -54,6 +66,7 @@ public class SearchController {
 		
 		return "main/search";
 	}
+ 
 	
 	
 	
@@ -80,5 +93,5 @@ public class SearchController {
 		return searchService.plantDes(plantsId);	
 	}
  
-	
+ 
 }

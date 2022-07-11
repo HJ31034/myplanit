@@ -14,7 +14,8 @@ public class SessionController {
 	
 	public void createSession(Object value, HttpServletResponse response) {
 		//세션생성 
-	 
+ 
+ 
 		String session=UUID.randomUUID().toString();
 		sessionStorage.put(session, value);
 	}
