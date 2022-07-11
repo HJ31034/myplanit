@@ -21,8 +21,8 @@ import java.util.UUID;
 
 @Controller
 public class FileController {
-//    @Value("${planit.upload.path}")
-//    private String uploadPath;
+    @Value("${planit.upload.path}")
+    private String saveDir;
 
 	@Autowired
 	private PostService postService;
@@ -30,7 +30,7 @@ public class FileController {
 	@PostMapping("/planiter/post/file/upload")
     public String uploadFile(@RequestParam("uploadFiles") MultipartFile[] files, Model model) throws IllegalStateException, IOException {
 		List<FilesDTO> list = new ArrayList<>();
-		String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section/";
+		//String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section/";
 
 		for (MultipartFile file : files) {
 			if(!file.isEmpty()) {
