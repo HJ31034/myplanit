@@ -24,12 +24,9 @@ public class MainController {
 	@GetMapping(value = "/planit")
 	public String main(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		
 		String id = null;
-		if (session.getAttribute("info") != null)
+		if (session.getAttribute("id") != null)
 			id = session.getAttribute("id").toString();
-		 
-		System.out.println("main id: "+id);
 		
 		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0));
 		model.addAttribute("users", mainService.selectUsers(id));
@@ -42,9 +39,5 @@ public class MainController {
 	public List<PlantKeywordDTO> kwd(@RequestParam("keyId") int keyId) {
 		return mainService.selectPlantKeyword(keyId);
 	}
-	
-	
 
-	 
-	
 }
