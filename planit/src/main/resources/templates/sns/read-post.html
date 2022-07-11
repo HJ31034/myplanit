@@ -30,6 +30,19 @@
 		</div>
 
 		<div class="post_box_right_read">
+			<div class="profile_box">
+				<span class="profile_box_img">
+					<img th:src="${'/imgs/img_section/' + accountProfile.profileImg}"/>					
+				</span>
+				<span>
+					<a href="#" th:text="${post.userId}"></a>
+					<a href="#" th:text="${accountProfile.accDescription}"></a>
+				</span>
+				<span>
+					<a href="th:href="@{/planiter/post/modify}"">수정</a>
+					<a href="th:href="@{/planiter/post/delete}"">삭제</a>
+				</span>
+			</div>
 			<div class="read_box">
 				<p th:text="*{postContent}">글읽기</p>
 			</div>
