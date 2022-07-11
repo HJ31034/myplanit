@@ -2,6 +2,7 @@
 <!-- saved from url=(0048)file:///Users/johndoe/Downloads/user-update.html -->
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="main/layout/basic2"
 	lang="en">
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -107,60 +108,21 @@
     <!-- Custom styles for this template -->
     <link href="../assets/dist/sidebars.css" rel="stylesheet">
     <link href="../assets/dist/register.css" rel="stylesheet">
-  
+  <link href="../assets/dist/signin.css" rel="stylesheet">
   
 
   </head>
-  <body >
+  <th:block layout:fragment="content">
 
 
 <th:block th:if="${session.userdto !=null}">
 <main>
+ <div class="container"> 
   
-  <h1 class="visually-hidden">Sidebars examples</h1>
-
- 
-
- 
-
-  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
-    <a href="file:///" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-5 fw-semibold">PLANIT</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-          Home
-        </button>
-        <div class="collapse show" id="home-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/planit" class="link-dark rounded">홈으로 돌아가기</a></li>
-            <li><a href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#" class="link-dark rounded">SNS 페이지 이동</a></li>
-            <li><a href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#" class="link-dark rounded">쇼핑몰 보러가기</a></li>
-          </ul>
-        </div>
-      </li>
-      
-      
-      <li class="border-top my-3"></li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-          Account
-        </button>
-        <div class="collapse" id="account-collapse">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/planit/userInfo" class="link-dark rounded">기본정보 보기</a></li>
-            <li><a href="/planit/password.do" class="link-dark rounded">비밀번호 변경</a></li>
-            <li><a href="file:///Users/johndoe/Downloads/bootstrap-5.1.3-examples%202/sidebars/index.html#" class="link-dark rounded">......</a></li>
-            <li><a href="/logout" class="link-dark rounded">로그아웃</a></li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  
+  <br>
+				<br>
+				<br>
+				<br>
     
   
 
@@ -169,13 +131,13 @@
 
   <div class="row g-5">
       <br>
-    <div class="col-md-7 col-lg-8">
-      <h4 class="mb-3">회원정보 수정</h4>
+    <div class="hi">
+      
 
 
-      <form class="needs-validation" novalidate="" method="post">
+      <form class="form-register" novalidate="" method="post">
         <div class="row g-3">
-          
+          <h4 class="mb-3">회원정보 수정</h4>
           <div class="col-12">
             <label for="address2" class="form-label">이름</label>
             <input type="text"  class="form-control" id="userName" name="userName"
@@ -227,8 +189,91 @@
         </div>
 
        
-
-        
+<br>
+        	<div class="col-12">
+			
+            <label class="form-check-label" for="same-address">관심식물(필수)</label><br>
+            
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios0" value="0" >
+  		<label class="form-check-label" >
+    	잘 모르겠음 
+  		</label>   
+  		<br> 
+            
+           
+             
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios1" value="1" >
+  		<label class="form-check-label" >
+    	잎을 감상하는  
+  		</label>
+            
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios2" value="2" >
+  		<label class="form-check-label" >
+    	꽃을 감상하는  
+  		</label>
+  		
+         <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios3" value="3">
+  		<label class="form-check-label">
+    	열매를 감상하는  
+  		</label>   
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios4" value="4">
+  		<label class="form-check-label" >    	다육/선인장 
+  		</label>
+          <br>
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  초보자용  
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  선물하기 좋은
+  		</label>  
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  공기정화
+  		</label>  
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  빛이적어도 되는
+  		</label>  
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  향기나는
+  	
+  		</label>  
+  		
+  		  <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  반려동물이 안전한
+  		</label>  
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  목대있는
+  		</label>  
+  		
+  		
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  흙이 필요없는
+  		</label>  
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  덩굴로 자라는
+  		</label>  
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  늘어져 자라는
+  		</label>  
+            
+                    <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  몸통이 납작한
+  		</label>  
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios" value="">
+  		<label class="form-check-label" >  가시가 없는
+  		</label>  
+  		
+  		
+  		
+          </div>
+           
 
         
 
@@ -247,15 +292,19 @@
       <button class="w-100 btn btn-lg btn-primary" type="submit"
 				style="background-color: #9FCF62; border-color: #9FCF62;">수정하기
 				</button>
+				<div class="blank2"></div>
+<div class="blank3"></div>
+
       </form>
       
     </div>
   </div>
   
 
-  
+ </div> 
 </main>
 
+</th:block> <!-- 로그인 관련 -->
 </th:block>
 <th:block th:if="${session.userdto == null}">
 <h1>올바르지 않은 접근입니다. 로그인 화면으로 이동해 주세요</h1>

@@ -16,6 +16,7 @@ import com.planit.domain.sns.UserToPlantsDTO;
 public interface PostMapper {
 	
 	public PostDTO selectPostDetail(Long postNo);
+	public void deleteYN(Long postNo);
 	public List<CommentDTO> commentList(Long postNo);
 	public void insertComment(CommentDTO params);
 	public Long insertPost(PostDetailDTO params);
