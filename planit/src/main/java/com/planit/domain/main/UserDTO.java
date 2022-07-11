@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -12,27 +13,28 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@AllArgsConstructor
+
+
+
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor(access=AccessLevel.PROTECTED)
 public class UserDTO implements UserDetails {
 	
-	
-
 	private static final long serialVersionUID = 1L;
 
 	
-	
-	@Size(min=5, max=12)
-	private String userId;
-	
-
 	@NotBlank
 	private String userName;
 	
-	
+	@Size(min=5, max=12)
+	@Pattern(regexp="(?=.*[a-z]).{5,12}", message="영문 다섯자리 이상 12자리 이하")
+	private String userId;
 	
 	
 	
@@ -47,11 +49,20 @@ public class UserDTO implements UserDetails {
 	private String email;
 	
 	
-	private String regdate;
-	private String userAuth;
+	
+	
 	private String phone;
+	
+	//private Long keyId;
+	private String regdate;
+	
+	private String userAuth;
+	
+	@NotEmpty(message="필수 사항입니다.")
+	private Long[] keyId;
+	
 
-
+	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -186,6 +197,44 @@ public class UserDTO implements UserDetails {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public Long[] getKeyId() {
+		return keyId;
+	}
+
+
+
+	public void setKeyIds(Long[] keyId) {
+		this.keyId = keyId;
+	}
+
+
+
+	
+
+	
+	
+//}
+
+
+
+	
+
+
+
+	
+
+
+	
+	
+	
+
+
+	
+	
+
+
+
 
 
 

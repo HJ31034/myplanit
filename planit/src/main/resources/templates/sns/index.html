@@ -10,7 +10,7 @@
 <th:block layout:fragment="content">
 
         <div class="inner">
-
+        
             <div class="contents_box">
             			  
             			 <div th:if="${keyFieldSearch != null}">
@@ -32,9 +32,11 @@
                           
                           <span th:each="img : ${ImgPost}" id="list">
  
+ 
                          	 <a th:href="@{/planiter/post/read(postno=${img.postNo},page=${page},keyField=${keyField},keyword=${keyword})}" style="text-decoration:none;" >
                            		 <img th:src="@{${'/imgs/img_section/'+img.orgFileName}}" alt="imgPost" id="imgPost"
 
+ 
                            	      class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover">	</a>   
                           </span>
                            
@@ -99,7 +101,6 @@
  <th:block layout:fragment="script">  
 	<script type="text/javascript">
    
-
 	 var page = 2;
  
 	 
@@ -135,8 +136,10 @@
 	  				success : function(data) {
 	  				$.each(data, function(index, item) {
  
+ 
 	  					$("#nextImgPost").append('<a href="/planiter/post/read?postno='+item.postNo+'&page='+page+'&keyField='+keyField+'&keyword='+keyword+'" style="text-decoration:none;" >'
 	  					+'<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.orgFileName+'">');	
+ 
  
 	  				});
 	  				
@@ -152,6 +155,5 @@
  
 	</script>
 </th:block>
-
  
 </html> 
