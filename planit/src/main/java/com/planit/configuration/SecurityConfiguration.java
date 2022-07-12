@@ -65,8 +65,10 @@ public class SecurityConfiguration {
         	.passwordParameter("password")
             .loginPage("/login").permitAll() //로그인 페이지 링크
             .loginProcessingUrl("/login") //로그인 처리 url
-            .defaultSuccessUrl("/user_access") //로그인 성공시 이동하는 페이지 등록
-            .failureUrl("/login")
+            .defaultSuccessUrl("/login.do") //로그인 성공시 이동하는 페이지 등록
+            .failureUrl("/loginFail")
+            
+            .failureHandler(loginFailHandler()) //로그인 실패 처리 핸들러
             .and()
         .logout()
            .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //로그아웃 경로를 지정
@@ -89,7 +91,10 @@ public class SecurityConfiguration {
 //   }
 //   
    
-   
+@Bean
+public LoginFailHandler loginFailHandler() {
+	return new LoginFailHandler();
+}
    
 
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {

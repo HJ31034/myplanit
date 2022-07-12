@@ -39,7 +39,7 @@ public interface UserMapper {
 	public void infoCh(UserDTO userdto);
 
 	//public int findByUserId(String userId);
-
+	public void interest(UserDTO userdto);
 	
 	//시큐리티를 통한 로그인 
 	public UserDTO findByUsername(@Param("userId") String userId);
