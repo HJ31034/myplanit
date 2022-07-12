@@ -78,13 +78,7 @@ public class UserController {
 		
 		
 		userService.joinUser(userdto);
-		//userService.joinUser2(userdto2);
-		
-//		List<UserDTO> check = new ArrayList<UserDTO>();
-//
-//        for(int i=0;i<check.size();i++) {
-//
-//        	}
+
 
 		System.out.println("이거 보이면 콘솔에 찍히면 성공 ");
 		System.out.println("회원가입dto:" + userdto);
@@ -116,24 +110,35 @@ public class UserController {
 	// 로그인 폼
 	@GetMapping("login")
 	public String loginForm() {
-		// System.out.println("login page");
-
-		return "/login/login2";
+		return "/login/loginForm";
 	}
+	// 로그인 실패폼
+		@GetMapping("loginFail")
+		public String loginFailForm(@RequestParam(value="error", required=false) String error,
+				@RequestParam(value="exception", required=false) String exception,
+				Model model) {
+			// System.out.println("login page");
+			model.addAttribute("error", error);
+			model.addAttribute("exception", exception);
+			return "/login/loginFail";
+		}
 
 	// 시큐리티 로그인 처리 ;;;
-	@GetMapping("/user_access")
+	@GetMapping("/login.do")
 	public String userAccess(Model model, Authentication authentication, HttpServletRequest request) {
 		// Authentication 객체를 통해 유저 정보를 가져올 수 있다.
 		UserDTO userdto = (UserDTO) authentication.getPrincipal(); // userDetail 객체를 가져옴
 		if (userdto == null) {
 			model.addAttribute("msg", "아이디와 비번호를 다시 입력해 주세요!");
-			return "redirect:/login";
+			return "redirect:/loginFail";
+			
+			//user_access
 		}
 		model.addAttribute("info", userdto.getUsername() + "님" + "로그인은 성공이요"); // 유저 아이디
 		HttpSession sessionInfo = request.getSession();
 		sessionInfo.setAttribute(SessionController.loginSession, sessionInfo);
 		sessionInfo.setAttribute("session", sessionInfo);
+		//sessionInfo.setAttribute("id", userdto.getUserId());
 		sessionInfo.setAttribute("userdto", userdto);
 		return "redirect:/planit";
 	}
@@ -163,7 +168,7 @@ public class UserController {
 		return "/login/update/userInfo";
 	}
 
-	// 회원정보 수정
+	// 회원정보 수정 페이지
 	@GetMapping("/planit/edit.do")
 	public String editUserPage(HttpSession session, UserDTO userdto) throws Exception {
 
@@ -178,10 +183,27 @@ public class UserController {
 	public String editUser(HttpSession session, @ModelAttribute UserDTO userdto, Model model) throws Exception {
 		session.getAttribute("userdto");
 		userService.infoCh(userdto);
+	
 		session.setAttribute("userdto", userdto);
 
 		return "redirect:/planit/userInfo";
 
+	}
+	//관심항목 
+	@GetMapping("/planit/interest.do")
+	public String interest(HttpSession session) {
+		session.getAttribute("userdto");
+		return"/login/update/user-interest";
+	}
+	
+	//관심항목 수정 동작
+	@PostMapping("/planit/interest.do")
+	public String interestEdit(HttpSession session, @ModelAttribute UserDTO userdto) {
+		session.getAttribute("userdto");
+		userService.interest(userdto);
+		
+		session.setAttribute("userdto", userdto);
+		return"redirect:/planit/userInfo";
 	}
 
 	// 비밀번호 변경 페이지

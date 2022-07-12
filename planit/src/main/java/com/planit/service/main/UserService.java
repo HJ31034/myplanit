@@ -116,6 +116,10 @@ public class UserService implements UserDetailsService {
 		System.out.println("회원정보 수정 작동 ?");
 
 	}
+	
+	public void interest(UserDTO userdto) {
+		userMapper.interest(userdto);
+	}
 
 
 	
