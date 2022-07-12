@@ -2,6 +2,7 @@ package com.planit.controller.sns;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,8 +96,6 @@ public class PlaniterController {
 	@RequestMapping(value = "/nextImgPost")
 	public  List<PostDTO> nextImgPost(@RequestParam(value="page", required = false) String page,
 									  @RequestParam(value="keyField",required = false) String keyField,
-
- 
 									  @RequestParam(value="keyword", required = false) String keyword, HttpServletRequest request,Model model) {
 
  
