@@ -48,5 +48,19 @@
 		WHERE NUM BETWEEN 1 AND 4
 	</select>
 	
+	<!-- 식물 추천 리스트 -->
+	<select id="selectPlantRecommend" parameterType="String" resultType="PlantsDTO">
+	SELECT a.*
+	FROM (
+		SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, p3.*
+		FROM PLANTKEYWORD p, PLANTSTOKEYWORD p2, PLANTS p3
+		WHERE p.KEYID IN (SELECT u.KEYID 
+							FROM USERKEYWORD u 
+							WHERE USERID = #{userId})
+				AND p.KEYID = p2.KEYID
+				AND p2.PLANTSID = p3.PLANTSID
+		) a
+	WHERE rn <![CDATA[ <= ]]> 6
+	</select>
  
 </mapper>

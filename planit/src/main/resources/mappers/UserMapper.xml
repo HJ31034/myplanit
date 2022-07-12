@@ -3,48 +3,50 @@
 <mapper namespace="com.planit.mapper.main.UserMapper">
 
 	<!-- 회원가입시 입력 내용 -->
-	<insert id="saveUser" parameterType="java.util.ArrayList"  >
-		<!--  INSERT INTO
-		USERS(USERID, PASSWORD, USERNAME, EMAIL,
-		PHONE, REGDATE, USERAUTH)
-		VALUES(#{userId}, #{password}, #{userName}, #{email}, #{phone}, SYSDATE, #{userAuth})
-  -->
+	<insert id="saveUser" parameterType="java.util.ArrayList">
+		<!-- INSERT INTO USERS(USERID, PASSWORD, USERNAME, EMAIL, PHONE, REGDATE, 
+			USERAUTH) VALUES(#{userId}, #{password}, #{userName}, #{email}, #{phone}, 
+			SYSDATE, #{userAuth}) -->
 
 
-	INSERT ALL
-	
-	INTO USERS(userid, password, username, regdate, phone, email, userauth)
-	VALUES (#{userId}, #{password}, #{userName}, SYSDATE, #{phone},
-	#{email}, #{userAuth})
-	
-	Into account(userid)
-	values (#{userId})
-	
-	
-	<foreach collection="keyId" item="item">
-	INTO USERKEYWORD (USERID, KEYID)
-	values(#{userId}, #{item})
-	</foreach>
-	
-	
-	SELECT * FROM dual 
-	
+		INSERT ALL
+
+		INTO USERS(userid, password, username, regdate, phone,
+		email, userauth)
+		VALUES (#{userId}, #{password}, #{userName}, SYSDATE,
+		#{phone},
+		#{email}, #{userAuth})
+
+		Into account(USERID, ACCDESCRIPTION,
+		PROFILEIMG, FOLLOWERCOUNT,
+		FOLLOWINGCOUNT)
+		values (#{userId}, '프로필을 업데이트
+		주세요.','thumb.png', 0,0)
+
+
+		<foreach collection="keyId" item="item">
+			INTO USERKEYWORD (USERID,
+			KEYID)
+			values(#{userId}, #{item})
+		</foreach>
+
+
+		SELECT * FROM dual
+
 	</insert>
 
 
 
 	<!-- login with security -->
 	<select id="findByUsername" resultType="UserDTO">
-		
+
 		SELECT u.*
-		 FROM USERS u
-		WHERE USERID = #{userId} 
-		
-		<!-- SELECT a.*, b.keyid
- 		FROM (SELECT u.*
-		 FROM USERS u
-		WHERE USERID = #{userId}) a, userkeyword b -->
-		
+		FROM USERS u
+		WHERE USERID = #{userId}
+
+		<!-- SELECT a.*, b.keyid FROM (SELECT u.* FROM USERS u WHERE USERID = #{userId}) 
+			a, userkeyword b -->
+
 	</select>
 
 	<!-- 아이디 중복체크 -->
@@ -54,13 +56,15 @@
 		WHERE USERID = #{userId}
 	</select>
 
-	
+
 
 	<!-- 회원정보 보기 -->
 	<select id="userInfo" resultType="UserDTO">
-		SELECT USERID, USERNAME, EMAIL, PHONE
+		SELECT USERID, USERNAME, EMAIL,
+		PHONE
 		FROM USERS
 		WHERE USERID = #{userId, jdbcType=VARCHAR}
+
 
 	</select>
 
@@ -68,13 +72,28 @@
 	<update id="pwdCh">
 		UPDATE USERS
 		SET PASSWORD = #{password}
-		WHERE USERID = #{userId}
+		WHERE USERID =
+		#{userId}
 	</update>
 
-	<update id="infoCh">
-		UPDATE USERS
+	<update id="infoCh" >
+		UPDATE ALL
+		USERS
 		SET USERNAME=#{userName}, EMAIL=#{email}, PHONE=#{phone}
 		WHERE USERID=#{userId}
+
+		
+	</update>
+
+	<update id="interest" parameterType="java.util.ArrayList">
+
+		<foreach collection="keyId" item="item" index="index">
+			Update
+			USERKEYWORD
+			SET KEYID = #{item}
+			WHERE USERID=#{userId, jdbcType=VARCHAR}
+		</foreach>
+		SELECT * FROM DUAL
 	</update>
 
 </mapper>

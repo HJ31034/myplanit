@@ -140,49 +140,93 @@
 
       <form class="form-register" novalidate="" method="post">
         <div class="row g-3">
-          <h4 class="mb-3">회원정보 수정</h4>
-          <div class="col-12">
-            <label for="address2" class="form-label">이름</label>
-            <input type="text"  class="form-control" id="userName" name="userName"
-            th:value="${session.userdto.userName}" placeholder="이름" >
-          </div>
-
-          <div class="col-12">
-            <label for="username" class="form-label">아이디</label>
-            <div class="input-group has-validation">
-              <span class="input-group-text">@</span>
-              <input type="text" class="form-control" name="userId"
-              th:value="${session.userdto.userId}" id="userId" placeholder="" required="" readonly >
-            <div class="invalid-feedback">
-                Your username is required.
-              </div>
-            </div>
-          </div>
+          <h4 class="mb-3">관심항목 수정</h4>
+       
+       
+        		<div class="col-12">
+			
+            <label class="form-check-label" for="same-address">관심식물</label><br>
+            
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios0" value="0" >
+  		<label class="form-check-label" >
+    	잘 모르겠음 
+  		</label>   
+  		<br> 
+            
+           
+             
+        <input class="form-check-input" type="checkbox" name="keyId" id="keyId1" value="1" >
+  		<label class="form-check-label" >
+    	잎을 감상하는  
+  		</label>
+            
+        <input class="form-check-input" type="checkbox" name="keyId" id="keyId2" value="2" >
+  		<label class="form-check-label" >
+    	꽃을 감상하는  
+  		</label>
+  		
+         <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios3" value="3">
+  		<label class="form-check-label">
+    	열매를 감상하는  
+  		</label>   
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios4" value="4">
+  		<label class="form-check-label" >    	다육/선인장 
+  		</label>
+          <br>
           
          
- 
-          <div class="col-12">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email"
-              th:value="${session.userdto.email}"
-            id="email" placeholder="you@example.com" >
-            <div class="invalid-feedback">
-              Please enter a valid email address for updates.
-            </div>
-          </div>
-
-          <div class="col-12">
-            <label for="phone" class="form-label">휴대폰</label>
-            <input type="tel" class="form-control" id="phone" 
-            th:value="${session.userdto.phone}" name="phone"
-            maxlength="13"
-            placeholder="휴대폰 번호(-없이)" >
-            <div class="alert alert-success" id="alert-success">숫자만 입력 하시면 됩니다.</div>
-			<div class="alert alert-danger" id="alert-danger">휴대폰 번호를 정확히 입력해 주세요.</div>
-          	
-            <div class="invalid-feedback">
-              Please enter a valid phone-number for updates.
-            </div>
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios5" value="5">
+  		<label class="form-check-label" >  초보자용  
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios6" value="6">
+  		<label class="form-check-label" >  선물하기 좋은
+  		</label>  
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios7" value="7">
+  		<label class="form-check-label" >  공기정화
+  		</label>  
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios8" value="8">
+  		<label class="form-check-label" >  빛이적어도 되는
+  		</label>  
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios9" value="9">
+  		<label class="form-check-label" >  향기나는
+  	
+  		</label>  
+  		
+  		  <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios10" value="10">
+  		<label class="form-check-label" >  반려동물이 안전한
+  		</label>  
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios11" value="11">
+  		<label class="form-check-label" >  목대있는
+  		</label>  
+  		
+  		
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios12" value="12">
+  		<label class="form-check-label" >  흙이 필요없는
+  		</label>  
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios13" value="13">
+  		<label class="form-check-label" >  덩굴로 자라는
+  		</label>  
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios14" value="39">
+  		<label class="form-check-label" >  늘어져 자라는
+  		</label>  
+            
+                    <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios15" value="40">
+  		<label class="form-check-label" >  몸통이 납작한
+  		</label>  
+  		
+  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios16" value="41">
+  		<label class="form-check-label" >  가시가 없는
+  		</label>  
+  		
+  		
+  		
           </div>
     
 		
