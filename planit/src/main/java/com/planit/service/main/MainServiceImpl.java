@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.planit.domain.main.PlantKeywordDTO;
+import com.planit.domain.main.PlantsDTO;
 import com.planit.domain.sns.AccountDTO;
 import com.planit.domain.sns.PostDTO;
 import com.planit.mapper.main.MainMapper;
@@ -30,5 +31,11 @@ public class MainServiceImpl implements MainService {
 	public List<PostDTO> selectPost() {
 		return mainMapper.selectPost();
 	}
+
+	@Override
+	public List<PlantsDTO> selectPlantRecommend(String userId) {
+		return mainMapper.selectPlantRecommend(userId);
+	}
+
 
 }
