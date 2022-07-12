@@ -39,6 +39,7 @@ public class PlaniterController {
 	
 	// SNS메인 게시물리스트 및 검색처리
 	@RequestMapping(value = "/")
+ 
     public String mainSnsPostList(Model model,
 			@RequestParam(value="keyField",required = false) String keyField,
 			@RequestParam(value="keyword", required = false) String keyword, HttpSession session) {
@@ -53,8 +54,6 @@ public class PlaniterController {
 			USERID="guest";
 		}
 		
-        System.out.println("mainSnsPostList USERID: "+ USERID);
-		 
         
 		if(keyword==null||keyField==null) {
 			
@@ -96,8 +95,10 @@ public class PlaniterController {
 	@RequestMapping(value = "/nextImgPost")
 	public  List<PostDTO> nextImgPost(@RequestParam(value="page", required = false) String page,
 									  @RequestParam(value="keyField",required = false) String keyField,
-									  @RequestParam(value="keyword", required = false) String keyword, Model model) {
-  
+
+ 
+									  @RequestParam(value="keyword", required = false) String keyword, HttpServletRequest request,Model model) {
+
  
 		 
 		System.out.println("nextImgPost keyword: "+keyword);

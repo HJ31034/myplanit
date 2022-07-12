@@ -1,5 +1,6 @@
- 
-package com.planit.domain.sns;
+
+ package com.planit.domain.sns;
+
 
 import lombok.Data;
 
@@ -8,5 +9,7 @@ public class FilesDTO {
     private long no;
     private String orgFileName;
     private String realFileName;
- 
+
 }
+ 
+
