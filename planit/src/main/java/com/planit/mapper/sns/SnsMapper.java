@@ -19,6 +19,9 @@ public interface SnsMapper {
 	public List<PostDTO> selectImgPost(HashMap params);
 	public List<PostDTO> searchSNS(@Param("keyField") String keyField,@Param("keyword") String keyword,
 			@Param("startNum") int startNum, @Param("endNum") int endNum);
+	public List<AccountDTO> searchAccount(@Param("keyField") String keyField,@Param("keyword") String keyword,
+			@Param("startNum") int startNum, @Param("endNum") int endNum);
+	
 	public int selectImgPostCnt();
 	
 	public List<AccountDTO> selectMainAccINfo(String USERID);
@@ -35,14 +38,7 @@ public interface SnsMapper {
 	
 	public int updateFollowcount(@Param("userId") String userId, @Param("check") String check);
  	
-	
-	
-	
-	
-	
-	
-	
-	 
+
 	
  
 }

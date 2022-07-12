@@ -135,6 +135,7 @@ public class UserController {
 		sessionInfo.setAttribute(SessionController.loginSession, sessionInfo);
 		sessionInfo.setAttribute("session", sessionInfo);
 		sessionInfo.setAttribute("userdto", userdto);
+		sessionInfo.setAttribute("id", userdto.getUserId());
 		return "redirect:/planit";
 	}
 

@@ -52,7 +52,7 @@
             join usertoplants u
        	    on u.plantscateno=p.plantscateno
  
-            where u.plantsname=#{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
+            where u.plantsname LIKE #{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
  
  		    order by likescount desc)
             WHERE rn > #{startNum}
@@ -82,39 +82,29 @@
  		    from postfiles
  		    group by postno)
    		    and p.postcontent LIKE #{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
- 
-   		  
-             join files fs
+            join files fs
             on pf.no=fs.no
  		    order by likescount desc)
  		    WHERE rn > #{startNum}
 		]]>
 			</when>
-			<when test='keyField.equals("postcontent")'>
-		<![CDATA[ 
-			 select rn,no,orgfilename,likescount,postno,postcontent from
-			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent
- 		    from postfiles pf join post p
- 		    on p.postno=pf.postno
- 		    and no in
- 		    (select
- 		    min(no)
- 		    from postfiles
- 		    group by postno)
-   		    and p.postcontent=#{keyword} and rownum <= #{startNum} + #{endNum} and p.delete_yn='N'
- 
- 
-             join files fs
-            on pf.no=fs.no
- 		    order by likescount desc)
- 		    WHERE rn > #{startNum}
-		]]>
-			</when>
+			 
 		</choose>
 		<![CDATA[
 		]]>
 		</select>
+	 
+	 
+	<!--  <select id="searchAccount" resultType="AccountDTO">
+		<![CDATA[ 
+		 select rn,userid,profileimg from
+        (select  rownum rn, a.userid, a.profileimg
+         from account a
+         where a.userid like #{keyword} and rownum <= #{startNum} + #{endNum})
+         WHERE rn > #{startNum}		 
+		]]>
+		</select> -->
+	 
 	 
 <!-- 전체 게시물 수  -->
 <select id="selectImgPostCnt" resultType="int">
