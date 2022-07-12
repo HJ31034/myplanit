@@ -1,93 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="main/layout/basic">
  
-
 <meta charset="UTF-8">
 
 <th:block layout:fragment="css">
-	<link href="../../css/search.css" rel="stylesheet">
+	<link href="/css/search.css" rel="stylesheet">
 </th:block>
 
-<th:block layout:fragment="script">
- 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="title" content="플립 fuleaf">
-<meta name="description" content="누구나 식물을 쉽게, 플립">
-<meta property="og:title" content="fuleaf">
-<meta property="og:type" content="website">
-<meta property="og:image"
-	content="https://huga.s3.ap-northeast-2.amazonaws.com/v3.1/images/public/og_image.png">
-<meta property="og:description" content="누구나 식물을 쉽게, 플립">
-<meta name="facebook-domain-verification"
-	content="z306y4gfbexatpne5yiz2jhoqz9ap6">
-<meta name="naver-site-verification"
-	content="5d4b56a3a62e1b5ec68c80c2bd729e7b799caf17">
-	
-	
- 
-<script type="text/javascript" async=""
-	src="../assets/detail/analytics.js"></script>
-<script src="../assets/detail/js"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	gtag('js', new Date());
-	gtag('config', 'UA-148463141-1');
-</script>
- 
-</th:block>
 
-</head>
 
 <th:block layout:fragment="content">
- 
- 
-<link rel="stylesheet" href="../assets/detail/jquery-ui.css">
-<link rel="shortcut icon" href="https://fuleaf.com/images/favicon.ico">
-<link rel="icon" href="https://fuleaf.com/images/favicon.ico">
-<link rel="stylesheet" href="../assets/detail/all.css"
-	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="../assets/detail/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<script src="../assets/detail/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
-<script src="../assets/detail/jquery.min.js"></script>
-<script src="../assets/detail/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<script src="../assets/detail/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
-<link href="../assets/detail/css" rel="stylesheet">
-<link rel="stylesheet" href="../assets/detail/swiper-bundle.min.css">
-<script src="../assets/detail/jquery-1.12.4.js"></script>
-<script src="../assets/detail/jquery-ui.js"></script>
-<title>PLANiT</title>
-<link rel="stylesheet" href="../assets/detail/styles.css">
-</head>
 
+	<div class="main">
+		<div id="main-wrapper">
 
-<body style="overflow-y: visible;">
- 
-	<div id="curation__alarm-popup">
+<div id="curation__alarm-popup">
 		<div class="popup__dimed-flex">
 			
 		</div>
 	</div>
 	
 	
-	<header class="header" id="header">	
-	</header>
-	
-	
+ 
 	<div id="layout_body">
 		<div class="plantDetail__page" id="plantDetail__page">
 			<section class="plantDetail__search-section" style="height: 0px;">
@@ -99,7 +35,7 @@
 								placeholder="식물 이름을 검색해 주세요." name="term" required="">
 							<button class="search-form-submit" type="submit">
 								<img class="submit-img"
-									src="../assets/detail/imgs/search-white-ico@3x.png">
+									src="/assets/detail/imgs/search-white-ico@3x.png">
 							</button>
 						</div>
 					</form>
@@ -110,6 +46,8 @@
 			</section>
 			<div class="plantDetail__page-flex">
 				<section class="plantDetail-slide-section">
+					
+					<!-- 식물 이미지 -->
 					<div
 						class="swiper-container s1 swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
 						<div class="slide_nav_section">
@@ -121,165 +59,144 @@
 								</div>
 							</div>
 							<div class="slide_number_section">
-								<span class="current_number">01</span><img
-									src="../assets/detail/ico-step@3x.png" width="14px"><span
-									class="total_number">03</span>
+								<span class="current_number">01</span>
+								<img src="/assets/detail/imgs/ico-step@3x.png" width="14px">
+								<span class="total_number">03</span>
 							</div>
 						</div>
 						<div class="swiper-wrapper" id="swiper-wrapper-5ec6dfc4f4c55de3"
 							aria-live="off"
 							style="transform: translate3d(-3801.56px, 0px, 0px); transition-duration: 0ms;">
-							<div
+						<!-- 	<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate"
 								data-swiper-slide-index="0" role="group" aria-label="1 / 3">
 								<input class="image_current_number" type="hidden" value="1"><img
-									src="../assets/detail/imgs/1590393690857coosigner_92567911_146187826906443_248297367443387629_n.jpg"
+									src="/assets/detail/imgs/1590393690857coosigner_92567911_146187826906443_248297367443387629_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B-xzqFMhJVB/?utm_source=ig_web_copy_link"
-									target="_blank">@coosigner</a>
+									target="_blank"></a>
 							</div>
 							<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate"
 								data-swiper-slide-index="1" role="group" aria-label="2 / 3">
 								<input class="image_current_number" type="hidden" value="2"><img
-									src="../assets/detail/imgs/1590393690904choco_cosmos_83353568_1618466708307139_5495328157475250113_n.jpg"
+									src="/assets/detail/imgs/1590393690904choco_cosmos_83353568_1618466708307139_5495328157475250113_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B8VOmcMpa8V/?utm_source=ig_web_copy_link"
-									target="_blank">@choco_cosmos</a>
+									target="_blank"></a>
 							</div>
 							<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate swiper-slide-duplicate-prev"
 								data-swiper-slide-index="2" role="group" aria-label="3 / 3">
 								<input class="image_current_number" type="hidden" value="3"><img
-									src="../assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
+									src="/assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
-								<a class="plant__image-link"
-									href="https://www.instagram.com/p/B99HKLRg4vX/?utm_source=ig_web_copy_link"
-									target="_blank">@kimjekim</a>
-							</div>
-							<input class="image_total_number" type="hidden" value="3">
-							<div
+								
+							</div> -->
+							<input class="image_total_number" type="hidden" th:value="${imgsCnt}">
+							<div   th:each="imgs : ${plantImgs}"
 								class="swiper-slide plant__image-item swiper-slide-duplicate-active"
-								data-swiper-slide-index="0" role="group" aria-label="1 / 3">
+								data-swiper-slide-index="0" role="group">
 								<input class="image_current_number" type="hidden" value="1"><img
-									src="../assets/detail/imgs/1590393690857coosigner_92567911_146187826906443_248297367443387629_n.jpg"
+									th:src="@{${imgs.fileName}}"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
-								<a class="plant__image-link"
-									href="https://www.instagram.com/p/B-xzqFMhJVB/?utm_source=ig_web_copy_link"
-									target="_blank">@coosigner</a>
+								
 							</div>
-							<div
+							<!-- <div
 								class="swiper-slide plant__image-item swiper-slide-duplicate-next"
 								data-swiper-slide-index="1" role="group" aria-label="2 / 3">
 								<input class="image_current_number" type="hidden" value="2"><img
-									src="../assets/detail/imgs/1590393690904choco_cosmos_83353568_1618466708307139_5495328157475250113_n.jpg"
+									src="/assets/detail/imgs/1590393690904choco_cosmos_83353568_1618466708307139_5495328157475250113_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B8VOmcMpa8V/?utm_source=ig_web_copy_link"
-									target="_blank">@choco_cosmos</a>
+									target="_blank"></a>
 							</div>
 							<div class="swiper-slide plant__image-item swiper-slide-prev"
 								data-swiper-slide-index="2" role="group" aria-label="3 / 3">
 								<input class="image_current_number" type="hidden" value="3"><img
-									src="../assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
+									src="/assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B99HKLRg4vX/?utm_source=ig_web_copy_link"
-									target="_blank">@kimjekim</a>
+									target="_blank"></a>
 							</div>
 							<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate swiper-slide-active"
 								data-swiper-slide-index="0" role="group" aria-label="1 / 3">
 								<input class="image_current_number" type="hidden" value="1"><img
-									src="../assets/detail/imgs/1590393690857coosigner_92567911_146187826906443_248297367443387629_n.jpg"
+									src="/assets/detail/imgs/1590393690857coosigner_92567911_146187826906443_248297367443387629_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B-xzqFMhJVB/?utm_source=ig_web_copy_link"
-									target="_blank">@coosigner</a>
+									target="_blank"></a>
 							</div>
 							<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate swiper-slide-next"
 								data-swiper-slide-index="1" role="group" aria-label="2 / 3">
 								<input class="image_current_number" type="hidden" value="2"><img
-									src="../assets/detail/imgs/1590393690904choco_cosmos_83353568_1618466708307139_5495328157475250113_n.jpg"
+									src="/assets/detail/imgs/1590393690904choco_cosmos_83353568_1618466708307139_5495328157475250113_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B8VOmcMpa8V/?utm_source=ig_web_copy_link"
-									target="_blank">@choco_cosmos</a>
+									target="_blank"></a>
 							</div>
 							<div
 								class="swiper-slide plant__image-item swiper-slide-duplicate swiper-slide-duplicate-prev"
 								data-swiper-slide-index="2" role="group" aria-label="3 / 3">
 								<input class="image_current_number" type="hidden" value="3"><img
-									src="../assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
+									src="/assets/detail/imgs/1590397688231kimjekim_90091245_2349676658665464_1917888528749720273_n.jpg"
 									width="100%" height="100%">
 								<div class="slide_gradient"></div>
 								<a class="plant__image-link"
 									href="https://www.instagram.com/p/B99HKLRg4vX/?utm_source=ig_web_copy_link"
-									target="_blank">@kimjekim</a>
-							</div>
+									target="_blank"></a>
+							</div> -->
 						</div>
+						
+						
 						<div class="main-swiper-btn-prev" tabindex="0" role="button"
 							aria-label="Previous slide"
 							aria-controls="swiper-wrapper-5ec6dfc4f4c55de3">
-							<img src="../assets/detail/main-slider-left@3x.png" width="30px"
+							<img src="/assets/detail/imgs/main-slider-left@3x.png" width="30px"
 								height="30px">
 						</div>
 						<div class="main-swiper-btn-next" tabindex="0" role="button"
 							aria-label="Next slide"
 							aria-controls="swiper-wrapper-5ec6dfc4f4c55de3">
-							<img src="../assets/detail/main-slider-right@3x.png" width="30px"
+							<img src="/assets/detail/imgs/main-slider-right@3x.png" width="30px"
 								height="30px">
 						</div>
 						<span class="swiper-notification" aria-live="assertive"
 							aria-atomic="true"></span>
 					</div>
 				</section>
-				<section class="plants-simpleinfo-section">
+				
+				<!-- 식물 이미지 END -->
+				
+				
+				<section class="plants-simpleinfo-section" th:each="detail:${plantDetail}">
 					<div class="simpleinfo-title">
-						<h1 class="simpleinfo-plantname_english mainColorTitle">Philodendron
-							Birkin</h1>
-						<h2 class="simpleinfo-plantname_korean mainTitle">필로덴드론 버킨
-							(무늬콩고)</h2>
-						<h3 class="simpleinfo-plantname_intro">하얀 무늬가 매력적인 이 식물은
-							필로덴드론 로조 콩고 재배 과정에서 자연적 돌연변이로 나오게 되었어요. 변이가 불안정한 식물이라 시간이 흐르면 로조
-							콩고를 닮은 잎이 날 수도 있답니다. 초반에는 공급이 적어서 고가였지만 조직 배양 덕분에 대량 생산으로 널리 보급되고
-							있어요. 가격도 저렴하고 키우기 어렵지 않아서 인기 식물이에요. 다만, 독성이 있어서 어린아이와 반려동물의 손이 닿지
-							않는 곳에 두는 것이 좋습니다.</h3>
+						<h1 class="simpleinfo-plantname_english mainColorTitle" th:text="${detail.plantEng}"> 
+							 </h1>
+						<h2 class="simpleinfo-plantname_korean mainTitle" th:text="${detail.plantsName}"> 
+							 </h2>
+						<h3 class="simpleinfo-plantname_intro" th:text="${detail.pDescription}"> </h3>
 					</div>
-					<div class="simpleinfo-table">
+					
+					<!-- 식물 상세설명  -->
+					<div class="simpleinfo-table" >
 						<ul class="table-items">
-							<div class="table-items-flex">
-								<li class="table-item"><img class="table-item-img"
-									src="../assets/detail/imgs/ico-water-sprinkler@3x.png">
-								<h1 class="table-item-title">주 1~2회</h1>
-									<h2 class="table-item-desc">흙 표면부터 3cm까지 마르면, 듬뿍 주세요.</h2></li>
-								<li class="table-item"><img class="table-item-img"
-									src="../assets/detail/imgs/ico-sun@3x.png">
-								<h1 class="table-item-title">반양지 ~ 반음지</h1>
-									<h2 class="table-item-desc">햇빛을 좋아하지만, 그늘에서도 잘자라요</h2></li>
-							</div>
-							<div class="table-items-flex">
-								<li class="table-item"><img class="table-item-img"
-									src="../assets/detail/imgs/icon-water-drop@3x.png">
-								<h1 class="table-item-title">70% 이상</h1>
-									<h2 class="table-item-desc">습한 환경에 적합해요.</h2></li>
-								<li class="table-item"><img class="table-item-img"
-									src="../assets/detail/imgs/icon-pen@3x.png">
-								<h1 class="table-item-title">학명</h1>
-									<h2 class="table-item-desc" style="font-style: italic;">Philodendron
-										Birkin</h2></li>
-							</div>
 						</ul>
 					</div>
 				</section>
@@ -291,7 +208,7 @@
 				</div>
 				<ul class="raise-items">
 					<li class="raise-item"><img class="raise-item-img"
-						src="../assets/detail/imgs/16063006614391.빛_부드러운(반양지_반음지).png">
+						src="/assets/detail/imgs/16063006614391.빛_부드러운(반양지_반음지).png">
 					<h1 class="raise-item-title">빛 : 부드러운 햇빛</h1>
 						<h2 class="raise-item-desc">
 							필로덴드론 버킨은 밝은 간접광에서 제일 잘 자라요. 너무 어두운 곳에서는 무늬가 흐려질 수 있어요.<br>
@@ -302,7 +219,7 @@
 
 						</h2></li>
 					<li class="raise-item"><img class="raise-item-img"
-						src="../assets/detail/imgs/16063006653812.온도_따뜻한.png">
+						src="/assets/detail/imgs/16063006653812.온도_따뜻한.png">
 					<h1 class="raise-item-title">온도 : 따뜻한 온도</h1>
 						<h2 class="raise-item-desc">
 							필로덴드론 버킨은 열대 식물이기 때문에 추위에 약해요. <br>
@@ -312,7 +229,7 @@
 							관리 온도 : 16℃ 이상
 						</h2></li>
 					<li class="raise-item"><img class="raise-item-img"
-						src="../assets/detail/imgs/16063006698733.습도_높은(70% 이상).png">
+						src="/assets/detail/imgs/16063006614391.빛_부드러운(반양지_반음지).png">
 					<h1 class="raise-item-title">습도 : 높은 습도</h1>
 						<h2 class="raise-item-desc">
 							필로덴드론 버킨은 잎이 두꺼워서 습도에 덜 까다로운 편이에요. 하지만 열대 식물이기 때문에 습도가 높을수록 건강하게
@@ -325,7 +242,7 @@
 							추천해 드립니다.
 						</h2></li>
 					<li class="raise-item"><img class="raise-item-img"
-						src="../assets/detail/imgs/16063006758754.물.png">
+						src="/assets/detail/imgs/16063006758754.물.png">
 					<h1 class="raise-item-title">물 : 흙이 바싹 마르지 않게</h1>
 						<h2 class="raise-item-desc">
 							흙을 항상 촉촉하게 유지해주는 것이 좋아요. 겨울에는 흙이 모두 바싹 마르면 물을 주세요. 나머지 성장기 계절에는
@@ -340,7 +257,7 @@
 						</h2></li>
 					<li class="raise-item"><div class="raise-item-flex">
 							<img class="raise-item-img"
-								src="../assets/detail/imgs/16063006799625.흙.png">
+								src="/assets/detail/imgs/16063006799625.흙.png">
 						</div>
 						<h1 class="raise-item-title">흙 : 배수가 잘되는 흙</h1>
 						<h2 class="raise-item-desc">
@@ -352,7 +269,7 @@
 							<br> <b>[관리 제품]</b><br> 뿌리 과습을 방지해주는 배수가 잘되는 흙 보러 가기
 						</h2></li>
 					<li class="raise-item"><img class="raise-item-img"
-						src="../assets/detail/imgs/16063006849896.분갈이 시기.png">
+						src="/assets/detail/imgs/16063006849896.분갈이 시기.png">
 					<h1 class="raise-item-title">분갈이 시기 알아보기</h1>
 						<h2 class="raise-item-desc">
 							⦁ 화분에 비해 식물이 지나치게 클 경우<br> ⦁ 뿌리가 화분 밑으로 뚫고 나온 경우<br> ⦁
@@ -374,7 +291,7 @@
 								<h3>잎이 노랗게 변해요.</h3>
 								<button class="sos-item-button" type="button">
 									<img
-										src="../assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
+										src="/assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
 								</button>
 							</div>
 							<div class="sos-item-desc">
@@ -408,7 +325,7 @@
 								<h3>잎이 까맣게 탔어요.</h3>
 								<button class="sos-item-button" type="button">
 									<img
-										src="../assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
+										src="/assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
 								</button>
 							</div>
 							<div class="sos-item-desc">
@@ -424,7 +341,7 @@
 								<h3>하얀 거미줄 같은 게 생겼어요.</h3>
 								<button class="sos-item-button" type="button">
 									<img
-										src="../assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
+										src="/assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
 								</button>
 							</div>
 							<div class="sos-item-desc">
@@ -450,13 +367,82 @@
 	
 	
 	
-	<script src="../assets/detail/swiper-bundle.min.js"></script>
-	<script src="../assets/detail/main.js"></script>
- 
+	<script src="/assets/detail/swiper-bundle.min.js"></script>
+	<script src="/assets/detail/main.js"></script>
+
+			 
+		</div>
+	</div>
 </th:block>
+
+
+<th:block layout:fragment="script">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script th:inline="javascript">
+	 
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+	gtag('config', 'UA-148463141-1');
  
-</body>
+	
+	 
+	/*<![CDATA[*/
+    var plantsId = /*[[${plantsId}]]*/ 'default';
+      /*]]>*/
+		 
+		 $.ajax({
+				type : 'get',
+				url : "/planit/plantDes?plantsId="+plantsId,
+				contentType : "application/json; charset=UTF-8",
+				dataType : "json",
+				success : function(data) {
+					 var plantDes = '';
+					 
+			  	$.each(data, function(index, item) {
+			  		console.log('data: '+JSON.stringify(item)+' '+index);
+			  		if(index==0){
+		       var plantDes ='<div class="table-items-flex">'
+							 +'<li class="table-item"><img class="table-item-img"src="/assets/detail/imgs/ico-water-sprinkler@3x.png">'
+							 +'<h1 class="table-item-title">'+item.desTitle+'</h1>'
+							 +'<h2 class="table-item-desc">'+item.des+'</h2></li>'
+							 +'<li class="table-item"><img class="table-item-img"src="../assets/detail/imgs/ico-sun@3x.png">'
+					 $(".table-items").append(plantDes);
+			  	    }else if(index==1){
+			   var plantDes ='<h1 class="table-item-title">'+item.desTitle+'</h1>'
+						     +'<h2 class="table-item-desc">'+item.des+'</h2></li></div>';
+				     $(".table-item:nth-child(2)").append(plantDes);
+			  	    }else if(index==2){
+			   var plantDes ='<div class="table-items-flex">'
+							 +'<li class="table-item"><img class="table-item-img" src="../assets/detail/imgs/icon-water-drop@3x.png">'
+							 +'<h1 class="table-item-title">'+item.desTitle+'</h1>'
+							 +'<h2 class="table-item-desc">'+item.des+'</h2></li>'
+							 +'<li class="table-item" id="lastDes"><img class="table-item-img" src="../assets/detail/imgs/icon-pen@3x.png">';
+					 $(".table-items").append(plantDes);    	
+			  	    }else if(index==3){
+			   var plantDes ='<h1 class="table-item-title">'+item.desTitle+'</h1>'
+					        +'<h2 class="table-item-desc">'+item.des+'</h2></li></div>';
+			         $("#lastDes").append(plantDes);
+			  	    }
+				});  
+				
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR.responseText);
+			}
+		});
+		
  
+	
+	
+	</script>
+</th:block>
+
+ 
+
+
 
 
 </html>

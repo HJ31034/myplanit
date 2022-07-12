@@ -21,6 +21,14 @@
 		WHERE p.POSTNO = #{postNo}
 	</select>
 	
+	<update id="deleteYN" parameterType="Long">
+		UPDATE post
+		<set>
+			<if test="deleteYN != null and deleteYN != '' "> delete_yn = 'Y'</if>
+		</set>
+		WHERE postno = #{postNo}
+	</update>
+	
 	<select id="commentList" parameterType="Long" resultType="CommentDTO">
 		SELECT p.userid, p.content, TO_CHAR(regdate, 'yyyy.MM.dd') regdate
 		FROM (
@@ -163,5 +171,7 @@
 			WHERE p.postno = #{postNo}
 		) p ON p.no = f.no
 	</select>
+	
+	
 	
 </mapper>

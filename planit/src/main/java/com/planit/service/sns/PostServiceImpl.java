@@ -26,11 +26,15 @@ public class PostServiceImpl implements PostService {
 		PostDTO postDto = postMapper.selectPostDetail(postNo);
  
  
- 
 		postDto.setOrgFileNameArr(postDto.getOrgFileName().split(","));
 		postDto.setRealFileNameArr(postDto.getRealFileName().split(","));
  
 		return postDto;
+	}
+	
+	@Override
+	public void deleteYN(Long postNo) {
+		postMapper.deleteYN(postNo);
 	}
 
 	@Override
@@ -114,5 +118,7 @@ public class PostServiceImpl implements PostService {
 	public List<FilesDTO> getFiles(Long postNo) {
 		return postMapper.getFiles(postNo);
 	}
+
+	
 
 }

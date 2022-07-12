@@ -18,4 +18,31 @@
 			AND p2.PLANTSID = p3.PLANTSID
 	</select>
 	
+ 
+	
+		
+	<!-- plants Detail -->
+	
+	<select id="plantDetail" resultType="PlantsDTO">
+	  SELECT P.PLANTSNAME,P.PLANTENG,P.PLANTSID, P.PDESCRIPTION FROM
+  	  PLANTS  p
+	  WHERE P.PLANTSID=#{plantsId}
+	</select>
+	
+	<select id="plantDes" resultType="PlantsDTO">
+	  SELECT DESNO,DESTITLE,DES FROM PLANTDES
+	  WHERE PLANTSID=#{plantsId} 
+	  ORDER BY DESNO
+	</select>
+	
+	<select id="plantImgs" resultType="PlantsDTO">
+	 SELECT FILENAME FROM PLANTFILE
+	 WHERE PLANTSID=#{plantsId} 
+	</select>
+	
+	<select id="ImgsCnt" resultType="int">
+	 SELECT count(FILENAME) FROM PLANTFILE
+	 WHERE PLANTSID=#{plantsId} 
+	</select>
+ 
 </mapper>
