@@ -14,6 +14,7 @@ public interface snsService {
 
 	public List<PostDTO> selectImgPost(int startNum, int endNum);
 	public List<PostDTO> searchSNS(String keyField,String keyword,int startNum, int endNum);
+	//public List<AccountDTO> searchAcc(String keyField,String keyword,int startNum, int endNum);
 	
 	public List<AccountDTO> selectMainAccINfo(String USERID);
 	public List<PlantsCateDTO> selectMainCate(String USERID);

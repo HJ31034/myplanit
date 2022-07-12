@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.planit.domain.main.PlantsDTO;
+import com.planit.domain.sns.UserToPlantsDTO;
 import com.planit.mapper.main.SearchMapper;
 
 @Service
@@ -41,6 +42,11 @@ public class SearchServiceImpl implements SearchService {
 	}
 	public int ImgsCnt(int plantsId) {
 		return searchMapper.ImgsCnt(plantsId);
+	}
+	public List<UserToPlantsDTO> addPlant(UserToPlantsDTO params){
+		System.out.println("SearchServiceImpl addPlant: "+params);
+		List<UserToPlantsDTO> addPlant = searchMapper.addPlant(params);
+		return addPlant;
 	}
  
 }

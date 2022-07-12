@@ -4,8 +4,8 @@ import java.util.List;
 
  
 import javax.servlet.http.HttpServletRequest;
- 
- 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  
 import com.planit.domain.main.PlantsDTO;
 import com.planit.domain.sns.FollowDTO;
+import com.planit.domain.sns.UserToPlantsDTO;
 import com.planit.service.main.MainService;
 import com.planit.service.main.SearchService;
 import com.planit.service.sns.snsService;
@@ -73,8 +74,13 @@ public class SearchController {
 	
 	/* plants_detail */
 	@RequestMapping(value = "/{plantsId}")
-	public String plantDetail(Model model, HttpServletRequest request,@PathVariable int plantsId) {
+	public String plantDetail(Model model, HttpServletRequest request,@PathVariable int plantsId,HttpSession session) {
+		 String USERID = "";
+		if (session.getAttribute("id") != null) {
+			USERID = session.getAttribute("id").toString();
+		}
 		 
+		 model.addAttribute("USERID", USERID);
 		 model.addAttribute("plantsId", plantsId);
 		 List<PlantsDTO> plantDetail = searchService.plantDetail(plantsId);
 		 model.addAttribute("plantDetail", plantDetail);
@@ -91,6 +97,19 @@ public class SearchController {
 	@RequestMapping(value = "/plantDes")
 	public List<PlantsDTO> plantDes(Model model, @RequestParam(value="plantsId") int plantsId) {
 		return searchService.plantDes(plantsId);	
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/addPlant")
+	public String addPlant(Model model, @RequestParam(value="plantsId") int plantsId,
+									    @RequestParam(value="userId") String userId,
+									    @RequestParam(value="plantsName") String plantsName) {
+		System.out.println("userIdplantsId: "+userId+" plantsId: "+plantsId);
+		UserToPlantsDTO utp = new UserToPlantsDTO(plantsName, plantsId, userId);
+	    searchService.addPlant(utp);
+	    
+		return "1";
 	}
  
  

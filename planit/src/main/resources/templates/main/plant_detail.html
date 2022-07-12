@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -7,6 +8,15 @@
 
 <th:block layout:fragment="css">
 	<link href="/css/search.css" rel="stylesheet">
+	<style>
+	#addPlant{
+	background-color: #9FCF62;
+    border: none;
+    color: white;
+    width: 110px;
+    height: 25px;
+	}
+	</style>
 </th:block>
 
 
@@ -187,13 +197,16 @@
 				
 				<section class="plants-simpleinfo-section" th:each="detail:${plantDetail}">
 					<div class="simpleinfo-title">
+					 <span th:if="${session.userdto != null}">
+					<input type="button" value="내 식물 추가하기 ➩" id="addPlant" onclick="addplant()">
+				     </span>
 						<h1 class="simpleinfo-plantname_english mainColorTitle" th:text="${detail.plantEng}"> 
 							 </h1>
 						<h2 class="simpleinfo-plantname_korean mainTitle" th:text="${detail.plantsName}"> 
 							 </h2>
 						<h3 class="simpleinfo-plantname_intro" th:text="${detail.pDescription}"> </h3>
 					</div>
-					
+					<input type="hidden" th:value="${detail.plantsName}" id="plantsName">
 					<!-- 식물 상세설명  -->
 					<div class="simpleinfo-table" >
 						<ul class="table-items">
@@ -390,9 +403,12 @@
 	
 	 
 	/*<![CDATA[*/
-    var plantsId = /*[[${plantsId}]]*/ 'default';
+     var plantsId = /*[[${plantsId}]]*/ 'default';
+     var userId = /*[[${USERID}]]*/ 'default';
       /*]]>*/
-		 
+	 
+    
+      
 		 $.ajax({
 				type : 'get',
 				url : "/planit/plantDes?plantsId="+plantsId,
@@ -433,8 +449,25 @@
 				console.log(jqXHR.responseText);
 			}
 		});
+      
+      
 		
- 
+		  function addplant() {
+				var plantsName=$('#plantsName').val();
+				$.ajax({
+					type : 'get',
+					url : "/planit/addPlant?plantsId=" + plantsId +"&userId="+userId+"&plantsName="+plantsName,
+					contentType : "application/json; charset=UTF-8",
+					dataType : "json",
+					success : function(data) {
+						 console.log(data);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.log(jqXHR.responseText);
+					}
+				});
+			}  
+			  
 	
 	
 	</script>
