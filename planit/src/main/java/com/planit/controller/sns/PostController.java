@@ -76,7 +76,7 @@ public class PostController {
 		return "sns/modify-post";
 	}
 	
-	@PostMapping(value = "/delete")
+	@GetMapping(value = "/delete")
 	public String postDelete (@RequestParam(value = "postno") Long postNo, Model model) {
 		
 		postService.deleteYN(postNo);

@@ -31,16 +31,16 @@
 
 		<div class="post_box_right_read">
 			<div class="profile_box">
-				<span class="profile_box_img">
+				<span class="profile_box_img" style="display: inline-block;">
 					<img th:src="${'/imgs/img_section/' + accountProfile.profileImg}"/>					
 				</span>
-				<span>
-					<a href="#" th:text="${post.userId}"></a>
-					<a href="#" th:text="${accountProfile.accDescription}"></a>
+				<span style="display: inline-block; width: 60%;">
+					<a href="#" th:text="${post.userId}" style="display: block; padding-bottom: 5px;"></a>
+					<a href="#" th:text="${accountProfile.accDescription}" style="display: block;"></a>
 				</span>
-				<span>
-					<a href="th:href="@{/planiter/post/modify}"">수정</a>
-					<a href="th:href="@{/planiter/post/delete}"">삭제</a>
+				<span style="display: inline-block; padding-left: 20px;">
+					<a th:href="@{/planiter/post/modify(postno=${post.postNo})}">수정</a>
+					<a th:href="@{/planiter/post/delete(postno=${post.postNo})}">삭제</a>
 				</span>
 			</div>
 			<div class="read_box">
