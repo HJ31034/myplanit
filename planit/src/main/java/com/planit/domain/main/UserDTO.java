@@ -204,7 +204,7 @@ public class UserDTO implements UserDetails {
 
 
 
-	public void setKeyIds(Long[] keyId) {
+	public void setKeyId(Long[] keyId) {
 		this.keyId = keyId;
 	}
 

@@ -221,8 +221,9 @@ public class UserController {
 
 		System.out.println(userdto);
 		userService.pwdCh(userdto);
+		session.removeAttribute("userdto"); // 재로그인 유도
 
-		return "redirect:/planit/userInfo";
+		return "redirect:/login";
 	}
 
 }

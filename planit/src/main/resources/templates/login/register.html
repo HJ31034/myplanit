@@ -16,45 +16,355 @@
      <link href="assets/dist/register.css" rel="stylesheet">
 	 <link href="assets/dist/signin.css" rel="stylesheet">
          
-    <style>
+    
+    </th:block>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>   
+
+  </head>
+  
+  
+  
+  
+  <th:block layout:fragment="content">
+   
+  
+  
+  
+  <div class="bg-light">
+    
+    
+<div class="container">
+
+  <main class="form-register">
+  <div class="py-5 text-center">
+      
+    </div>
+      
+      
+      <div class="blank2"></div>
+     <div class="blank2"></div>
+     
+      
+        <h4 class="mb-3">회원가입</h4>
+        
+        
+        <form class="needs-validation" action="" id="regForm" name="regForm"
+         method="post" modelAttribute="user" onsubmit="return validation();">
+          
+          
+          
+          <div class="row g-3">
+            
+	            
+            
+            
+            <div class="col-12">
+              <label for="username" class="form-label">이름 <span class="text-muted"></span></label>
+              <input type="text" class="form-control" name="userName" id="username"
+              th:value="${user?.userName}" placeholder="이름" required="required">
+              
+            </div>
+            <div class="col-12">
+              <label for="username" class="form-label">아이디</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">@</span>
+                
+                <input type="text" class="form-control" name="userId" id="userId" 
+                th:value="${user?.userId}"
+                placeholder=" 영문 최소 5자리 이상 12자리 이하 " autocomplete="username" required onchange="checkId()"/>
+                <span th:text="${valid_userId}"></span>
+                
+              <!--   <span>
+                <button type="button" onclick="fn_idChk();" value="N" id="idChk"
+                class="w-100 btn btn-lg btn-primary">중복체크</button>
+                </span>
+               -->
+              </div>
+              <br>
+                <div>
+                <p class="id_ok">사용 가능한 아이디입니다.</p>
+				<p class="id_already">누군가 이 아이디를 사용하고 있어요.</p>
+                </div>
+            </div>
+
+
+
+            <div class="col-12">
+              <label for="password" class="form-label">비밀번호 </label>
+              <input type="password" class="form-control" name="password" id="pwd1" 
+              th:value="${user?.password}"
+              autocomplete="new-password" placeholder="PASSWORD" required/>
+              <span th:text="${valid_password}"></span>
+            </div>
+            
+            <div class="col-12">
+              <label for="password" class="form-label">비밀번호 확인</label>
+              <input type="password" class="form-control" name="password2" id="pwd2"
+              autocomplete="new-password"  placeholder="RE-PASSWORD" required/>
+             <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+			<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다. 다시한번 확인하여 주세요.</div>
+          	<div class="alert alert-info" id="alert-info"> 비밀번호 영문 대소문자 특수문자 최소 1개 포함 8-20자리 조합으로 만드시오</div>
+            </div>
+           
+            
+    
+            
+	            <div class="col-12">
+              <label for="email" class="form-label">이메일 <span class="text-muted"></span></label>
+              <input type="email" class="form-control" name="email" id="email" 
+              th:value="${user?.email}" placeholder="you@example.com">
+  			<span th:text="${valid_email}"></span>
+            </div>
+            
+            <div class="col-12">
+              <label for="address2" class="form-label">휴대폰 <span class="text-muted"></span></label>
+              <input type="tel" class="form-control" name="phone" id="phone"  maxlength="13"
+              th:value="${user?.phone}" placeholder="010-1234-5678(-없이)">
+              <span th:text="${valid_phone}"></span>
+            </div>
+
+             
+             
+			<div class="col-12">
+			
+            <label class="form-check-label" for="same-address">관심식물(필수)</label><br>
+            
+    
+          <br>
+          
+         <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="box" onclick="selectAll(this)">
+  		<label class="form-check-label" >  전체 
+  		</label> 
+  		<br>
+  		
+  		
+        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios5" for="novice" value="5" onclick="selectAll1(this)">
+  		<label class="form-check-label" id="1" >  초보자용  
+  		</label>  
+  		
+  		<div class="hidden-box" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios14" for="novice" value="14">
+  		<label class="form-check-label" id="1">  초보자용  
+  		</label> 
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios23" for="novice" value="23">
+  		<label class="form-check-label" >  초보자용  
+  		</label> 
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios32" for="novice" value="32">
+  		<label class="form-check-label" >  초보자용  
+  		</label> 
+  		</div>
+  		&nbsp;
+  		&nbsp;&nbsp;
+  		&nbsp;&nbsp;
+  		
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios6" for="novice2" value="6" onclick="selectAll2(this)">
+  		<label class="form-check-label" >  선물하기 좋은
+  		</label> 
+  		
+  		<div class="hidden-box" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios15" for="novice2" value="15">
+  		<label class="form-check-label" >  선물하기 좋은
+  		</label>   
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios15"  for="novice2" value="24">
+  		<label class="form-check-label" >  선물하기 좋은
+  		</label>   
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios15" for="novice2" value="33">
+  		<label class="form-check-label" >  선물하기 좋은
+  		</label>   
+  		</div>
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  		
+  		
+
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice3" id="exampleRadios7" value="7" onclick="selectAll3(this)">
+  		<label class="form-check-label" name="공기정화" >  공기정화
+  		</label>  
+  		<div class="hidden-box" style="display: none;">
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice3" id="exampleRadios16" value="16">
+  		<label class="form-check-label" >  공기정화
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice3" id="exampleRadios25" value="25">
+  		<label class="form-check-label" >  공기정화
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice3" id="exampleRadios34" value="34">
+  		<label class="form-check-label" >  공기정화
+  		</label>  
+  		</div>
+  		&nbsp;
+  		&nbsp;&nbsp;
+  		&nbsp;&nbsp;
+  		
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice4" id="exampleRadios8" value="8" onclick="selectAll4(this)">
+  		<label class="form-check-label" >  빛이적어도 되는
+  		</label>  
+  		
+  		<div class="hidden-box" style="display: none;" >
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice4" id="exampleRadios17" value="17">
+  		<label class="form-check-label" >  빛이적어도 되는
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice4" id="exampleRadios26" value="26">
+  		<label class="form-check-label" >  빛이적어도 되는
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice4" id="exampleRadios35" value="35">
+  		<label class="form-check-label" >  빛이적어도 되는
+  		</label>  
+  		</div>
+  		<br>
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice5" id="exampleRadios9" value="9" onclick="selectAll5(this)">
+  		<label class="form-check-label" >  향기나는
+  		</label> 
+  		<div class="hidden-box" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice5" id="exampleRadios18" value="18">
+  		<label class="form-check-label" >  향기나는
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice5" id="exampleRadios27" value="27">
+  		<label class="form-check-label" >  향기나는
+  		</label> 
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice5" id="exampleRadios36" value="36">
+  		<label class="form-check-label" >  향기나는
+  		</label>  
+  		 </div>
+  		
+  		
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		  <input class="form-check-input" type="checkbox" name="keyId" for="novice6" id="exampleRadios10" value="10" onclick="selectAll6(this)">
+  		<label class="form-check-label" >  반려동물이 안전한
+  		</label>  
+  		<div class="hidden-button" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice6" id="exampleRadios10" value="19" >
+  		<label class="form-check-label" >  반려동물이 안전한
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice6" id="exampleRadios10" value="28" >
+  		<label class="form-check-label" >  반려동물이 안전한
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice6" id="exampleRadios10" value="37" >
+  		<label class="form-check-label" >  반려동물이 안전한
+  		</label>  
+  		</div>
+  		
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice7" id="exampleRadios11" value="11" onclick="selectAll7(this)">
+  		<label class="form-check-label" >  목대있는
+  		</label>  
+  		<div class="hidden-button" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice7" id="exampleRadios11" value="20">
+  		<label class="form-check-label" >  목대있는
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice7" id="exampleRadios11" value="29">
+  		<label class="form-check-label" >  목대있는
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" for="novice7" id="exampleRadios11" value="38">
+  		<label class="form-check-label" >  목대있는
+  		</label>  
+  		</div>
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios12" for="novice8" value="12" onclick="selectAll8(this)">
+  		<label class="form-check-label" >  흙이 필요없는
+  		</label>  
+  		<div class="hidden-button" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios12" for="novice8" value="21">
+  		<label class="form-check-label" >  흙이 필요없는
+  		</label>  
+  	
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios12" for="novice8" value="30">
+  		<label class="form-check-label" >  흙이 필요없는
+  		</label>  
+  		</div>
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		&nbsp;
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios13" for="novice9" value="13" onclick="selectAll9(this)">
+  		<label class="form-check-label" >  덩굴로 자라는
+  		</label>  
+  		<div class="hidden-button" style="display: none;">
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios13" for="novice9" value="22">
+  		<label class="form-check-label" >  덩굴로 자라는
+  		</label>  
+  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios13" for="novice9" value="31">
+  		<label class="form-check-label" >  덩굴로 자라는
+  		</label>  
+  		</div>
+  		
+  		
+  		
+  		
+  			</div>
+  		
+  		
+  		
+          </div>
+           
+           
+           
+           
+          
+          </div>
+          
+          
+
+          <hr class="my-4">
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same-address" onclick="policy()">
+            <label class="form-check-label" for="same-address" >약관동의(필수)</label>
+          </div>
+
+
+<br>
+
+         
+          <button class="w-100 btn btn-lg btn-primary" type="submit"
+				id="submit" style="background-color: #9FCF62; border-color: #9FCF62;">회원가입</button>
+        </form>
+        <div class="blank2"></div>
+        
+        
+     
+    
+ 
+  </main>
+
+          </div>
+
+     </div>
+     
+     
+     
+     
+     
+<style>
     .id_ok{color:green; display: none;}
 	.id_already{color:#6A82FB; display: none;}
-	/*.bg-light{position:center; background-color:black;}*/
+	.col-12{font-size:12px;}
+	.form-check{font-size:12px;}
 	
-	
+
     </style>
-    </th:block>
-    
-        <script src="https://code.jquery.com/jquery-latest.min.js"></script>          
 <script th:inline="javascript" >
 
 
 
-
-
-function Chk() {
-
-	var result = Array();
-
-	var cnt = 0;
-
-	var chkbox = $(".form-check-input");
-
-	for(i=0;i<chkbox.length;i++) {
-
-		if(chkbox[i].checked == true) {
-
-			result[cnt] = chkbox[i].value;
-
-			cnt++;
-
-		}
-
-	}
-
-	$('#result').val(result);
-
-}
 
 
 
@@ -135,240 +445,161 @@ $(function(){
 	    }
 	});
 	}); 
+	
+	
 
+
+
+	
+/* 	
+function selectAll(selectAll)  {
+	  const checkboxes
+	     = document.querySelectorAll('input[name="keyId"]');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	 
+	} */
+function selectAll(selectAll)  {
+	  const checkboxes
+	     = document.getElementsByName('keyId');
+	 
+	 
+	  
+	  
+		  checkboxes.forEach((checkbox) => {
+			    checkbox.checked = selectAll.checked
+			  })
+	 
+	}
+	
+	
+ function checkSelectAll(){
+	// 전체 체크박스
+	  const checkboxes 
+	    = document.querySelectorAll('input[name="keyId"]');
+	  // 선택된 체크박스
+	  const checked 
+	    = document.querySelectorAll('input[name="keyId"]:checked');
+	  // select all 체크박스
+	  const selectAll 
+	    = document.querySelector('input[id="box"]');
+	  
+	  if(checkboxes.length === checked.length)  {
+	    selectAll.checked = true;
+	  }else {
+	    selectAll.checked = false;
+	  }
+	
+
+	
+}	 
+	
+	
+	
+function selectAll1(selectAll)  {
+	  const checkboxes1 
+	     = document.querySelectorAll('input[for="novice"]');
+	 
+	  
+	  checkboxes1.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	 
+	}
+	
+function selectAll2(selectAll)  {
+	
+	  const checkboxes2 
+	     = document.querySelectorAll('input[for="novice2"]');
+	  
+	  
+	  checkboxes2.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+	
+function selectAll3(selectAll)  {
+	
+	  const checkboxes3 
+	     = document.querySelectorAll('input[for="novice3"]');
+	  
+	  
+	  checkboxes3.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+function selectAll4(selectAll)  {
+	
+	  const checkboxes4 
+	     = document.querySelectorAll('input[for="novice4"]');
+	  
+	  
+	  checkboxes4.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+function selectAll5(selectAll)  {
+	
+	  const checkboxes5 
+	     = document.querySelectorAll('input[for="novice5"]');
+	  
+	  
+	  checkboxes5.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+function selectAll6(selectAll)  {
+	
+	  const checkboxes6
+	     = document.querySelectorAll('input[for="novice6"]');
+	  
+	  
+	  checkboxes6.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+function selectAll7(selectAll)  {
+	
+	  const checkboxes7
+	     = document.querySelectorAll('input[for="novice7"]');
+	  
+	  
+	  checkboxes7.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+function selectAll8(selectAll)  {
+	
+	  const checkboxes8
+	     = document.querySelectorAll('input[for="novice8"]');
+	  
+	  
+	  checkboxes8.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
+function selectAll9(selectAll)  {
+	
+	  const checkboxes9 
+	     = document.querySelectorAll('input[for="novice9"]');
+	  
+	  
+	  checkboxes9.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked
+	  })
+	}
 </script>
-
-  </head>
-  
-  
-  
-  
-  <th:block layout:fragment="content">
-   
-  
-  
-  
-  <div class="bg-light">
-    
-    
-<div class="container">
-
-  <main class="form-register">
-  <div class="py-5 text-center">
-      
-    </div>
-      
-      
-      <div class="blank2"></div>
-     <div class="blank2"></div>
-     
-      
-        <h4 class="mb-3">회원가입</h4>
-        
-        
-        <form class="needs-validation" action="" id="regForm" name="regForm"
-         method="post" modelAttribute="user" onsubmit="return validation();">
-          
-          
-          
-          <div class="row g-3">
-            
-	            
-            
-            
-            <div class="col-12">
-              <label for="username" class="form-label">이름 <span class="text-muted"></span></label>
-              <input type="text" class="form-control" name="userName" id="username"
-              th:value="${user?.userName}" placeholder="이름" required="required">
-              
-            </div>
-            <div class="col-12">
-              <label for="username" class="form-label">아이디</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text">@</span>
-                
-                <input type="text" class="form-control" name="userId" id="userId" 
-                th:value="${user?.userId}"
-                placeholder="USERID" autocomplete="username" required onchange="checkId()"/>
-                <span th:text="${valid_userId}"></span>
-                
-              <!--   <span>
-                <button type="button" onclick="fn_idChk();" value="N" id="idChk"
-                class="w-100 btn btn-lg btn-primary">중복체크</button>
-                </span>
-               -->
-              </div>
-              <br>
-                <div>
-                <p class="id_ok">사용 가능한 아이디입니다.</p>
-				<p class="id_already">누군가 이 아이디를 사용하고 있어요.</p>
-                </div>
-            </div>
-
-
-
-            <div class="col-12">
-              <label for="password" class="form-label">비밀번호 </label>
-              <input type="password" class="form-control" name="password" id="pwd1" 
-              th:value="${user?.password}"
-              autocomplete="new-password" placeholder="PASSWORD" required/>
-              <span th:text="${valid_password}"></span>
-            </div>
-            
-            <div class="col-12">
-              <label for="password" class="form-label">비밀번호 확인</label>
-              <input type="password" class="form-control" name="password2" id="pwd2"
-              autocomplete="new-password"  placeholder="RE-PASSWORD" required/>
-             <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
-			<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다. 다시한번 확인하여 주세요.</div>
-          	<div class="alert alert-info" id="alert-info"> 비밀번호 영문 대소문자 특수문자 최소 1개 포함 8-20자리 조합으로 만드시오</div>
-            </div>
-           
-            
-    
-            
-	            <div class="col-12">
-              <label for="email" class="form-label">이메일 <span class="text-muted"></span></label>
-              <input type="email" class="form-control" name="email" id="email" 
-              th:value="${user?.email}" placeholder="you@example.com">
-  			<span th:text="${valid_email}"></span>
-            </div>
-            
-            <div class="col-12">
-              <label for="address2" class="form-label">휴대폰 <span class="text-muted"></span></label>
-              <input type="tel" class="form-control" name="phone" id="phone"  maxlength="13"
-              th:value="${user?.phone}" placeholder="010-1234-5678(-없이)">
-              <span th:text="${valid_phone}"></span>
-            </div>
-
-             
-             
-			<div class="col-12">
-			
-            <label class="form-check-label" for="same-address">관심식물(필수)</label><br>
-            
-        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios0" value="0" >
-  		<label class="form-check-label" >
-    	잘 모르겠음 
-  		</label>   
-  		<br> 
-            
-           
-             
-        <input class="form-check-input" type="checkbox" name="keyId" id="keyId1" value="1" >
-  		<label class="form-check-label" >
-    	잎을 감상하는  
-  		</label>
-            
-        <input class="form-check-input" type="checkbox" name="keyId" id="keyId2" value="2" >
-  		<label class="form-check-label" >
-    	꽃을 감상하는  
-  		</label>
-  		
-         <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios3" value="3">
-  		<label class="form-check-label">
-    	열매를 감상하는  
-  		</label>   
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios4" value="4">
-  		<label class="form-check-label" >    	다육/선인장 
-  		</label>
-          <br>
-          
-         
-        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios5" value="5">
-  		<label class="form-check-label" >  초보자용  
-  		</label>  
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios6" value="6">
-  		<label class="form-check-label" >  선물하기 좋은
-  		</label>  
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios7" value="7">
-  		<label class="form-check-label" >  공기정화
-  		</label>  
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios8" value="8">
-  		<label class="form-check-label" >  빛이적어도 되는
-  		</label>  
-  		
-  		<input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios9" value="9">
-  		<label class="form-check-label" >  향기나는
-  	
-  		</label>  
-  		
-  		  <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios10" value="10">
-  		<label class="form-check-label" >  반려동물이 안전한
-  		</label>  
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios11" value="11">
-  		<label class="form-check-label" >  목대있는
-  		</label>  
-  		
-  		
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios12" value="12">
-  		<label class="form-check-label" >  흙이 필요없는
-  		</label>  
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios13" value="13">
-  		<label class="form-check-label" >  덩굴로 자라는
-  		</label>  
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios14" value="39">
-  		<label class="form-check-label" >  늘어져 자라는
-  		</label>  
-            
-                    <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios15" value="40">
-  		<label class="form-check-label" >  몸통이 납작한
-  		</label>  
-  		
-  		        <input class="form-check-input" type="checkbox" name="keyId" id="exampleRadios16" value="41">
-  		<label class="form-check-label" >  가시가 없는
-  		</label>  
-  		
-  		
-  		
-          </div>
-           
-           
-           
-           
-          
-          </div>
-          
-          
-
-          <hr class="my-4">
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">약관동의</label>
-          </div>
-
-
-
-                <hr class="my-4">
-
-         
-          <button class="w-100 btn btn-lg btn-primary" type="submit"
-				id="submit" style="background-color: #9FCF62; border-color: #9FCF62;">회원가입</button>
-        </form>
-        <div class="blank2"></div>
-        
-        
-     
-    
- 
-  </main>
-
-          </div>
-
-     </div>
      
      
 </th:block>
 
 
-	
+
+
+
+
 
 
   
