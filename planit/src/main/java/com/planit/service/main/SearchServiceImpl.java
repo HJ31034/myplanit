@@ -14,16 +14,19 @@ public class SearchServiceImpl implements SearchService {
 	private SearchMapper searchMapper;
 
 	@Override
-	public List<PlantsDTO> selectPlants(String term) {
-		return searchMapper.selectPlants('%' + term + '%');
+	public List<PlantsDTO> selectPlants(String term, int keyId, int start, int end) {
+		return searchMapper.selectPlants('%' + term + '%', keyId, start, end);
 	}
 
 	@Override
-	public List<PlantsDTO> selectKwdSearch(int kwdId) {
-		return searchMapper.selectKwdSearch(kwdId);
+	public List<PlantsDTO> selectKwdSearch(int kwdId, int start, int end) {
+		return searchMapper.selectKwdSearch(kwdId, start, end);
 	}
-
- 
+	
+	@Override
+	public int plantsTotalCount(String term, int keyId) {
+		return searchMapper.plantsTotalCount('%' + term + '%', keyId);
+	}
 	
 	
 	/*	plants Detail */
@@ -42,5 +45,7 @@ public class SearchServiceImpl implements SearchService {
 	public int ImgsCnt(int plantsId) {
 		return searchMapper.ImgsCnt(plantsId);
 	}
+
+	
  
 }
