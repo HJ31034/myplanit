@@ -209,10 +209,10 @@
 					<div class="member">
 						<a th:href="@{/planiter/post/read(postno=${post.postNo})}">
 							<div class="member-img">
-								<img th:if="${not #strings.isEmpty(post.realFileName)}"
-									th:src="@{/imgs/img_section/} + ${post.realFileName}"
-									class="img-fluid"> <img
-									th:unless="${not #strings.isEmpty(post.realFileName)}"
+								<img th:if="${not #strings.isEmpty(post.orgFileName)}"
+									th:src="@{/imgs/img_section/} + ${post.orgFileName}"
+									class="img-fluid"> 
+								<img th:unless="${not #strings.isEmpty(post.orgFileName)}"
 									th:src="@{/imgs/img_section/마란타.jpg}" class="img-fluid">
 							</div>
 							<div class="member-info">

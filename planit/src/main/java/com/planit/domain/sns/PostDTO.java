@@ -29,7 +29,10 @@ public class PostDTO {
 	private String weather;
 	private String address;
 	
+	private String profileImg;
+	
 	// 임시
 	private String fileName;
+	
 	
 }

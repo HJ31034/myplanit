@@ -55,15 +55,14 @@
                             </div>
                             <!-- Tags -->
                           
-                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList"   >
-                               <ol style="margin-left: -40px;  margin-top: -14px;" >
- 
+                            <div id="cate">  
+                           <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
+                               <ol id="cateItems" >
                                		 <li>#<a th:text="${cate.plantsName}" class="testt" style="font-family: 'Jua', sans-serif;  text-decoration: none; " href="/planiter/profile.do"></a> </li>
- 
                               
                                </ol>
-                            </ol>
-                            
+                            </ol> 
+                            </div> 
                             
                         	
                         </div>
