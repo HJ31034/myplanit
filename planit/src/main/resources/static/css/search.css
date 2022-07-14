@@ -19,7 +19,7 @@ footer {
 }
 .title h2 {
 	font-weight: bold;
-	transform: translate(10%, 0);
+	transform: translate(12%, 0);
 }
 
 
@@ -30,7 +30,7 @@ footer {
 	text-align: center;
 	padding-top: 10px;
 	border-bottom: 2px solid #000;
-	transform: translate(10%, 0);
+	transform: translate(12%, 0);
 }
 #search-icon {
 	float: left;
@@ -58,7 +58,7 @@ footer {
 .info {
 	width: 80%;
 	height: 40px;
-	transform: translate(10%, 0);
+	transform: translate(12%, 0);
 }
 .total {
 	font-size: 15px;
@@ -84,7 +84,7 @@ footer {
 
 .plantList{
 	margin: 20px 0;
-	transform: translate(10%, 0);
+	transform: translate(12%, 0);
 	background: #ddd;
 	width: 80%;
 	
@@ -118,7 +118,7 @@ footer {
 	color: #888;
 }
 .kwd-box{
-	transform: translate(10%, 0);
+	transform: translate(12%, 0);
 }
 .kwd {
 	margin: 5px;
