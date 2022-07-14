@@ -36,6 +36,11 @@ public class PostServiceImpl implements PostService {
 	public void deleteYN(Long postNo) {
 		postMapper.deleteYN(postNo);
 	}
+	
+	@Override
+	public void modify(PostDetailDTO parmas) {
+		postMapper.modify(parmas);
+	}
 
 	@Override
 	public List<CommentDTO> getCommentDetail(Long postNo) {
@@ -43,11 +48,14 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void insertComment(CommentDTO parmas) {
-		//로그인 처리 후에 지울 
-		parmas.setUserId("kosta");
-		postMapper.insertComment(parmas);
+	public void insertComment(CommentDTO params) {
+		postMapper.insertComment(params);
 		
+	}
+
+	@Override
+	public void deleteComment(CommentDTO params) {
+		postMapper.deleteComment(params);
 	}
 
 	@Override

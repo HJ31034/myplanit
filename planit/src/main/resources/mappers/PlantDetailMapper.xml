@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.planit.mapper.main.PlantDetailMapper">
+  
+		
+	<!-- plants Detail -->
+	
+	<select id="plantDetail" resultType="PlantsDTO">
+	  SELECT P.PLANTSNAME,P.PLANTENG,P.PLANTSID, P.PDESCRIPTION FROM
+  	  PLANTS  p
+	  WHERE P.PLANTSID=#{plantsId}
+	</select>
+	
+	<select id="plantDes" resultType="PlantsDTO">
+	  SELECT DESNO,DESTITLE,DES FROM PLANTDES
+	  WHERE PLANTSID=#{plantsId} 
+	  ORDER BY DESNO
+	</select>
+	
+	<select id="plantImgs" resultType="PlantsDTO">
+	 SELECT FILENAME FROM PLANTFILE
+	 WHERE PLANTSID=#{plantsId} 
+	</select>
+	
+	<select id="ImgsCnt" resultType="int">
+	 SELECT count(FILENAME) FROM PLANTFILE
+	 WHERE PLANTSID=#{plantsId} 
+	</select>
+	
+	<insert id="addPlant" parameterType="UserToPlantsDTO">
+	INSERT INTO USERTOPLANTS(plantsCateNo,PLANTSNAME,PLANTSID,USERID)
+	VALUES(seq_plantsCateNo_no.nextval,#{plantsName},#{plantId},#{userId})
+	</insert>
+	
+	<select id="userPlantCheck" resultType="int">
+	SELECT COUNT(PLANTSID)
+	FROM USERTOPLANTS
+	WHERE PLANTSID=#{plantId} AND USERID=#{userId}
+	</select>
+	
+	<select id="PlantKeyword" resultType="PlantKeywordDTO">
+	SELECT KEYNAME
+	FROM PLANTSTOKEYWORD P
+	JOIN PLANTKEYWORD K
+	ON P.PLANTSID=#{plantId} AND K.KEYID=P.KEYID
+	</select>
+	
+	<select id="selectSolution" resultType="SolutionDTO">
+	SELECT SOLNO,SOLTITLE,SOLCONTENT,PLANTSID FROM SOLUTION
+	WHERE PLANTSID=#{plantId}
+	</select>
+  
+</mapper>

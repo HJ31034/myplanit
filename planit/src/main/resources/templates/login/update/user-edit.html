@@ -14,21 +14,36 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
-    
+    <link href="assets/dist/register.css" rel="stylesheet">
+	 <link href="assets/dist/signin.css" rel="stylesheet">
     
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script th:inline="javascript">
 
 
-/* $(document).ready(function() {
-	                
-	  var test = "${session.userdto.phone}";
-	  var testDate = test.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
-	  
-	  $("#phone").text(testDate);
-	 
-	}); */
+/* /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; */
 
+function useredit(){
+	var email = $("#email").val();
+	var reg = 
+	/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+	
+	if(email !=""){
+		if(!reg.test(email)===false){
+			 
+			 $("#submit").removeAttr("disabled");
+				alert("회원정보가 성공적으로 변경되었습니다.");
+		} 
+			
+		 else{
+			 $("#submit").attr("disabled", "disabled");
+			 
+		}	
+		
+	}
+	
+	
+}
 	
 	
 	
@@ -59,25 +74,36 @@
 	});
 	}); 
 
+	
+	$(function(){
+		$("#alert-success").hide();
+		$("#invalid-feedback3").hide();
+		$("input").change(function(){
+		    var email = $("#email").val();
+		    var reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		    			
+		    if(email != ""){
+		        if(!reg.test(email)){
+		            
+		            
+		            $("#invalid-feedback3").show();
+		            $("#email").val().focus();
+		            $("#submit").attr("disabled", "disabled");
+		            return false;
+		        }else {
+		        	$("#invalid-feedback3").hide();
+		            $("#submit").removeAttr("disabled");
+		            
+		        } 
+		    }
+		});
+		});
+	
+	
+	
+	
 
 
-/* $("#phone").keyup(function(){
-
-	  var num = $(this).val().replace(/[^0-9]/g, '');
-	  //input의 값이 글자면 공백으로 처리하기
-
-	  if(num >= 3){ //입력값이 3 이상일때, 
-	      $(this).val(num.substring(0,3) + '-');
-	      //입력 값의 3자리 수까지 입력 후 - 삽입
-	  }
-	  
-	  if(num >= 7){//입력 값이 7이상일때
-	    $(this).val( num.substring(0,3) + '-' + num.substring(3,7) + '-' + num.substring(7,11));
-	      //입력값의 3자리 수 다음 - 4자리에서 7 다음 - 8자리에서 11까지 입력 하기
-	  }
-	    
-	});
- */
 </script>
     
 
@@ -86,19 +112,8 @@
 
 
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
+   
+      
       .mb-3 {
       margin-top:50px;
       }
@@ -136,9 +151,11 @@
       <br>
     <div class="hi">
       
+<br>
+<br>
+<br>
 
-
-      <form class="form-register" novalidate="" method="post">
+      <form class="form-register" novalidate="" method="post" onsubmit="return validation();">
         <div class="row g-3">
           <h4 class="mb-3">회원정보 수정</h4>
           <div class="col-12">
@@ -165,8 +182,8 @@
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" name="email"
               th:value="${session.userdto.email}"
-            id="email" placeholder="you@example.com" >
-            <div class="invalid-feedback">
+            id="email" placeholder="you@example.com" for="email" required>
+            <div class="invalid-feedback3">
               Please enter a valid email address for updates.
             </div>
           </div>
@@ -176,7 +193,7 @@
             <input type="tel" class="form-control" id="phone" 
             th:value="${session.userdto.phone}" name="phone"
             maxlength="13"
-            placeholder="휴대폰 번호(-없이)" >
+            placeholder="휴대폰 번호(-없이)" required>
             <div class="alert alert-success" id="alert-success">숫자만 입력 하시면 됩니다.</div>
 			<div class="alert alert-danger" id="alert-danger">휴대폰 번호를 정확히 입력해 주세요.</div>
           	
@@ -210,7 +227,7 @@
 
         
         
-      <button class="w-100 btn btn-lg btn-primary" type="submit"
+      <button class="w-100 btn btn-lg btn-primary" type="submit" id="submit" onclick="useredit()"
 				style="background-color: #9FCF62; border-color: #9FCF62;">수정하기
 				</button>
 				<div class="blank2"></div>
@@ -229,6 +246,8 @@
 </main>
 
 </th:block> <!-- 로그인 관련 -->
+
+
 </th:block>
 <th:block th:if="${session.userdto == null}">
 <h1>올바르지 않은 접근입니다. 로그인 화면으로 이동해 주세요</h1>
@@ -239,5 +258,5 @@
       <script src="/js/sidebars.js"></script>
       <script src="/js/register.js"></script>
 
-</body>
+
 </html>

@@ -2,6 +2,9 @@ package com.planit.controller.sns;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.planit.domain.main.UserDTO;
 import com.planit.domain.sns.AccountDTO;
 import com.planit.domain.sns.CommentDTO;
 import com.planit.domain.sns.FilesDTO;
@@ -33,9 +37,13 @@ public class PostController {
 	private ProfileService profileService;
 	
 	@GetMapping(value = "/write")
-	public String writePost (Model model) {
+	public String writePost (Model model, HttpServletRequest request) {
+		HttpSession session  = request.getSession();
+		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		
 		//session으로 변경할 것 
-		String userId = "test";
+		//String userId = "test";
+		String userId = userDto.getUserId();
 		List<UserToPlantsDTO> userToPlantList = postService.selectPlantsCate(userId);
 		
 		model.addAttribute("userToPlantList", userToPlantList);
@@ -48,14 +56,16 @@ public class PostController {
 		
 		postService.insertPost(params);
 		
-		//return "redirect:/planiter/";
-		return "sns/write-post";
+		return "redirect:/planiter/profile.do";
+//		return "sns/write-post";
 	}
 	
 	@GetMapping(value = "/modify")
-	public String modifyPost (@RequestParam(value = "postno") Long postNo, Model model) {
-		//session으로 변경할 것 
-		String userId = "test";
+	public String modifyPost (@RequestParam(value = "postno") Long postNo, Model model, HttpServletRequest request) {
+		HttpSession session  = request.getSession();
+		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		
+		String userId = userDto.getUserId();
 		
 		PostDTO post = postService.getBoardDetail(postNo);
 		List<UserToPlantsDTO> userToPlantList = postService.selectPlantsCate(userId);
@@ -70,10 +80,10 @@ public class PostController {
 	
 	@PostMapping(value = "/modify")
 	public String modifyPost (@ModelAttribute("params") PostDetailDTO params,  Model model) {
+		postService.modify(params);
 		
-		
-		//return "redirect:/planiter/";
-		return "sns/modify-post";
+		return "redirect:/planiter/profile.do";
+//		return "sns/modify-post";
 	}
 	
 	@GetMapping(value = "/delete")
@@ -85,11 +95,16 @@ public class PostController {
 	}
 	
 	@GetMapping(value = "/read")
-	public String readPost (@RequestParam(value = "postno") Long postNo, Model model) {
+	public String readPost (@RequestParam(value = "postno") Long postNo, Model model, HttpServletRequest request) {
+		HttpSession session  = request.getSession();
+		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		
+		String userId = userDto.getUserId();
+		
 		LikesDTO likeDto = new LikesDTO();
 		
 		likeDto.setPostNo(postNo);
-		likeDto.setUserId("kosta");
+		likeDto.setUserId(userId);
 		
 		PostDTO post = postService.getBoardDetail(postNo);
 		List<CommentDTO> commentList = postService.getCommentDetail(postNo);
@@ -103,10 +118,30 @@ public class PostController {
 		
 		return "sns/read-post";
 	}
+
+	@GetMapping(value = "/refresh/comment")
+	public String refreshComment (@RequestParam(value = "postNo")Long postNo, Model model) {
+		List<CommentDTO> commentList = null;
+
+		try {
+			commentList = postService.getCommentDetail(postNo);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		model.addAttribute("commentList", commentList);
+
+		return "sns/read-post :: #comment_table_second";
+	}
 	
 	@PostMapping(value = "/insert/comment")
-	public String readPost (Model model, CommentDTO params) {
+	public String insertComment (Model model, CommentDTO params, HttpServletRequest request) {
+		HttpSession session  = request.getSession();
+		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		String userId = userDto.getUserId();
+		
 		try {
+			params.setUserId(userId);
 			postService.insertComment(params);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -116,11 +151,33 @@ public class PostController {
 		
 		 return "sns/read-post :: #comment_table";		
 	}
+
+	@GetMapping(value = "/delete/comment")
+	public String deleteComment (Model model, CommentDTO params, HttpServletRequest request) {
+		HttpSession session  = request.getSession();
+		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		String userId = userDto.getUserId();
+		try {
+			params.setUserId(userId);
+			postService.deleteComment(params);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		model.addAttribute("commentList", postService.getCommentDetail(params.getPostNo()));
+
+		return "sns/read-post :: #comment_table";
+	}
 	
 	@PostMapping(value = "/like")
-	public String Likes (LikesDTO params, @RequestParam(value = "isLike") String isLike, Model model) {
+	public String Likes (LikesDTO params, @RequestParam(value = "isLike") String isLike, Model model, HttpServletRequest request) {
+		HttpSession session  = request.getSession();
+		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		
+		String userId = userDto.getUserId();
+		
 		String result = null;
-		params.setUserId("kosta");
+		params.setUserId(userId);
 		
 		try {
 			postService.likeControl(params, isLike);

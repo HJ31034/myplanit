@@ -94,5 +94,28 @@
 	 SELECT count(FILENAME) FROM PLANTFILE
 	 WHERE PLANTSID=#{plantsId} 
 	</select>
- 
+	
+	<insert id="addPlant" parameterType="UserToPlantsDTO">
+	INSERT INTO USERTOPLANTS(plantsCateNo,PLANTSNAME,PLANTSID,USERID)
+	VALUES(seq_plantsCateNo_no.nextval,#{plantsName},#{plantId},#{userId})
+	</insert>
+	
+	<select id="userPlantCheck" resultType="int">
+	SELECT COUNT(PLANTSID)
+	FROM USERTOPLANTS
+	WHERE PLANTSID=#{plantId} AND USERID=#{userId}
+	</select>
+	
+	<select id="PlantKeyword" resultType="PlantKeywordDTO">
+	SELECT KEYNAME
+	FROM PLANTSTOKEYWORD P
+	JOIN PLANTKEYWORD K
+	ON P.PLANTSID=#{plantId} AND K.KEYID=P.KEYID
+	</select>
+	
+	<select id="selectSolution" resultType="SolutionDTO">
+	SELECT SOLNO,SOLTITLE,SOLCONTENT,PLANTSID FROM SOLUTION
+	WHERE PLANTSID=#{plantId}
+	</select>
+  
 </mapper>

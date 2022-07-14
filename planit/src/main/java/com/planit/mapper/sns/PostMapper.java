@@ -17,8 +17,10 @@ public interface PostMapper {
 	
 	public PostDTO selectPostDetail(Long postNo);
 	public void deleteYN(Long postNo);
+	public void modify(PostDetailDTO parmas);
 	public List<CommentDTO> commentList(Long postNo);
 	public void insertComment(CommentDTO params);
+	public void deleteComment(CommentDTO params);
 	public Long insertPost(PostDetailDTO params);
 	public void insertPostFiles(PostFilesDTO params);
 	public void insertWeatherLocation(PostDetailDTO params);
