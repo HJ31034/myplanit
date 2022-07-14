@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
- 
+
+import com.planit.domain.main.PlantKeywordDTO;
 import com.planit.domain.main.PlantsDTO;
+import com.planit.domain.main.SolutionDTO;
 import com.planit.domain.sns.FollowDTO;
 import com.planit.domain.sns.UserToPlantsDTO;
 import com.planit.service.main.MainService;
@@ -72,45 +74,6 @@ public class SearchController {
 	
 	
 	
-	/* plants_detail */
-	@RequestMapping(value = "/{plantsId}")
-	public String plantDetail(Model model, HttpServletRequest request,@PathVariable int plantsId,HttpSession session) {
-		 String USERID = "";
-		if (session.getAttribute("id") != null) {
-			USERID = session.getAttribute("id").toString();
-		}
-		 
-		 model.addAttribute("USERID", USERID);
-		 model.addAttribute("plantsId", plantsId);
-		 List<PlantsDTO> plantDetail = searchService.plantDetail(plantsId);
-		 model.addAttribute("plantDetail", plantDetail);
-		 List<PlantsDTO> plantImgs = searchService.plantImgs(plantsId);
-	     model.addAttribute("plantImgs", plantImgs);
-		 int imgsCnt=searchService.ImgsCnt(plantsId);
-		 model.addAttribute("imgsCnt", imgsCnt);
-		 
-		return "main/plant_detail";
-	}
 	
-	//식물 상세 설명 출력
-	@ResponseBody
-	@RequestMapping(value = "/plantDes")
-	public List<PlantsDTO> plantDes(Model model, @RequestParam(value="plantsId") int plantsId) {
-		return searchService.plantDes(plantsId);	
-	}
-	
-	
-	@ResponseBody
-	@RequestMapping(value = "/addPlant")
-	public String addPlant(Model model, @RequestParam(value="plantsId") int plantsId,
-									    @RequestParam(value="userId") String userId,
-									    @RequestParam(value="plantsName") String plantsName) {
-		System.out.println("userIdplantsId: "+userId+" plantsId: "+plantsId);
-		UserToPlantsDTO utp = new UserToPlantsDTO(plantsName, plantsId, userId);
-	    searchService.addPlant(utp);
-	    
-		return "1";
-	}
- 
  
 }

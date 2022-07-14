@@ -35,12 +35,10 @@ public class PlaniterController {
 	@Autowired
 	private SnsMapper snsmapper;
 	 
-	@Autowired
-	private UserService userService;
+ 
 	
 	// SNS메인 게시물리스트 및 검색처리
 	@RequestMapping(value = "/")
- 
     public String mainSnsPostList(Model model,
 			@RequestParam(value="keyField",required = false) String keyField,
 			@RequestParam(value="keyword", required = false) String keyword, HttpSession session) {
@@ -162,7 +160,7 @@ public class PlaniterController {
 	public ModelAndView selectFollow(Model model, @RequestParam(value = "fol") String fol,  ModelAndView mav, HttpSession session) {
 		
 		
-        String USERID = "kosta";
+        String USERID = "";
 		
         if (session.getAttribute("id") != null) {
 			USERID = session.getAttribute("id").toString();
@@ -184,4 +182,5 @@ public class PlaniterController {
 		return mav;
 	}
  
+	
 }
