@@ -29,10 +29,19 @@
 		WHERE postno = #{postNo}
 	</update>
 	
+	<update id="modify" parameterType="PostDTO">
+		UPDATE post
+		<set>
+			<if test="postContent != null and postContent != '' "> postcontent = #{postContent}</if>
+			<if test="plantsCateNo != null and plantsCateNo != '' "> plantscateno = #{plantsCateNo}</if>
+		</set>
+		WHERE postno = #{postNo}
+	</update>
+	
 	<select id="commentList" parameterType="Long" resultType="CommentDTO">
-		SELECT p.userid, p.content, TO_CHAR(regdate, 'yyyy.MM.dd') regdate
+		SELECT p.userid, p.content, TO_CHAR(regdate, 'yyyy.MM.dd') regdate, p.no
 		FROM (
-			SELECT p.userid, p.content, p.regdate
+			SELECT p.userid, p.content, p.regdate, p.no
 			FROM PCOMMENT p 
 			WHERE POSTNO = #{postNo}
 			ORDER BY regdate desc
@@ -60,6 +69,10 @@
 			sysdate, 
 			#{content}
 		)
+	</insert>
+
+	<insert id="deleteComment" parameterType="CommentDTO">
+		DELETE FROM pcomment WHERE no=#{no} AND postno=#{postNo}
 	</insert>
 	
 	<insert id="insertPost" parameterType="PostDetailDTO">
