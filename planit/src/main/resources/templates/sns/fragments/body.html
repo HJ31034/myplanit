@@ -47,8 +47,10 @@
 				   </span> 
 				   
 				
-				<a th:href="@{/planiter/goProfileEdit.do}">프로필수정</a>
- 
+ 					<a id="profile" th:href="@{/planiter/profile.do}" /> 
+ 						<img src="/imgs/img_section/user.png"/ style="height: 30px; margin-top: 20px;">
+ 					</a>
+				
 				
   <th:block th:if="${session.userdto == null}">
 <a th:href="@{/login}">로그인 </a>

@@ -34,7 +34,7 @@ public class MainController {
 		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0));
 		model.addAttribute("users", mainService.selectUsers(id));
 		model.addAttribute("postList", mainService.selectPost());
-		model.addAttribute("recommendList", mainService.selectPlantRecommend(id));
+		//model.addAttribute("recommendList", mainService.selectPlantRecommend(id));
 		return "main/index";
 	}
 

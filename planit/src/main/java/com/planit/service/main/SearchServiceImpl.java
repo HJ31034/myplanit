@@ -2,10 +2,14 @@ package com.planit.service.main;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.planit.domain.main.PlantKeywordDTO;
 import com.planit.domain.main.PlantsDTO;
+import com.planit.domain.main.SolutionDTO;
+import com.planit.domain.sns.UserToPlantsDTO;
 import com.planit.mapper.main.SearchMapper;
 
 @Service
@@ -27,8 +31,7 @@ public class SearchServiceImpl implements SearchService {
 	public int plantsTotalCount(String term, int keyId) {
 		return searchMapper.plantsTotalCount('%' + term + '%', keyId);
 	}
-	
-	
+  
 	/*	plants Detail */
 	public List<PlantsDTO> plantDetail(int plantsId){
 		List<PlantsDTO> detailList=searchMapper.plantDetail(plantsId);
@@ -46,6 +49,5 @@ public class SearchServiceImpl implements SearchService {
 		return searchMapper.ImgsCnt(plantsId);
 	}
 
-	
- 
+
 }

@@ -15,8 +15,10 @@ public interface PostService {
 	
 	public PostDTO getBoardDetail(Long postNo);
 	public void deleteYN(Long postNo);
+	public void modify(PostDetailDTO params);
 	public List<CommentDTO> getCommentDetail(Long postNo);
-	public void insertComment(CommentDTO parmas);
+	public void insertComment(CommentDTO params);
+	public void deleteComment(CommentDTO params);
 	public FilesDTO insertFiles(FilesDTO params);
 	public void deleteFile(long no);
 	public void insertPost(PostDetailDTO params);

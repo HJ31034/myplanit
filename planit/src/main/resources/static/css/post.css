@@ -312,13 +312,43 @@ followList start
 
 .post_box_right_read{
 	height: 500px;
+	width: 380px;
+	position: relative;
+}
+
+.post_box_right_read_main{
+	height: 500px;
     width: 380px;
     display: flex;
     flex-direction: column;
-    position:relative;
+    position:absolute;
     margin-left: 10px;
     border: 1px solid rgba(0,0,0,0.09);
     background: white;
+	z-index: 10;
+}
+
+.post_box_right_read_comment{
+	height: 500px;
+	width: 380px;
+	display: flex;
+	flex-direction: column;
+	position:absolute;
+	margin-left: 10px;
+	border: 1px solid rgba(0,0,0,0.09);
+	background: white;
+	z-index: 1;
+}
+
+.post_box_right_read_comment_close{
+	height: 30px;
+	display: inline-block;
+}
+
+.post_box_right_read_comment_close img{
+	width: 15px;
+	float: right;
+	margin: 5px 5px;
 }
 
 .post_box_left{
@@ -675,7 +705,46 @@ followList start
 
 /* followList END */
 
+.comment_second{
+	height: 400px;
+	width: 350px;
+	position:relative;
+	border: 1px solid rgba(0,0,0,0.09);
+	background: white;
+	box-sizing: border-box;
+	margin: 5px 15px 0px 15px;
+	display: flex;
+	flex-direction: row;
+	padding: 5px;
+	overflow: scroll;
+}
 
+#comment_table_second{
+	width: 100%;
+	height: 100%;
+}
 
+#comment_table_second tr td {
+	vertical-align: middle !important;
+	height: 30px !important;
+}
 
+#comment_table_second tr td:nth-child(1){
+	text-align: left;
+	width: 20%;
+}
 
+#comment_table_second tr td:nth-child(2){
+	text-align: left;
+	width: 45%;
+}
+
+#comment_table_second tr td:nth-child(3){
+	text-align: right;
+	width: 25%;
+}
+
+#comment_table_second tr td:nth-child(4){
+	text-align: right;
+	width: 10%;
+}

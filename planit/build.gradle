@@ -26,13 +26,15 @@ dependencies {
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16' /* Log4JDBC */
 	implementation 'com.google.code.gson:gson:2.8.6' /* Gson */
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1' /*json*/
-	
+ 
+
+ 
 	implementation 'org.springframework.session:spring-session-core' /*세션처리*/ 
 	implementation 'org.springframework.boot:spring-boot-starter-security' /*보안처리*/
-	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
 	implementation 'org.springframework.boot:spring-boot-starter-validation' /*validation*/
 	
-	  implementation 'org.apache.httpcomponents:httpclient:4.5.7'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.7'
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
