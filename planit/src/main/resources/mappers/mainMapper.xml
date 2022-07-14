@@ -18,10 +18,11 @@
 		</choose>
 	</select>
 	
+	<!-- 사용자 계정 랜덤 추천 -->
 	<select id="selectUsers" parameterType="String" resultType="AccountDTO">
 		SELECT *
 		FROM (
-			SELECT ROWNUM NUM, a.*
+			SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, a.*
 			FROM
 				account a
 		)
@@ -29,7 +30,7 @@
 		<if test="userId != null">
 			NOT userId IN (#{userId}) AND
 		</if>
-			NUM BETWEEN 1 AND 6
+			rn <![CDATA[ <= ]]> 6
 		
 	</select>
 	
@@ -50,17 +51,37 @@
 	
 	<!-- 식물 추천 리스트 -->
 	<select id="selectPlantRecommend" parameterType="String" resultType="PlantsDTO">
-	SELECT a.*
+	<!-- 사용자가 로그인을 하지 않았을 경우 모든 식물에 대해 랜덤 추천 -->
+	<if test="userId == null">
+	SELECT p2.PLANTSID ,p2.PLANTSNAME ,f3.FILENAME
+	FROM PLANTS p2 ,(SELECT f2.PLANTSID, f2.FILENAME 
+						FROM (
+							SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, f.PLANTSID, f.FILENAME 
+							FROM (
+									SELECT RANK () OVER (PARTITION BY p.PLANTSID ORDER BY p.FILENAME) AS RANK, p.*
+									FROM PLANTFILE p 
+								) f
+								WHERE rank = 1 
+							) f2
+						WHERE rn <![CDATA[ <= ]]> 6) f3
+	WHERE p2.PLANTSID = f3.PLANTSID
+	</if>
+	
+	<!-- 사용자가 로그인을 했을 경우 사용자가 회원가입 시 입력했던 관심 키워드 기준으로 랜덤 추천 -->
+	<if test="userId != null">
+	SELECT  a.PLANTSID, a.PLANTSNAME , a.FILENAME 
 	FROM (
-		SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, p3.*
-		FROM PLANTKEYWORD p, PLANTSTOKEYWORD p2, PLANTS p3
-		WHERE p.KEYID IN (SELECT u.KEYID 
-							FROM USERKEYWORD u 
-							WHERE USERID = #{userId})
-				AND p.KEYID = p2.KEYID
-				AND p2.PLANTSID = p3.PLANTSID
-		) a
+	SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, p3.PLANTSID, p3.PLANTSNAME , p4.FILENAME 
+	FROM PLANTKEYWORD p, PLANTSTOKEYWORD p2, PLANTS p3, PLANTFILE p4  
+	WHERE p.KEYID IN (SELECT u.KEYID 
+						FROM USERKEYWORD u
+						WHERE u.USERID = #{userId})
+			AND p.KEYID = p2.KEYID
+			AND p2.PLANTSID = p3.PLANTSID
+			AND p3.PLANTSID = p4.PLANTSID 
+		) a 
 	WHERE rn <![CDATA[ <= ]]> 6
+	</if>
 	</select>
  
 </mapper>

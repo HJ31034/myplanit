@@ -103,7 +103,13 @@
 	width: 200px; 
 	height: 200px; 
 }
-
+.plant_name {
+	margin: 10px;
+	width: 200px;
+	text-align: center;
+	font-size: 15px; 
+	font-weight: bold;
+}
 
 /* user profile */
 .box .profile_box {
