@@ -2,10 +2,14 @@ package com.planit.service.main;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.planit.domain.main.PlantKeywordDTO;
 import com.planit.domain.main.PlantsDTO;
+import com.planit.domain.main.SolutionDTO;
+import com.planit.domain.sns.UserToPlantsDTO;
 import com.planit.mapper.main.SearchMapper;
 
 @Service
@@ -23,24 +27,5 @@ public class SearchServiceImpl implements SearchService {
 		return searchMapper.selectKwdSearch(kwdId);
 	}
 
- 
-	
-	
-	/*	plants Detail */
-	public List<PlantsDTO> plantDetail(int plantsId){
-		List<PlantsDTO> detailList=searchMapper.plantDetail(plantsId);
-		return detailList;
-	}
-	public List<PlantsDTO> plantDes(int plantsId){
-		List<PlantsDTO> plantDes=searchMapper.plantDes(plantsId);
-		return plantDes;
-	}
-	public List<PlantsDTO> plantImgs(int plantsId){
-		List<PlantsDTO> plantImgs=searchMapper.plantImgs(plantsId);
-		return plantImgs;
-	}
-	public int ImgsCnt(int plantsId) {
-		return searchMapper.ImgsCnt(plantsId);
-	}
- 
+  
 }

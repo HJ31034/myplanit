@@ -42,10 +42,23 @@ public class snsServiceImpl implements snsService {
 		}
 		
 		System.out.println("service keyField: "+keyField+ " keyword: "+keyword);
-		List<PostDTO> serachSNS = snsmapper.searchSNS(keyField,keyword,startNum,endNum);
+		List<PostDTO> serachSNS = snsmapper.searchSNS(keyField,'%' + keyword + '%',startNum,endNum);
 		 
 		return serachSNS;
 	}
+
+	
+//	@Override
+//	public List<AccountDTO> searchAcc(String keyField,String keyword,int startNum, int endNum){
+//		List<AccountDTO> serachSNS=null;
+//		
+//		if(keyField.equals("계정")) {
+//				keyField="userId";
+//			    serachSNS=snsmapper.searchAccount(keyField, keyword, startNum, endNum);
+//			}
+//			
+//		 return serachSNS;
+//	}
 
 	@Override
 	public List<AccountDTO> selectMainAccINfo(String USERID) {

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -49,7 +50,7 @@ public class PlaniterRestController {
 	// 팔로잉 리스트
 		@RequestMapping(value = "/followingList.do", method = RequestMethod.GET)
 		public List<FollowDTO> follower(Model model, ModelAndView mav,
-				@RequestParam(value="page") int page) {
+				@RequestParam(value="page") int page, HttpSession session) {
 			System.out.println("followingList con page: "+page);
 			
 			 int nowPage = page;
@@ -67,7 +68,14 @@ public class PlaniterRestController {
 				 endNum = numPerPage;
 			}
 			
-			String USERID = "kosta";
+			  String USERID = null;
+				
+			  if (session.getAttribute("id") != null) {
+					USERID = session.getAttribute("id").toString();
+				}else {
+					USERID="guest";
+				}
+				  
 			List<FollowDTO> followingList_TEMP = new ArrayList<FollowDTO>();
 			List<FollowDTO> followingList = snsservice.selectFollowingList(startNum,endNum,USERID);
 			System.out.println("RestCon Service selectFollowingList startNum: "+startNum+" endNum: "+endNum+" userId: "+USERID);
@@ -103,14 +111,20 @@ public class PlaniterRestController {
 
 	// 팔로워 리스트
 	@RequestMapping(value = "/followerList.do", method = RequestMethod.GET)
-	public List<FollowDTO> Following(Model model, ModelAndView mav,@RequestParam(value="page") int page) {
+	public List<FollowDTO> Following(Model model, ModelAndView mav,@RequestParam(value="page") int page,
+			HttpSession session) {
 		System.out.println("followerList con page: "+page);
 		List<FollowDTO> followerList_TEMP = new ArrayList<FollowDTO>();
 		
-		String USERID = "kosta";
- 
-		
-		int nowPage = page;
+		  String USERID = "";
+			
+		  if (session.getAttribute("id") != null) {
+				USERID = session.getAttribute("id").toString();
+			}else {
+				USERID="guest";
+			}
+		  
+		 int nowPage = page;
 		 int startNum=1;
 		 int endNum=5;
 		 int numPerPage=5; 
@@ -176,19 +190,25 @@ public class PlaniterRestController {
 	public AccountDTO unfollow(@RequestParam(value = "followerId") String followerId,
 			@RequestParam(value = "followingId") String followingId,@RequestParam(value="page") int page) {
 	    System.out.println("unfollow: "+followerId+" / "+followingId);
+	    
 		snsservice.unfollow(followerId, followingId);
  
 		snsmapper.updateFollowcount(followerId, "unfollowing");
 		snsmapper.updateFollowcount(followingId, "unfollower");
 		
-	 
 		return profileService.selectUserProfile(followerId);
 	}
 
 	// 프로필 수정 페이지 이동
 	@GetMapping(value = "/goProfileEdit.do")
-	public ModelAndView goProfileEdit(Model model, ModelAndView mav, AccountDTO dto) {
-			String USERID="kosta";
+	public ModelAndView goProfileEdit(Model model, ModelAndView mav, AccountDTO dto, HttpSession session) {
+		   String USERID = ""	;
+		
+		   if (session.getAttribute("id") != null) {
+				USERID = session.getAttribute("id").toString();
+			}else {
+				USERID="guest";
+			}
 			
 		
 		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID);
@@ -201,9 +221,15 @@ public class PlaniterRestController {
 	// 프로필 수정
 	@RequestMapping(value = "/updateInfo.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	public ModelAndView updateBlogInfo(@RequestParam(value = "InfoDes") String InfoDes,
-
-			@RequestParam(value = "profileIMG") MultipartFile profileIMG, ModelAndView mav 
+			@RequestParam(value = "profileIMG") MultipartFile profileIMG, ModelAndView mav, HttpSession session
 			 ) throws IOException {
+		
+		
+		 String USERID = null;
+			
+		  if (session.getAttribute("id") != null)
+		  USERID = session.getAttribute("id").toString();
+			
 		
 		String fileName = profileIMG.getOriginalFilename();
 		String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
@@ -230,7 +256,7 @@ public class PlaniterRestController {
 		AccountDTO dto = new AccountDTO();
 		dto.setProfileImg(fileName);
 		dto.setAccDescription(InfoDes);
-		dto.setUserId("kosta");
+		dto.setUserId(USERID);
 		snsservice.updateInfo(dto);
 
 		System.out.println("InfoDes: " + InfoDes);

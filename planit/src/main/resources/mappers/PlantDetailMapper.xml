@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.planit.mapper.main.SearchMapper">
-
-	<select id="selectPlants" parameterType="String" resultType="PlantsDTO">
-		SELECT *
-		FROM PLANTS p 
-		<if test='term != "%all%"'>
-		WHERE PLANTSNAME LIKE #{term}
-		</if>
-	</select>
-	
-	<select id="selectKwdSearch" parameterType="Integer" resultType="PlantsDTO">
-		SELECT DISTINCT p3.*
-		FROM PLANTKEYWORD p, PLANTSTOKEYWORD p2, PLANTS p3 
-		WHERE p.KEYID = #{keyId}
-			AND p.KEYID = p2.KEYID
-			AND p2.PLANTSID = p3.PLANTSID
-	</select>
-	
- 
-	
+<mapper namespace="com.planit.mapper.main.PlantDetailMapper">
+  
 		
 	<!-- plants Detail -->
 	

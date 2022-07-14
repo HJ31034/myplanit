@@ -14,5 +14,20 @@ public class UserToPlantsDTO {
 		this.plantsName = plantsName;
 		this.userId = userId;
 	}
+
+	public UserToPlantsDTO() {
+		super();
+	}
+
+	public UserToPlantsDTO(String plantsName, int plantId, String userId) {
+		super();
+		this.plantsName = plantsName;
+		this.plantId = plantId;
+		this.userId = userId;
+	}
+	
+	
+	
+	
 	 
 }
