@@ -94,16 +94,7 @@
 		]]>
 		</select>
 	 
-	 
-	<!--  <select id="searchAccount" resultType="AccountDTO">
-		<![CDATA[ 
-		 select rn,userid,profileimg from
-        (select  rownum rn, a.userid, a.profileimg
-         from account a
-         where a.userid like #{keyword} and rownum <= #{startNum} + #{endNum})
-         WHERE rn > #{startNum}		 
-		]]>
-		</select> -->
+ 
 	 
 	 
 <!-- 전체 게시물 수  -->
@@ -128,10 +119,12 @@
 	 
 <!--메인 계정정보 출력 (식물카테고리)-->
 		<select id="selectMainCate" parameterType="String" resultType="com.planit.domain.sns.PlantsCateDTO">
-	<![CDATA[
-	select plantsname
-	from usertoplants
-	where userId=#{userId}
+	<![CDATA[  
+    select plantsname from(
+select rownum rn, plantscateno,plantsname from usertoplants
+where userid=#{userId}
+order by plantscateno desc)
+where rownum <= 4
 	]]>	
 		</select>
 		

@@ -9,12 +9,29 @@
 <th:block layout:fragment="css">
 	<link href="/css/search.css" rel="stylesheet">
 	<style>
+	
 	#addPlant{
 	background-color: #9FCF62;
     border: none;
     color: white;
     width: 110px;
     height: 25px;
+	}
+	
+
+	li.plantTags__item{
+	border-radius: 10px; 
+	padding: 9px 17px 6px;
+    background-color: #f5f5f5;
+    font-size: 14px;
+    letter-spacing: -0.7px;
+    text-align: center;
+    color: #666;
+    margin-bottom: 6px;
+    width: auto;
+    margin-right: 4px;
+    display: flex;
+    flex-wrap: wrap;
 	}
 	</style>
 </th:block>
@@ -38,7 +55,7 @@
 		<div class="plantDetail__page" id="plantDetail__page">
 			<section class="plantDetail__search-section" style="height: 0px;">
 				<div class="search__section-flex">
-					<form class="search-form" action="https://fuleaf.com/search"
+					<form class="search-form" action="/planit/search"
 						method="get" style="opacity: 0; transform: translateY(-50px);">
 						<div class="search-form-flex">
 							<input class="search-form-input" type="text"
@@ -200,13 +217,20 @@
 					 <span th:if="${session.userdto != null}">
 					<input type="button" value="내 식물 추가하기 ➩" id="addPlant" onclick="addplant()">
 				     </span>
+				     
 						<h1 class="simpleinfo-plantname_english mainColorTitle" th:text="${detail.plantEng}"> 
 							 </h1>
 						<h2 class="simpleinfo-plantname_korean mainTitle" th:text="${detail.plantsName}"> 
 							 </h2>
+							 <ul class="plantTags__items" style="display: flex; display: flex;flex-direction: row;
+    flex-wrap: wrap;width: 90%; min-width: 500px;">
+							    <li class="plantTags__item" th:each="key:${PlantKeyword}" th:text="${key.keyName}"></li>
+							 </ul>
 						<h3 class="simpleinfo-plantname_intro" th:text="${detail.pDescription}"> </h3>
 					</div>
-					<input type="hidden" th:value="${detail.plantsName}" id="plantsName">
+
+							
+							<input type="hidden" th:value="${detail.plantsName}" id="plantsName">
 					<!-- 식물 상세설명  -->
 					<div class="simpleinfo-table" >
 						<ul class="table-items">
@@ -299,77 +323,17 @@
 				</div>
 				<div class="sos-desc">
 					<ul class="sos-items">
-						<li class="sos-item"><div class="sos-item-title">
+						<li class="sos-item" th:each="sol:${solution}"><div class="sos-item-title">
 								<div class="question-mark">Q.</div>
-								<h3>잎이 노랗게 변해요.</h3>
+								<h3 th:text="${sol.solTitle}"></h3>
 								<button class="sos-item-button" type="button">
 									<img
 										src="/assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
 								</button>
 							</div>
 							<div class="sos-item-desc">
-								<h3 class="height-fake">① 식물이 계속 새잎을 낸다면, 잎이 노랗게 변하는 것은 잎의
-									노화로 자연스러운 현상이랍니다. 완전히 죽은 잎은 해충이 생길 수 있음으로 제거하는 것이 좋아요. 잎이 노랗게
-									물들 때, 완전히 노랗게 되고 나서 잎을 떼는 게 좋아요. 죽어가는 잎에서 식물이 남은 영양소를 흡수하기
-									때문이에요. 잎이 갈색으로 바싹바싹 마르면 식물에 해를 끼치지 않고 줄기나 가지에서 떼어낼 수 있어요. ② 물을
-									너무 과하게 줬어요. 뿌리 주변에 물이 흥건하면 뿌리가 호흡을 할 수 없어서 결국 죽게 됩니다. 바람이 잘 통하는
-									곳에 옮겨서 흙을 잘 말려주세요. 선풍기나 서큘레이터의 도움을 받아도 좋아요. 물은 환경에 따라 마르는 정도가
-									달라집니다. 식물의 상태와 흙이 수분을 얼마나 머금고 있는지를 관찰하며 물을 주세요. 물을 준 후에는 물이 완전히
-									빠져나가도록 두고 흙이 흡수하지 못한 물은 과습의 위험이 있으니 버려주는 것이 좋습니다. 물이 잘 빠져나가서
-									뿌리가 호흡을 할 수 있도록 배수가 잘되는 흙으로 바꿔주는 것을 권장합니다. 물을 주고 다음 물 주기까지 흙을
-									적절히 말린 후 물을 주는 것이 중요해요. ③ 양분이 부족해요. 뿌리가 화분 안에 가득 차서 밖으로 빠져나오지
-									않았나요? 분갈이해 줄 시기가 왔습니다. 기존 화분보다 4cm 정도 더 큰 화분에 식물을 옮겨주세요. 죽은 뿌리를
-									정리한 후 분갈이해 주세요. 분갈이 후에는 물을 흠뻑 준 뒤 그늘에 두고 쉬게 해주세요.</h3>
-								<h3 class="height-real">① 식물이 계속 새잎을 낸다면, 잎이 노랗게 변하는 것은 잎의
-									노화로 자연스러운 현상이랍니다. 완전히 죽은 잎은 해충이 생길 수 있음으로 제거하는 것이 좋아요. 잎이 노랗게
-									물들 때, 완전히 노랗게 되고 나서 잎을 떼는 게 좋아요. 죽어가는 잎에서 식물이 남은 영양소를 흡수하기
-									때문이에요. 잎이 갈색으로 바싹바싹 마르면 식물에 해를 끼치지 않고 줄기나 가지에서 떼어낼 수 있어요. ② 물을
-									너무 과하게 줬어요. 뿌리 주변에 물이 흥건하면 뿌리가 호흡을 할 수 없어서 결국 죽게 됩니다. 바람이 잘 통하는
-									곳에 옮겨서 흙을 잘 말려주세요. 선풍기나 서큘레이터의 도움을 받아도 좋아요. 물은 환경에 따라 마르는 정도가
-									달라집니다. 식물의 상태와 흙이 수분을 얼마나 머금고 있는지를 관찰하며 물을 주세요. 물을 준 후에는 물이 완전히
-									빠져나가도록 두고 흙이 흡수하지 못한 물은 과습의 위험이 있으니 버려주는 것이 좋습니다. 물이 잘 빠져나가서
-									뿌리가 호흡을 할 수 있도록 배수가 잘되는 흙으로 바꿔주는 것을 권장합니다. 물을 주고 다음 물 주기까지 흙을
-									적절히 말린 후 물을 주는 것이 중요해요. ③ 양분이 부족해요. 뿌리가 화분 안에 가득 차서 밖으로 빠져나오지
-									않았나요? 분갈이해 줄 시기가 왔습니다. 기존 화분보다 4cm 정도 더 큰 화분에 식물을 옮겨주세요. 죽은 뿌리를
-									정리한 후 분갈이해 주세요. 분갈이 후에는 물을 흠뻑 준 뒤 그늘에 두고 쉬게 해주세요.</h3>
-							</div></li>
-						<li class="sos-item"><div class="sos-item-title">
-								<div class="question-mark">Q.</div>
-								<h3>잎이 까맣게 탔어요.</h3>
-								<button class="sos-item-button" type="button">
-									<img
-										src="/assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
-								</button>
-							</div>
-							<div class="sos-item-desc">
-								<h3 class="height-fake">식물이 너무 밝은 곳에 있지 않나요? 강한 빛은 잎을 태울 수
-									있어요. 이미 탄 잎은 회복되지 않으니 소독된 가위로 잘라주는 것이 좋습니다. 커튼이나 창문으로 걸러진 빛이 있는
-									곳으로 이동해주세요.</h3>
-								<h3 class="height-real">식물이 너무 밝은 곳에 있지 않나요? 강한 빛은 잎을 태울 수
-									있어요. 이미 탄 잎은 회복되지 않으니 소독된 가위로 잘라주는 것이 좋습니다. 커튼이나 창문으로 걸러진 빛이 있는
-									곳으로 이동해주세요.</h3>
-							</div></li>
-						<li class="sos-item"><div class="sos-item-title">
-								<div class="question-mark">Q.</div>
-								<h3>하얀 거미줄 같은 게 생겼어요.</h3>
-								<button class="sos-item-button" type="button">
-									<img
-										src="/assets/detail/imgs/search_detail_sos_dropdown_arrow_down@2x.png">
-								</button>
-							</div>
-							<div class="sos-item-desc">
-								<h3 class="height-fake">응애가 생겼어요. 응애는 주로 잎의 아랫면과 줄기와 잎이 연결된
-									부분에서 살고 있어요. 고온 건조할 때 많이 생긴답니다. 평상시 예방 차원으로 잎에 분무를 자주 해주거나 샤워를
-									시켜줍니다. 응애가 생겼을 때는 주방 세제 한 큰술을 물 2L와 섞어서 분무해 주세요. 또는, 소독용 알코올을
-									솜이나 면봉에 적셔서 잎사귀를 닦아주세요. 몇 시간 뒤 잎을 물로 헹궈주는 것 잊지 마세요. ※피레스로이드를
-									포함하는 친환경 살충제(제충국)는 응애에게 효과가 없어요. 대신 응애의 천적에게 해를 끼쳐 응애가 계속 번식할 수
-									있으니 사용에 유의해 주세요.</h3>
-								<h3 class="height-real">응애가 생겼어요. 응애는 주로 잎의 아랫면과 줄기와 잎이 연결된
-									부분에서 살고 있어요. 고온 건조할 때 많이 생긴답니다. 평상시 예방 차원으로 잎에 분무를 자주 해주거나 샤워를
-									시켜줍니다. 응애가 생겼을 때는 주방 세제 한 큰술을 물 2L와 섞어서 분무해 주세요. 또는, 소독용 알코올을
-									솜이나 면봉에 적셔서 잎사귀를 닦아주세요. 몇 시간 뒤 잎을 물로 헹궈주는 것 잊지 마세요. ※피레스로이드를
-									포함하는 친환경 살충제(제충국)는 응애에게 효과가 없어요. 대신 응애의 천적에게 해를 끼쳐 응애가 계속 번식할 수
-									있으니 사용에 유의해 주세요.</h3>
+								<h3 class="height-fake" th:text="${sol.solContent}"></h3>
+								<h3 class="height-real" th:text="${sol.solContent}"></h3>
 							</div></li>
 					</ul>
 				</div>
@@ -377,13 +341,9 @@
 		</div>
 	</div>
 	
-	
-	
-	
 	<script src="/assets/detail/swiper-bundle.min.js"></script>
 	<script src="/assets/detail/main.js"></script>
-
-			 
+		 
 		</div>
 	</div>
 </th:block>
@@ -405,10 +365,10 @@
 	/*<![CDATA[*/
      var plantsId = /*[[${plantsId}]]*/ 'default';
      var userId = /*[[${USERID}]]*/ 'default';
-      /*]]>*/
+    /*]]>*/
 	 
     
-      
+      //식물 상세설명 출력
 		 $.ajax({
 				type : 'get',
 				url : "/planit/plantDes?plantsId="+plantsId,
@@ -451,7 +411,7 @@
 		});
       
       
-		
+		 //나만의 식물 추가하기
 		  function addplant() {
 				var plantsName=$('#plantsName').val();
 				$.ajax({
@@ -460,7 +420,11 @@
 					contentType : "application/json; charset=UTF-8",
 					dataType : "json",
 					success : function(data) {
-						 console.log(data);
+						 if(data!=0){
+							 alert('이미 등록하신 식물입니다');
+						 }else{
+							 alert('식물이 등록되었습니다')
+						 }
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
 						console.log(jqXHR.responseText);

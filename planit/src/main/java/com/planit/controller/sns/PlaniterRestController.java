@@ -116,7 +116,7 @@ public class PlaniterRestController {
 		System.out.println("followerList con page: "+page);
 		List<FollowDTO> followerList_TEMP = new ArrayList<FollowDTO>();
 		
-		  String USERID = "kosta";
+		  String USERID = "";
 			
 		  if (session.getAttribute("id") != null) {
 				USERID = session.getAttribute("id").toString();
@@ -190,19 +190,19 @@ public class PlaniterRestController {
 	public AccountDTO unfollow(@RequestParam(value = "followerId") String followerId,
 			@RequestParam(value = "followingId") String followingId,@RequestParam(value="page") int page) {
 	    System.out.println("unfollow: "+followerId+" / "+followingId);
+	    
 		snsservice.unfollow(followerId, followingId);
  
 		snsmapper.updateFollowcount(followerId, "unfollowing");
 		snsmapper.updateFollowcount(followingId, "unfollower");
 		
-	 
 		return profileService.selectUserProfile(followerId);
 	}
 
 	// 프로필 수정 페이지 이동
 	@GetMapping(value = "/goProfileEdit.do")
 	public ModelAndView goProfileEdit(Model model, ModelAndView mav, AccountDTO dto, HttpSession session) {
-		   String USERID = "kosta"	;
+		   String USERID = ""	;
 		
 		   if (session.getAttribute("id") != null) {
 				USERID = session.getAttribute("id").toString();

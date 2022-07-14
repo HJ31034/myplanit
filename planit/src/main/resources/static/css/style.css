@@ -290,7 +290,7 @@ margin-left: 150px;
 
 .single-widget-area {
   position: relative;
-  z-index: 1;
+ /*  z-index: 1; */
   margin-bottom: 50px;
   margin-left: 40px;
   width: 210px;
@@ -372,6 +372,15 @@ margin-left: 150px;
 	margin-left: 90px;
 	width: 210px;
 	
+}
+
+#cate{
+	margin-left: -48px;
+	text-align: center;
+}
+
+#cateItems{
+	margin-left:-75px;  margin-top: -14px;
 }
 
 .follower{
