@@ -38,12 +38,12 @@ public class PostController {
 	
 	@GetMapping(value = "/write")
 	public String writePost (Model model, HttpServletRequest request) {
-		HttpSession session  = request.getSession();
-		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+//		HttpSession session  = request.getSession();
+//		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
 		
 		//session으로 변경할 것 
-		//String userId = "test";
-		String userId = userDto.getUserId();
+		String userId = "test";
+//		String userId = userDto.getUserId();
 		List<UserToPlantsDTO> userToPlantList = postService.selectPlantsCate(userId);
 		
 		model.addAttribute("userToPlantList", userToPlantList);
@@ -96,15 +96,15 @@ public class PostController {
 	
 	@GetMapping(value = "/read")
 	public String readPost (@RequestParam(value = "postno") Long postNo, Model model, HttpServletRequest request) {
-		HttpSession session  = request.getSession();
-		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
-		
-		String userId = userDto.getUserId();
+//		HttpSession session  = request.getSession();
+//		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+//		
+//		String userId = userDto.getUserId();
 		
 		LikesDTO likeDto = new LikesDTO();
 		
 		likeDto.setPostNo(postNo);
-		likeDto.setUserId(userId);
+		likeDto.setUserId("test");
 		
 		PostDTO post = postService.getBoardDetail(postNo);
 		List<CommentDTO> commentList = postService.getCommentDetail(postNo);
