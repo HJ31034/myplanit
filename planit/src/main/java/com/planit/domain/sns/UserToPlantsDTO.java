@@ -10,6 +10,8 @@ public class UserToPlantsDTO {
 	private int plantId;
 	private String userId;
 	
+	private String proFileImg;
+	
 	public UserToPlantsDTO(String plantsName, String userId) {
 		this.plantsName = plantsName;
 		this.userId = userId;

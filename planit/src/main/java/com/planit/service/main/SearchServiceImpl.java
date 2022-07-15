@@ -31,7 +31,8 @@ public class SearchServiceImpl implements SearchService {
 	public int plantsTotalCount(String term, int keyId) {
 		return searchMapper.plantsTotalCount('%' + term + '%', keyId);
 	}
-  
+	
+	
 	/*	plants Detail */
 	public List<PlantsDTO> plantDetail(int plantsId){
 		List<PlantsDTO> detailList=searchMapper.plantDetail(plantsId);
@@ -49,5 +50,6 @@ public class SearchServiceImpl implements SearchService {
 		return searchMapper.ImgsCnt(plantsId);
 	}
 
-
+	
+ 
 }

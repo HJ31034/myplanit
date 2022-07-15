@@ -18,20 +18,35 @@
 		</choose>
 	</select>
 	
-	<!-- 사용자 계정 랜덤 추천 -->
-	<select id="selectUsers" parameterType="String" resultType="AccountDTO">
+	<!-- 사용자 계정 추천 -->
+	<select id="selectUsers" parameterType="java.util.List" resultType="AccountDTO">
 		SELECT *
 		FROM (
 			SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, a.*
 			FROM
 				account a
 		)
-		WHERE 
-		<if test="userId != null">
-			NOT userId IN (#{userId}) AND
+		WHERE
+		<if test="list.size != 0">
+		userId IN (<foreach collection="list" item="item" separator=","> #{item} </foreach>)
 		</if>
-			rn <![CDATA[ <= ]]> 6
 		
+		<if test="list.size == 0">
+		rn <![CDATA[ <= ]]> 6
+		</if>
+		
+	</select>
+	
+	<!-- 추천할 계정이 6보다 작을 경우 실행 -->
+	<select id="selectUsers2" parameterType="map" resultType="AccountDTO">
+		SELECT *
+		FROM (
+			SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, a.*
+			FROM
+				account a
+		)
+		WHERE NOT userId In (<foreach collection="list" item="item" separator=","> #{item} </foreach>)
+		AND rn <![CDATA[ <= ]]> #{count}
 	</select>
 	
 	<select id="selectPost" resultType="PostDTO">
