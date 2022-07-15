@@ -141,7 +141,7 @@
 
 <th:block layout:fragment="content">
 
-	<div class="main">
+	<div class="main" style="margin-top: 18%;">
 
 		<div id="main-wrapper">
 
@@ -202,8 +202,10 @@
 			</div>
 
 			<div class="plantList">
-				<div class="plant-box" th:each="plant : ${plantList}"> 
-					<a th:href="@{/planit/plantsDetail(plantsId=${plant.plantsId},plantsName=${plant.plantsName})}"> <img class="plant-img"
+ 
+				<div class="plant-box" th:each="plant : ${plantList}">
+					<a th:href="@{/planit/} + ${plant.plantsId}"> <img class="plant-img"
+ 
 						th:src="${plant.fileName}">
 						<p class="plant-name">[[${plant.plantsName}]]</p>
 					</a>

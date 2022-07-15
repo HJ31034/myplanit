@@ -35,8 +35,9 @@ public class ProfileController {
 		
 		HttpSession session  = request.getSession();
 		
-//		String id = session.getAttribute("id").toString();
-		String id = "kosta";
+		String id = null;
+		if (session.getAttribute("id") != null)
+			id = session.getAttribute("id").toString();
 		String page = "main";
 		
 		// 사용자 프로필 정보
@@ -110,8 +111,11 @@ public class ProfileController {
 		
 		HttpSession session  = request.getSession();
 		
-//		String myId = session.getAttribute("id").toString();
-		String myId = "kosta";
+		String myId = null;
+		if (session.getAttribute("id") != null)
+			myId = session.getAttribute("id").toString();
+		
+		model.addAttribute("myId", myId);
 		
 		follow.setUserId(myId);
 		follow.setFollowingId(id);
