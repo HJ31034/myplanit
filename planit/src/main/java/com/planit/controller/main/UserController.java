@@ -83,7 +83,7 @@ public class UserController {
 		System.out.println("이거 보이면 콘솔에 찍히면 성공 ");
 		System.out.println("회원가입dto:" + userdto);
 		log.info("join: userdto", userdto);
-		return "redirect:/login";
+		return "redirect:/planit/welcome";
 		//return "";
 	}
 
@@ -225,5 +225,9 @@ public class UserController {
 
 		return "redirect:/login";
 	}
-
+	
+	@GetMapping("/planit/welcome")
+	public String regSuccess() {
+		return"/login/regSuccess";
+	}
 }
