@@ -19,4 +19,6 @@ public interface PlantDetailService {
 	public int userPlantCheck(@Param("userId")String userId,@Param("plantId") int plantId);
 	public List<PlantKeywordDTO> PlantKeyword(int plantsId);
 	public List<SolutionDTO> selectSolution(int plantsId);
+	public List<UserToPlantsDTO> detail_User(int plantsId);
+	public List<UserToPlantsDTO> random_User();
 }

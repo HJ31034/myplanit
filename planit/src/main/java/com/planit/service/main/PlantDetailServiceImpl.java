@@ -39,18 +39,22 @@ public class PlantDetailServiceImpl implements PlantDetailService {
 		System.out.println("SearchServiceImpl addPlant: "+params);
 		detailMapper.addPlant(params);
 	}
-	public int userPlantCheck(@Param("userId")String userId,@Param("plantId") int plantId) {
-		int check=detailMapper.userPlantCheck(userId, plantId);
-		return check;
+	public int userPlantCheck(@Param("userId")String userId,@Param("plantId") int plantId) {  
+		return detailMapper.userPlantCheck(userId, plantId);
 	}
-	public List<PlantKeywordDTO> PlantKeyword(int plantsId) {
-		List<PlantKeywordDTO> keyNameList = detailMapper.PlantKeyword(plantsId);
-		return keyNameList;
+	public List<PlantKeywordDTO> PlantKeyword(int plantsId) { 
+		return detailMapper.PlantKeyword(plantsId);
 	}
-	public List<SolutionDTO> selectSolution(int plantsId){
-		List<SolutionDTO> solution=detailMapper.selectSolution(plantsId);
-		return solution;
+	public List<SolutionDTO> selectSolution(int plantsId){ 
+		return detailMapper.selectSolution(plantsId);
 	}
  
+	public List<UserToPlantsDTO> detail_User(int plantsId){ 
+		return detailMapper.detail_User(plantsId);
+	}
+	
+	public List<UserToPlantsDTO> random_User(){
+		return detailMapper.random_User();
+	}
 
 }
