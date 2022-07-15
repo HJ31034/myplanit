@@ -71,8 +71,7 @@
 		 
 		});
 
-	
-		
+	/* 이미지 파일 미리보기 */ 
 		$(function() {
 			$("#profileIMG").on('change', function() {
 				readURL(this);
@@ -80,11 +79,13 @@
 		});
 
 		function readURL(input) {
+			// input에 파일이 있는 경우
 			if (input.files && input.files[0]) {
+				// FileReader 인스턴스 생성
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					$('.followerPro').attr('src', e.target.result);
-				}
+				}// 이미지가 로드가 된 경우 reader가 이미지를 읽도록 함
 				reader.readAsDataURL(input.files[0]);
 			}
 		}

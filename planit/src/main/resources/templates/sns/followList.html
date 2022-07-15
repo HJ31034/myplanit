@@ -29,16 +29,15 @@
 		<input type="hidden" id="page" value="1">
              
 			<!-- 로그인 계정 정보 -->
-            <div class="side_box" th:each="info:${AccInfo}">
-          
-                <div class="user_profile">
-                    <div class="profile_thumb">
+           <div class="side_box" th:each="info:${AccInfo}">
+                   <div class="user_profile"  >
+                      <div class="profile_thumb">
                         <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
-                    </div>
-                 </div>
-               
+                      </div>
+                      <div><p id="planiter_userId" th:text="${info.userId}+님" ></p></div>
+                   </div>
                  
-                 <div style="margin-top: -22px;">  
+                 <div style="margin-top: -20px;">  
                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
  
                   <p class="followerCount" th:text="${info.followerCount}"/></a></div>
@@ -48,24 +47,19 @@
                 </div>
 <br><br>
 					<!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area">
-                            <!-- Title -->
-                            <div class="widget-title">  
+					 <div class="single-widget-area">
+					 <div class="widget-title">  
                                 <h1 class="MyPlants" style="text-align: center; width: 97%; font-family: 'Exo 2', sans-serif; font-size: 23px;">My Plants</h1>
-                            </div>
-                            <!-- Tags -->
-                          
-                            <div id="cate">  
+                            </div> 
+                         <div id="cate">  
                            <ol  th:each="cate:${CateList}" class="popular-tags d-flex flex-wrap" id="cateList">
-                               <ol id="cateItems" >
+                               <ol  id="cateItems" >
                                		 <li>#<a th:text="${cate.plantsName}" class="testt" style="font-family: 'Jua', sans-serif;  text-decoration: none; " href="/planiter/profile.do"></a> </li>
                               
                                </ol>
                             </ol> 
                             </div> 
-                            
-                        	
-                        </div>
+                      </div>
                         </div>		 	 
 
 
@@ -100,11 +94,11 @@
  $("#follow_section").scroll(function() { 
  
 		var innerHeight = $(this).innerHeight(); 
-		var scroll=$(this).scrollTop() + $(this).innerHeight(); 
+		var scroll=$(this).scrollTop() + $(this).innerHeight()+0.5;  
 		var height=$(this)[0].scrollHeight; 
 
 		
-		if(scroll == height){ 
+		if(scroll >= height){
 			if(fol==1){
 				 console.log(page+'페이지 시작');
 				 followerList(page); 
@@ -115,7 +109,7 @@
 			 page++;
 			
 		} 
- 
+		 //console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
 		
 	});
  

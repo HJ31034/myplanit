@@ -9,7 +9,8 @@ import com.planit.domain.sns.PostDTO;
 
 public interface MainService {
 	public List<PlantKeywordDTO> selectPlantKeyword(int keyId);
-	public List<AccountDTO> selectUsers(String userId);
+	public List<AccountDTO> selectUsers(List<String> userId);
+	public List<AccountDTO> selectUsers2(List<String> userId, int count);
 	public List<PostDTO> selectPost();
 	public List<PlantsDTO> selectPlantRecommend(String userId);
 }

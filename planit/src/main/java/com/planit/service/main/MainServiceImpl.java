@@ -21,10 +21,15 @@ public class MainServiceImpl implements MainService {
 	public List<PlantKeywordDTO> selectPlantKeyword(int keyId) {
 		return mainMapper.selectPlantKeyword(keyId);
 	}
+	
+	@Override
+	public List<AccountDTO> selectUsers(List<String> userId) {
+		return mainMapper.selectUsers(userId);
+	}
 
 	@Override
-	public List<AccountDTO> selectUsers(String userId) {
-		return mainMapper.selectUsers(userId);
+	public List<AccountDTO> selectUsers2(List<String> userId, int count) {
+		return mainMapper.selectUsers2(userId, count);
 	}
 
 	@Override
@@ -36,6 +41,8 @@ public class MainServiceImpl implements MainService {
 	public List<PlantsDTO> selectPlantRecommend(String userId) {
 		return mainMapper.selectPlantRecommend(userId);
 	}
+
+	
 
 
 }

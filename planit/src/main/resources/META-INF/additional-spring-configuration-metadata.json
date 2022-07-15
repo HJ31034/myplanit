@@ -10,8 +10,14 @@
     "description": "A description for 'planit.upload.path'"
   },
   {
+
     "name": "access.static.resource",
     "type": "java.lang.String",
     "description": "A description for 'access.static.resource'"
+
+    "name": "planit.recommend.path",
+    "type": "java.lang.String",
+    "description": "A description for 'planit.recommend.path'"
+
   }
 ]}

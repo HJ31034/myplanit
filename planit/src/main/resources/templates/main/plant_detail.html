@@ -9,6 +9,7 @@
 <th:block layout:fragment="css">
 
 
+
 <!-- deail  -->
 	
  	<link rel="stylesheet" href="../assets/detail/jquery-ui.css">
@@ -40,7 +41,12 @@
 	<!-- deail  -->
  
 
+
+
+
 	<link href="/css/search.css" rel="stylesheet">
+	 
+	
 	<style>
 	
 	#addPlant{
@@ -66,6 +72,28 @@
     display: flex;
     flex-wrap: wrap;
 	}
+	
+	#userItem{
+	display: flex;
+    justify-content: space-between;
+	}
+	
+ 	#userItems img{
+ 	height: 150px;
+	width: 150px;
+    margin: 13px;
+	}
+	
+	#detail_profileImg{
+	border-radius: 50%;
+	}
+	
+	#detail_userId{
+	font-size: 19px;
+    font-weight: bold; 
+	}
+	
+	
 	</style>
 </th:block>
 
@@ -256,7 +284,7 @@
 						<h2 class="simpleinfo-plantname_korean mainTitle" th:text="${detail.plantsName}"> 
 							 </h2>
 							 <ul class="plantTags__items" style="display: flex; display: flex;flex-direction: row;
-    flex-wrap: wrap;width: 90%; min-width: 500px;">
+    flex-wrap: wrap; width: 90%; min-width: 500px;">
 							    <li class="plantTags__item" th:each="key:${PlantKeyword}" th:text="${key.keyName}"></li>
 							 </ul>
 						<h3 class="simpleinfo-plantname_intro" th:text="${detail.pDescription}"> </h3>
@@ -271,84 +299,29 @@
 					</div>
 				</section>
 			</div>
+			
+			
 			<section class="plants-raise-section">
-				<div class="raise-title">
-					<h1 class="mainColorTitle">how to raise</h1>
-					<h2 class="mainTitle">어떻게 키우나요?</h2>
-				</div>
-				<ul class="raise-items">
-					<li class="raise-item"><img class="raise-item-img"
-						src="/assets/detail/imgs/16063006614391.빛_부드러운(반양지_반음지).png">
-					<h1 class="raise-item-title">빛 : 부드러운 햇빛</h1>
-						<h2 class="raise-item-desc">
-							필로덴드론 버킨은 밝은 간접광에서 제일 잘 자라요. 너무 어두운 곳에서는 무늬가 흐려질 수 있어요.<br>
-							<br> <b>[빛 관리 Tip]</b><br> - 밝은 빛이 드는 창문 근처에서 키워주세요.<br>
-							- 잎을 태울 수 있으니 직사광선은 피해 주세요.<br>
-							<br> <b>[관리 제품]</b><br> 빛이 잘 들지 않아 걱정이라면, 식물 생장용 LED의
-							도움을 받아보세요.
+			<div>
+			
+ 			  <h1 class="mainColorTitle">planiter</h1>
+			  <h2 class="mainTitle" th:text="${plantsName}"></h2>
+					 <span id="userItems" style="margin-left: 53px;"> 
+						 <span th:each="user:${userList}" style="display: inline-block;  width: 185px; text-align: center;"> 
+							<span style="width: 250px; height: 250px;">
+							<a th:href="@{/planiter/{id}(id=${user.userId})}">
+							  <img id="detail_profileImg" th:src=" @{${'/imgs/img_section/'+user.proFileImg}}">  
+							  <span id="detail_userId" th:text="${user.userId}"></span></a>
+							</span>
+						 </span>
+					 </span>
 
-						</h2></li>
-					<li class="raise-item"><img class="raise-item-img"
-						src="/assets/detail/imgs/16063006653812.온도_따뜻한.png">
-					<h1 class="raise-item-title">온도 : 따뜻한 온도</h1>
-						<h2 class="raise-item-desc">
-							필로덴드론 버킨은 열대 식물이기 때문에 추위에 약해요. <br>
-							<br> <b>[온도 관리 Tip]</b><br> - 온도 변화가 잦은 에어컨이나 난방 기구 밑은
-							피해 주세요.<br> - 겨울철 찬바람은 피해 주세요.<br>
-							<br> <b>[적정 온도]</b><br> 잘 자라는 온도 : 18~30℃<br> 겨울철
-							관리 온도 : 16℃ 이상
-						</h2></li>
-					<li class="raise-item"><img class="raise-item-img"
-						src="/assets/detail/imgs/16063006614391.빛_부드러운(반양지_반음지).png">
-					<h1 class="raise-item-title">습도 : 높은 습도</h1>
-						<h2 class="raise-item-desc">
-							필로덴드론 버킨은 잎이 두꺼워서 습도에 덜 까다로운 편이에요. 하지만 열대 식물이기 때문에 습도가 높을수록 건강하게
-							자랄 거예요.<br>
-							<br> <b>[습도 관리 Tip]</b><br> - 식물 주변에 분무를 자주 해주면 습도를 높이는
-							데 도움이 될 거예요.<br> - 식물은 호흡할 때 수분을 방출하기 때문에 식물들을 한데 모아서 키우면 공기
-							중 습도를 올리는 데 도움이 된답니다.<br> - 잎에 먼지가 많으면 호흡을 방해할 수 있어요. 잎을 씻어
-							주거나 젖은 수건으로 자주 닦아주는 것이 좋습니다.<br>
-							<br> <b>[관리 제품]</b><br> 건조한 환경이라면 스프레이와 가습기의 도움을 받는 것을
-							추천해 드립니다.
-						</h2></li>
-					<li class="raise-item"><img class="raise-item-img"
-						src="/assets/detail/imgs/16063006758754.물.png">
-					<h1 class="raise-item-title">물 : 흙이 바싹 마르지 않게</h1>
-						<h2 class="raise-item-desc">
-							흙을 항상 촉촉하게 유지해주는 것이 좋아요. 겨울에는 흙이 모두 바싹 마르면 물을 주세요. 나머지 성장기 계절에는
-							주기적으로 물을 주는 것이 좋습니다. <br>
-							<br> <b>[물 주기 Tip]</b><br> - 같은 식물이더라도 키우는 공간의 환경에 따라 물
-							마름 정도가 달라져요. 물을 줄 때는 흙의 마름 정도를 파악하고 주는 것이 가장 좋답니다.<br> - 손으로
-							만졌을 때 겉흙이 말랐으면 물을 주세요. 흙이 오랜 시간 흥건하면 뿌리가 숨을 못 쉬어서 썩는 원인이 된답니다.<br>
-							- 뿌리 전체가 물을 골고루 먹을 수 있도록 화분 배수 구멍으로 물이 충분히 흘러나올 때까지 물을 흠뻑 주세요.<br>
-							- 물을 준 후엔 충분한 환기를 해주세요. 뿌리에 산소를 공급하고, 과습을 방지하여 뿌리 성장을 돕는답니다.<br>
-							<br> <b>[관리 제품]</b><br> 더 편리하게 물을 주고 싶다면 물조리개를 추천해
-							드립니다.
-						</h2></li>
-					<li class="raise-item"><div class="raise-item-flex">
-							<img class="raise-item-img"
-								src="/assets/detail/imgs/16063006799625.흙.png">
+
 						</div>
-						<h1 class="raise-item-title">흙 : 배수가 잘되는 흙</h1>
-						<h2 class="raise-item-desc">
-							뿌리 주변 흙에 습기가 많으면 뿌리가 호흡을 하지 못해서 썩을 수 있어요. 뿌리 과습이 오지 않도록 배수가 잘되는
-							흙에 심어 주세요.<br>
-							<br> <b>[비료는 언제 주나요]</b><br> 시중에서 판매되는 분갈이용 흙에는 식물에 필요한
-							영양분이 포함되어 있어요. 분갈이 기준 중/소형 화분은 1년, 대형 화분은 2년 동안 별도의 비료는 필요하지
-							않답니다. 과한 비료, 영양제는 오히려 식물의 건강을 해칠 수 있으니 주의해 주세요. <br>
-							<br> <b>[관리 제품]</b><br> 뿌리 과습을 방지해주는 배수가 잘되는 흙 보러 가기
-						</h2></li>
-					<li class="raise-item"><img class="raise-item-img"
-						src="/assets/detail/imgs/16063006849896.분갈이 시기.png">
-					<h1 class="raise-item-title">분갈이 시기 알아보기</h1>
-						<h2 class="raise-item-desc">
-							⦁ 화분에 비해 식물이 지나치게 클 경우<br> ⦁ 뿌리가 화분 밑으로 뚫고 나온 경우<br> ⦁
-							흙 표면이 오래되어 딱딱하게 굳은 경우<br> ⦁ 평소보다 흙이 빠르게 마르는 경우<br> ⦁
-							평소보다 흙의 잘 마르지 않는 경우<br> ⦁ 소형 화분 기준 : 분갈이를 한 지 1년이 지난 경우<br>
-							⦁ 대형 화분 기준 : 분갈이를 한 지 2년이 지난 경우
-						</h2></li>
-				</ul>
+				 
 			</section>
+			
+			
 			<section class="plants-sos-section">
 				<div class="sos-title">
 					<h1 class="mainColorTitle">sos solution</h1>
@@ -399,8 +372,7 @@
      var plantsId = /*[[${plantsId}]]*/ 'default';
      var userId = /*[[${USERID}]]*/ 'default';
     /*]]>*/
-	 
-    
+	
       //식물 상세설명 출력
 		 $.ajax({
 				type : 'get',
@@ -445,8 +417,9 @@
       
       
 		 //나만의 식물 추가하기
-		  function addplant() {
-				var plantsName=$('#plantsName').val();
+		  function addplant() { 
+			  var plantsName=$('#plantsName').val();
+				 
 				$.ajax({
 					type : 'get',
 					url : "/planit/addPlant?plantsId=" + plantsId +"&userId="+userId+"&plantsName="+plantsName,
