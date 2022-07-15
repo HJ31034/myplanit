@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="main/layout/basic">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.88.1">
+<title>Checkout example · Bootstrap v5.1</title>
+
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/5.1/examples/checkout/">
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+
+<link href="/assets/dist/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/dist/register.css" rel="stylesheet">
+<link href="/assets/dist/signin.css" rel="stylesheet">
+
+
+
+</head>
+
+
+
+
+<th:block layout:fragment="content">
+
+
+
+
+	<div class="bg-light">
+
+
+		<div class="container">
+
+
+			<br><br><br><br><br><br><br><br><br>
+			
+
+				<main>
+
+
+
+					<th:block th:if="${session.userdto == null}">
+						<form >
+						<div>
+						<h1>Welcome to PLANiT !</h1><br>
+					<h4>PLANit의 회원이 되신것을 진심으로 축하드립니다!</h4>
+					
+					<a href="/login" class="btn btn-secondary"
+								onclick="location.href='/login'">로그인하러가기 </a>
+								
+					
+					
+						
+						</div>
+							
+
+
+							
+							<div class="form-floating"></div>
+							<div class="form-floating"></div>
+							<div class="form-floating"></div>
+
+
+
+							
+							
+							
+							
+							
+							
+
+
+
+
+							
+
+							<div class="container py-4">
+								<div class="copyright"></div>
+							</div>
+<br><br><br><br>
+<div class="blank"></div>
+						</form>
+					</th:block>
+					<!-- 로그인 조건 -->
+				</main>
+
+
+			
+
+		</div>
+
+	</div>
+</th:block>
+
+
+
+
+
+
+
+</html>

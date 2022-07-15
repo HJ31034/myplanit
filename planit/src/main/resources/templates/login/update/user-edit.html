@@ -77,7 +77,7 @@ function useredit(){
 	
 	$(function(){
 		$("#alert-success").hide();
-		$("#invalid-feedback3").hide();
+		$("#.invalid-feedback3").hide();
 		$("input").change(function(){
 		    var email = $("#email").val();
 		    var reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -86,12 +86,12 @@ function useredit(){
 		        if(!reg.test(email)){
 		            
 		            
-		            $("#invalid-feedback3").show();
+		            $("#.invalid-feedback3").show();
 		            $("#email").val().focus();
 		            $("#submit").attr("disabled", "disabled");
 		            return false;
 		        }else {
-		        	$("#invalid-feedback3").hide();
+		        	$("#.invalid-feedback3").hide();
 		            $("#submit").removeAttr("disabled");
 		            
 		        } 
@@ -236,6 +236,8 @@ function useredit(){
 				<div class="blank2"></div>
 				<br>
 <div class="blank3"></div>
+<br>
+<br>
       </form>
       
     </div>
