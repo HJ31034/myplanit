@@ -5,8 +5,7 @@
 <th:block layout:fragment="title">
 	<title>list page</title>
 </th:block>
-
-
+ 
 <th:block layout:fragment="content">
 
         <div class="inner">
@@ -50,20 +49,18 @@
                           <!--  <h1 id="profileId" th:text="${img.userId}"></h1> -->
                           <span  th:each="img : ${ImgPost}" style="width:200px; display: inline-block;"> 
   
-                             <a  th:href="@{/planiter/{id}(id=${img.userId})}" style="text-decoration:none; width: 200px;    text-align: center; display: block; height: 200px; margin-left: 8px;     margin-top: 8px;" >
+                             <a th:href="@{/planiter/{id}(id=${img.userId})}" id="userSearch">
                            		 <img th:src="@{${'/imgs/img_section/'+img.profileImg}}" alt="imgPost" id="profileImgList"
 									class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" >
-								 <p id="profileId"  th:text="${img.userId}"></p>
+								 <p id="search_userId"  th:text="${img.userId}"></p>
+								 <p id="search_des"  th:text="${img.accDescription}"></p>
                            		 </a>
                           </span>
                           
                           </span>
-                            
-                          
-                          
-                          	  <input type="hidden" id="page" value="1">
+                             <input type="hidden" id="page" value="1">
                         </div>
-                        	<span id="nextImgPost"></span>
+                        	<span id="nextImgPost"></span> 
 				</div> 
 				 
                 </article>
@@ -77,17 +74,18 @@
                 
             <th:block th:if="${session.userdto != null}"> 
                <div class="side_box" th:each="info:${AccInfo}">
-                   <div class="user_profile">
+                   <div class="user_profile"  >
                       <div class="profile_thumb">
                         <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
                       </div>
+                      <div><p id="planiter_userId" th:text="${info.userId}+님" ></p></div>
                    </div>
-               
-                 
-                  <div style="margin-top: -22px;">  
+ 
+    
+                  <div style="margin-top: -20px;">  
                    <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
                       <p th:text="${info.followerCount}"/></a></div>
-                   <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag">팔로잉<br>
+                   <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag" style="">팔로잉<br>
                       <p th:text="${info.followingCount}"/></a></div>
                   </div><br><br>
                 
@@ -123,7 +121,7 @@
 				var innerHeight = $(this).innerHeight(); 
 				var scroll=$(this).scrollTop() + $(this).innerHeight()+0.5; 
 				var height=$(this)[0].scrollHeight; 
-                console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+               // console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
 				if(scroll >= height){
 					 console.log('페이지 끝');
 					 nextImgPost(page);
@@ -151,8 +149,8 @@
 			var keyword = $("#search-field").val();
 			var keyField = $("#keyField").val();
 
-			$.ajax({
-						type : 'get',
+			$.ajax({ 
+					    type : 'get',
 						url : "/planiter/nextImgPost?page=" + page
 								+ "&keyword=" + keyword + "&&keyField="
 								+ keyField,
@@ -160,19 +158,27 @@
 						dataType : "json",
 						success : function(data) {
 							$.each(data,function(index, item) {
-							$("#nextImgPost")
-						     .append('<a href="/planiter/post/read?postno='+ item.postNo+ '&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" style="text-decoration:none;" >'
-							       + '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.orgFileName+'">');
+						 if(keyField=="계정"){
+							 console.log('datadatadata:'+ JSON.stringify(data));
+							 $("#nextImgPost").append('<span style="width:200px; display: inline-block;"> '
+							 +'<a id="userSearch" href="/planiter/{id}?id='+ item.userId+'&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" >' 
+							 +'<img src="/imgs/img_section/'+item.profileImg+'" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" >'
+						     +' <p id="search_userId">'+item.userId+'</p>'
+						     +' <p id="search_des">'+item.accDescription+'</p></a><span>');
+						 }else{
+							$("#nextImgPost").append('<a href="/planiter/post/read?postno='+ item.postNo+ '&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" style="text-decoration:none;" >'
+						    + '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.orgFileName+'">');
+						  }
+						 
+					 });
 
-						     });
+				 },
+				 error : function(jqXHR, textStatus, errorThrown) {
+				 console.log(jqXHR.responseText);
+			 }
+		 });
 
-						},
-						error : function(jqXHR, textStatus, errorThrown) {
-							console.log(jqXHR.responseText);
-						}
-					});
-
-		}
+	 }
 		
 		
 	 

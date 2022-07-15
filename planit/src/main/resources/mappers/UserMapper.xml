@@ -20,7 +20,7 @@
 		Into account(USERID, ACCDESCRIPTION,
 		PROFILEIMG, FOLLOWERCOUNT,
 		FOLLOWINGCOUNT)
-		values (#{userId}, '프로필을 업데이트주세요.','thumb.png', 0,0)
+		values (#{userId}, '프로필을 업데이트 해주세요.','thumb.png', 0,0)
 
 
 		<foreach collection="keyId" item="item">

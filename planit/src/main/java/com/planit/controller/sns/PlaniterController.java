@@ -136,7 +136,7 @@ public class PlaniterController {
 				if(totalPage>=nowPage) {
 				nextImgPost = snsservice.selectImgPost(startNum,endNum);  
 				}
-				return nextImgPost;
+				 
 				
 				}else{ //검색처리
 					
@@ -147,10 +147,10 @@ public class PlaniterController {
 					model.addAttribute("keyField", keyField);
 					 
 					nextImgPost = snsservice.searchSNS(keyField, keyword,startNum,endNum);
-				    return nextImgPost;
 				}
 			
 			 
+			return nextImgPost;
 	}
 		 
  
