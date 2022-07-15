@@ -30,6 +30,7 @@ public class PostDTO {
 	private String address;
 	
 	private String profileImg;
+	private String accDescription;
 	
 	// 임시
 	private String fileName;

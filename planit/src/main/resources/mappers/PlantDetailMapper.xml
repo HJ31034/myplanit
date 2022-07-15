@@ -49,5 +49,25 @@
 	SELECT SOLNO,SOLTITLE,SOLCONTENT,PLANTSID FROM SOLUTION
 	WHERE PLANTSID=#{plantId}
 	</select>
+	
+	<select id="detail_User" resultType="UserToPlantsDTO"> 
+	<![CDATA[
+	select plantscateno,plantsname,plantsid,userid,accdescription,profileimg from(
+    select ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn,u.plantscateno,u.plantsname,u.plantsid,u.userid,a.accdescription,a.profileimg
+	from usertoplants u JOIN account a
+	on plantsid=#{plantId} and u.userId=a.userId)
+    where rn <=6  
+    ]]>
+	</select>
+ 	
+ 	<select id="random_User" resultType="UserToPlantsDTO">
+ 	<![CDATA[
+ 	   SELECT userid,profileimg
+		FROM(
+			SELECT ROW_NUMBER() OVER(ORDER BY DBMS_RANDOM.RANDOM) AS rn, a.*
+			FROM account a)
+		WHERE rn <= 6
+	]]>
+ 	</select>
   
 </mapper>

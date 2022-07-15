@@ -202,8 +202,10 @@
 			</div>
 
 			<div class="plantList">
+ 
 				<div class="plant-box" th:each="plant : ${plantList}">
 					<a th:href="@{/planit/} + ${plant.plantsId}"> <img class="plant-img"
+ 
 						th:src="${plant.fileName}">
 						<p class="plant-name">[[${plant.plantsName}]]</p>
 					</a>
