@@ -14,8 +14,8 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sidebars/">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
-    <link href="assets/dist/register.css" rel="stylesheet">
-	 <link href="assets/dist/signin.css" rel="stylesheet">
+    <link href="../assets/dist/register.css" rel="stylesheet">
+	 <link href="../assets/dist/signin.css" rel="stylesheet">
     
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script th:inline="javascript">
@@ -37,7 +37,7 @@ function useredit(){
 			
 		 else{
 			 $("#submit").attr("disabled", "disabled");
-			 
+			alert("이메일 형식을 확인해 주세요 eg)xxxxx@xxx.com");
 		}	
 		
 	}
@@ -77,7 +77,7 @@ function useredit(){
 	
 	$(function(){
 		$("#alert-success").hide();
-		$("#.invalid-feedback3").hide();
+		$("#invalid-feedback").hide();
 		$("input").change(function(){
 		    var email = $("#email").val();
 		    var reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -86,12 +86,12 @@ function useredit(){
 		        if(!reg.test(email)){
 		            
 		            
-		            $("#.invalid-feedback3").show();
-		            $("#email").val().focus();
+		            
+		        	$("#.invalid-feedback").show();
 		            $("#submit").attr("disabled", "disabled");
 		            return false;
 		        }else {
-		        	$("#.invalid-feedback3").hide();
+		        	$("#.invalid-feedback").hide();
 		            $("#submit").removeAttr("disabled");
 		            
 		        } 
@@ -183,7 +183,7 @@ function useredit(){
             <input type="email" class="form-control" name="email"
               th:value="${session.userdto.email}"
             id="email" placeholder="you@example.com" for="email" required>
-            <div class="invalid-feedback3">
+            <div class="invalid-feedback">
               Please enter a valid email address for updates.
             </div>
           </div>
@@ -211,31 +211,14 @@ function useredit(){
        
 <br>
        
-           
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+      
         
       <button class="w-100 btn btn-lg btn-primary" type="submit" id="submit" onclick="useredit()"
 				style="background-color: #9FCF62; border-color: #9FCF62;">수정하기
 				</button>
+				<div class="blank"></div>
 				<div class="blank2"></div>
-				<div class="blank2"></div>
-				<div class="blank2"></div>
-				<div class="blank2"></div>
-				<br>
-<div class="blank3"></div>
+				
 <br>
 <br>
       </form>
@@ -245,6 +228,7 @@ function useredit(){
   
 
  </div> 
+ <div class="blank"></div>
 </main>
 
 </th:block> <!-- 로그인 관련 -->
