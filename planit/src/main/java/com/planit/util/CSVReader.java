@@ -10,14 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CSVReader {
-    public static void main(String[] args) {
-        CSVReader csvReader = new CSVReader();
-        List<List<String>> a = csvReader.readCSV();
-        
-        for(int i = 0; i < a.size(); i++) {
-        	System.out.println(a.get(i));
-        }
-    }
+//    public static void main(String[] args) {
+//        CSVReader csvReader = new CSVReader();
+//        List<List<String>> a = csvReader.readCSV();
+//        
+//        for(int i = 0; i < a.size(); i++) {
+//        	System.out.println(a.get(i));
+//        }
+//    }
 
     public List<List<String>> readCSV() {
         List<List<String>> csvList = new ArrayList<List<String>>();

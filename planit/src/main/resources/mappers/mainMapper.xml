@@ -61,7 +61,7 @@
 					) a
 			WHERE RANK = 1
 		)
-		WHERE NUM BETWEEN 1 AND 4
+		WHERE NUM BETWEEN 1 AND 4 AND DELETE_YN = 'N'
 	</select>
 	
 	<!-- 식물 추천 리스트 -->
