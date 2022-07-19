@@ -65,9 +65,8 @@ public class SecurityConfiguration {
         	.passwordParameter("password")
             .loginPage("/login").permitAll() //로그인 페이지 링크
             .loginProcessingUrl("/login") //로그인 처리 url
-            .defaultSuccessUrl("/login.do") //로그인 성공시 이동하는 페이지 등록
-            .failureUrl("/loginFail")
             
+            .defaultSuccessUrl("/login.do") //로그인 성공시 이동하는 페이지 등록
             .failureHandler(loginFailHandler()) //로그인 실패 처리 핸들러
             .and()
         .logout()

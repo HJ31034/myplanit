@@ -169,35 +169,16 @@ where rownum <= 4
         WHERE rn >= #{startNum}
  		]]>
 			</select>
-<!-- 			<select id="selectFollowerList" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
-		<![CDATA[
-		 select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
-        from follow f join account a
-        on f.userId=a.userId
-        where f.followingid=#{userId}
-	     
- 		]]>
-			</select> -->
-			
-			
+ 
 <!-- followList 팔로워 리스트 한번 거르기 -->
 	<select id="selectFollowerList2" parameterType="String" resultType="com.planit.domain.sns.FollowDTO">
 		<![CDATA[
 	    select rownum rn,f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
         from follow f join account a
         on f.userId=a.userId
-       where f.followingid=#{parameter2} and f.followerid=#{parameter1}
-    
+        where  f.followerid=#{parameter1} and f.followingid=#{parameter2}
  		]]>	
- 		
- 		
- 		
- 		  <!--   select f.userId,a.accdescription,a.profileimg,f.followerid,f.followingid,ftype
-        from follow f join account a
-         on f.followingid=a.userId
-        where followerid='kosta' and followingid=''; -->
- 		
-			</select>
+ 		 </select>
 			
  
 			

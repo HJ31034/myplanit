@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.planit.domain.sns.AccountDTO;
 import com.planit.domain.sns.FollowDTO;
@@ -27,7 +28,8 @@ public interface SnsMapper {
 	public int updateInfo(AccountDTO params);
 	
 	public List<FollowDTO> selectFollowingList(@Param("startNum") int startNum, @Param("endNum") int endNum, @Param("userId") String userId);
-	public List<FollowDTO> selectFollowerList(@Param("startNum") int startNum, @Param("endNum") int endNum,@Param("userId") String userId);
+	public List<FollowDTO> selectFollowerList( @Param("startNum") int startNum,@Param("endNum") int endNum,
+											   @Param("userId") String userId );
 	public List<FollowDTO> selectFollowerList2(HashMap params);
 	
 	public int insertFollow(HashMap params);
