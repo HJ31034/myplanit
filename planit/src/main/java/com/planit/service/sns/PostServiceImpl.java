@@ -38,8 +38,20 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	@Override
-	public void modify(PostDetailDTO parmas) {
-		postMapper.modify(parmas);
+	public void modify(PostDetailDTO params) {
+		Long[] fileNoArr = params.getNo();
+
+		postMapper.modify(params);
+		postMapper.deletePostFileWithPostNo(params.getPostNo());
+		
+		for(Long fileNo: fileNoArr){
+			PostFilesDTO dto = new PostFilesDTO();
+
+			dto.setPostNo(params.getPostNo());
+			dto.setNo(fileNo);
+
+			postMapper.insertPostFiles(dto);
+		}
 	}
 
 	@Override
@@ -67,7 +79,8 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public void deleteFile(long no){
-		postMapper.deleteFile(no);
+		postMapper.deletePostFile(no);
+		//postMapper.deleteFile(no);
 	}
 
 	@Override
