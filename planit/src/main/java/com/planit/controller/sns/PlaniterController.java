@@ -157,18 +157,21 @@ public class PlaniterController {
 	
 	//팔로우 페이지 이동
 	@RequestMapping(value = "/follower.do")
-	public ModelAndView selectFollow(Model model, @RequestParam(value = "fol") String fol,  ModelAndView mav, HttpSession session) {
+	public ModelAndView selectFollow(Model model, @RequestParam(value = "fol") String fol, 
+									 ModelAndView mav, HttpSession session,
+									 @RequestParam(value="otherUserId",required = false)String otherUserId) {
 		
 		
         String USERID = "";
 		
-        if (session.getAttribute("id") != null) {
+        if (otherUserId == null || "".equals(otherUserId)) {
 			USERID = session.getAttribute("id").toString();
 		}else {
-			USERID="guest";
+			USERID=otherUserId;
 		}
-		  
-		  
+		  System.out.println("selectFollow USERID: "+USERID);
+		  model.addAttribute("USERID",USERID);
+		  model.addAttribute("sessionId", session.getAttribute("id").toString());
 		  //계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리 
 		  List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID); 
 		  model.addAttribute("AccInfo", AccInfo); List<PlantsCateDTO> CateList = snsservice.selectMainCate(USERID);

@@ -31,13 +31,16 @@ public class ProfileController {
 	private ProfileService profileService;
 	
 	@GetMapping("/profile.do")
-	public String myProfile(Model model, HttpServletRequest request) {
-		
+	public String myProfile(Model model, HttpServletRequest request,@RequestParam(value="otherUserId",required = false)String otherUserId) {
+ 
 		HttpSession session  = request.getSession();
 		
 		String id = null;
-		if (session.getAttribute("id") != null)
-			id = session.getAttribute("id").toString();
+		 if (otherUserId == null || "".equals(otherUserId)) {
+			    id = session.getAttribute("id").toString();
+			}else {
+				id=otherUserId;
+			}
 		String page = "main";
 		
 		// 사용자 프로필 정보

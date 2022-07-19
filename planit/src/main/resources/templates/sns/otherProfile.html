@@ -163,13 +163,15 @@
 
 				<ul class="middle plant_name">
 					<li>
-						<a href="/planiter/follower.do?fol=1">
+						<!-- <a href="/planiter/follower.do?fol=1"> -->
+						<a th:href="@{/planiter/follower.do/(otherUserId=${userProfile.userId},fol=1)}">
 							<div class="label">팔로워</div>
 							<div class="followerCount">[[${userProfile.followerCount}]]</div>
 						</a>
 					</li>
 					<li>
-						<a href="/planiter/follower.do?fol=2">
+						<!-- <a href="/planiter/follower.do?fol=2"> -->
+						<a th:href="@{/planiter/follower.do/(otherUserId=${userProfile.userId},fol=2)}">
 							<div class="label">팔로잉</div>
 							<div>[[${userProfile.followingCount}]]</div>
 						</a>
