@@ -157,7 +157,7 @@
 
 			<div class="box">
 				<div 
-					th:each="plant : ${recommendList}" class="plant_box" onclick="location.href='#'">
+					th:each="plant : ${recommendList}" class="plant_box" th:onclick="location.href='/planit/plantsDetail?plantsId=[[${plant.plantsId}]]&&plantsName=[[${plant.plantsName}]]'">
 					<div class="plant_img_box">
 						<img th:src="${plant.fileName}" class="plant_img" alt="">
 					</div>
@@ -210,10 +210,10 @@
 					<div class="member">
 						<a th:href="@{/planiter/post/read(postno=${post.postNo})}">
 							<div class="member-img">
-								<img th:if="${not #strings.isEmpty(post.orgFileName)}"
-									th:src="@{/imgs/img_section/} + ${post.orgFileName}"
+								<img th:if="${not #strings.isEmpty(post.realFileName)}"
+									th:src="@{/planiter/post/image/} + ${post.realFileName}"
 									class="img-fluid"> 
-								<img th:unless="${not #strings.isEmpty(post.orgFileName)}"
+								<img th:unless="${not #strings.isEmpty(post.realFileName)}"
 									th:src="@{/imgs/img_section/마란타.jpg}" class="img-fluid">
 									<!-- /*<img th:unless="${ #strings.isEmpty(post.orgFileName)}"
 									th:src="@{/imgs/img_section/마란타.jpg}" class="img-fluid">*/ -->
