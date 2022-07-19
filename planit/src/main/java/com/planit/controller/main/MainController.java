@@ -50,6 +50,9 @@ public class MainController {
         	}
         }
         
+        if(userNo == -1)
+        	return mainService.selectUsers(new ArrayList<String>());
+        
 		try {
 			List<String> userIdList = new ArrayList<>();
 			DataModel dm = new FileDataModel(new File("data/recommendUsers.csv"));

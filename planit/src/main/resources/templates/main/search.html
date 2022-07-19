@@ -116,7 +116,7 @@
 					str = "";
 					for (var i = 0; i < data['plantList'].length; i++) {
 						str += "<div class='plant-box'>";
-						str += "<a href='#'> <img class='plant-img' src='" + data['plantList'][i].fileName + "'>";
+						str += "<a href='/planit/plantsDetail?plantsId=" + data['plantList'][i].plantsId + "&&plantsName=" + data['plantList'][i].plantsName + "'> <img class='plant-img' src='" + data['plantList'][i].fileName + "'>";
 						str += "<p class='plant-name'>"+ data['plantList'][i].plantsName + "</p></a></div>";
 					}
 					if(page == 1){
