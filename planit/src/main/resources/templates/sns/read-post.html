@@ -11,7 +11,7 @@
 		<div class="post_box_left"> 
 		
 			<div class="photo_box">
-	            <div class="swiper-wrapper">
+	            <div class="swiper-wrapper">	
 	               <div class="swiper-slide" th:each="fileName, index : ${post.realFileNameArr}">
 	                  <img class="photo swiper-lazy"  th:src="@{${'/planiter/post/image/'+fileName}}" />
 	               </div>

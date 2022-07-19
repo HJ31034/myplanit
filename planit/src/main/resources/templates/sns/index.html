@@ -32,7 +32,7 @@
                         <span th:if= "${keyword == null} or ${keyField == null} ">
                           <span th:each="img : ${ImgPost}" id="list">
                             <a th:href="@{/planiter/post/read(postno=${img.postNo},page=${page},keyField=${keyField},keyword=${keyword})}" style="text-decoration:none;" >
-                           		 <img th:src="@{${'/imgs/img_section/'+img.orgFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
+                           		 <img th:src="@{${'/imgs/img_section/'+img.realFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
                           </span>
                         </span>
                         
@@ -40,7 +40,7 @@
                           <span th:if= "${keyField == '식물'} or ${keyField == '내용'}">
                           <span th:each="img : ${ImgPost}" id="list">
                             <a th:href="@{/planiter/post/read(postno=${img.postNo},page=${page},keyField=${keyField},keyword=${keyword})}" style="text-decoration:none;" >
-                           		 <img th:src="@{${'/imgs/img_section/'+img.orgFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
+                           		 <img th:src="@{${'/imgs/img_section/'+img.realFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
                           </span>
                           </span>
                           
@@ -167,7 +167,7 @@
 						     +' <p id="search_des">'+item.accDescription+'</p></a><span>');
 						 }else{
 							$("#nextImgPost").append('<a href="/planiter/post/read?postno='+ item.postNo+ '&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" style="text-decoration:none;" >'
-						    + '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.orgFileName+'">');
+						    + '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.realFileName+'">');
 						  }
 						 
 					 });
