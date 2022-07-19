@@ -38,17 +38,27 @@ public class PostController {
 	
 	@GetMapping(value = "/write")
 	public String writePost (Model model, HttpServletRequest request) {
-//		HttpSession session  = request.getSession();
-//		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
+		String returnUrl = "sns/write-post";
 		
-		//session으로 변경할 것 
-		String userId = "test";
-//		String userId = userDto.getUserId();
-		List<UserToPlantsDTO> userToPlantList = postService.selectPlantsCate(userId);
+		HttpSession session = null;
+		UserDTO userDto = null;
+		String userId = "";
+
+		try{
+			session  = request.getSession();
+			userDto = (UserDTO) session.getAttribute("userdto");
+			
+			userId = userDto.getUserId();
+			
+			List<UserToPlantsDTO> userToPlantList = postService.selectPlantsCate(userId);
+			
+			model.addAttribute("userToPlantList", userToPlantList);
+			
+		}catch(Exception e){
+			returnUrl = "sns/session-error";
+		}
 		
-		model.addAttribute("userToPlantList", userToPlantList);
-		
-		return "sns/write-post";
+		return returnUrl;
 	}
 	
 	@PostMapping(value = "/write")
@@ -96,27 +106,39 @@ public class PostController {
 	
 	@GetMapping(value = "/read")
 	public String readPost (@RequestParam(value = "postno") Long postNo, Model model, HttpServletRequest request) {
-//		HttpSession session  = request.getSession();
-//		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
-//		
-//		String userId = userDto.getUserId();
 		
-		LikesDTO likeDto = new LikesDTO();
+		String returnUrl = "sns/read-post";
 		
-		likeDto.setPostNo(postNo);
-		likeDto.setUserId("test");
+		HttpSession session = null;
+		UserDTO userDto = null;
+		String userId = "";
+
+		try{
+			session  = request.getSession();
+			userDto = (UserDTO) session.getAttribute("userdto");
+			
+			userId = userDto.getUserId();
+			
+			LikesDTO likeDto = new LikesDTO();
+			
+			likeDto.setPostNo(postNo);
+			likeDto.setUserId(userId);
+			
+			PostDTO post = postService.getBoardDetail(postNo);
+			List<CommentDTO> commentList = postService.getCommentDetail(postNo);
+			String isLike = postService.getLikes(likeDto);
+			AccountDTO accountProfile = profileService.selectUserProfile(post.getUserId());
+			
+			model.addAttribute("post", post);
+			model.addAttribute("commentList", commentList);
+			model.addAttribute("isLike", isLike);
+			model.addAttribute("accountProfile", accountProfile);
+			
+		}catch(Exception e){
+			returnUrl = "sns/session-error";
+		}
 		
-		PostDTO post = postService.getBoardDetail(postNo);
-		List<CommentDTO> commentList = postService.getCommentDetail(postNo);
-		String isLike = postService.getLikes(likeDto);
-		AccountDTO accountProfile = profileService.selectUserProfile(post.getUserId());
-		
-		model.addAttribute("post", post);
-		model.addAttribute("commentList", commentList);
-		model.addAttribute("isLike", isLike);
-		model.addAttribute("accountProfile", accountProfile);
-		
-		return "sns/read-post";
+		return returnUrl;
 	}
 
 	@GetMapping(value = "/refresh/comment")
@@ -157,6 +179,7 @@ public class PostController {
 		HttpSession session  = request.getSession();
 		UserDTO userDto = (UserDTO) session.getAttribute("userdto");
 		String userId = userDto.getUserId();
+		
 		try {
 			params.setUserId(userId);
 			postService.deleteComment(params);
