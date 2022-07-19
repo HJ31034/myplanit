@@ -7,9 +7,9 @@
 		<select id="selectImgPost" resultType="com.planit.domain.sns.PostDTO">
 	<![CDATA[
  
-	select rn,postno,orgfilename,likescount,postcontent from
+	select rn,postno,orgfilename,likescount,postcontent,realfilename from
 	(select /*+ INDEX_DESC(seq_POSTNO_no) */
-	rownum rn,p.postno,pf.no,fs.orgfilename,p.likescount,p.postcontent 
+	rownum rn,p.postno,pf.no,fs.orgfilename,p.likescount,p.postcontent,fs.realfilename 
  	from postfiles pf join post p
  	on p.postno=pf.postno
  	and no in
@@ -19,7 +19,7 @@
  	group by postno)
     join files fs
     on pf.no=fs.no 
-    and rownum <= #{parameter1} + #{parameter2} 
+    and rownum <= #{parameter1} + #{parameter2} and p.delete_yn='N' 
  	order by likescount desc)
     WHERE rn > #{parameter1}
 	]]>
@@ -33,9 +33,9 @@
 			<when test='keyField.equals("plantsname")'>
 		<![CDATA[ 
  
-		 select rn,no,orgfilename,likescount,postno,postcontent,plantscateno from
+		 select rn,no,orgfilename,likescount,postno,postcontent,plantscateno,realfilename  from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-			rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.plantscateno 
+			rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.plantscateno,fs.realfilename 
  			from post p join postfiles pf 
  			on p.postno=pf.postno
  			and no in
@@ -65,9 +65,9 @@
 			</when>
 			<when test='keyField.equals("postcontent")'>
 		<![CDATA[ 
-			 select rn,no,orgfilename,likescount,postno,postcontent,delete_yn from
+			 select rn,no,orgfilename,likescount,postno,postcontent,delete_yn,realfilename  from
 			(select /*+ INDEX_DESC(seq_POSTNO_no) */
-		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.delete_yn
+		    rownum rn, pf.no,fs.orgfilename,p.likescount,p.postno, p.postcontent,p.delete_yn,fs.realfilename 
  		    from postfiles pf join post p
  		    on p.postno=pf.postno
  		    and no in
