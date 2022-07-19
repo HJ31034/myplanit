@@ -108,16 +108,25 @@ public class UserController {
 	}
 
 	// 로그인 폼
-	@GetMapping("login")
-	public String loginForm() {
+//	@GetMapping("login")
+//	public String loginForm() {
+//		return "/login/loginForm";
+//	}
+	
+	@GetMapping("/login")
+	public String loginForm(@RequestParam(value="error", required=false) String error,
+			@RequestParam(value="exception", required=false) String exception,
+			Model model) {
+		
+		model.addAttribute("error", error);
+		model.addAttribute("exception", exception);
 		return "/login/loginForm";
 	}
 	// 로그인 실패폼
-		@GetMapping("loginFail")
+		@GetMapping("/loginFail")
 		public String loginFailForm(@RequestParam(value="error", required=false) String error,
 				@RequestParam(value="exception", required=false) String exception,
 				Model model) {
-			// System.out.println("login page");
 			model.addAttribute("error", error);
 			model.addAttribute("exception", exception);
 			return "/login/loginFail";
@@ -125,7 +134,7 @@ public class UserController {
 
 	// 시큐리티 로그인 처리 ;;;
 	@GetMapping("/login.do")
-	public String userAccess(Model model, Authentication authentication, HttpServletRequest request) {
+	public String userAccess(Model model, Authentication authentication, HttpServletRequest request){
 		// Authentication 객체를 통해 유저 정보를 가져올 수 있다.
 		UserDTO userdto = (UserDTO) authentication.getPrincipal(); // userDetail 객체를 가져옴
 		if (userdto == null) {
