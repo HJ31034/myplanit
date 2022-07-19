@@ -4,7 +4,7 @@
 
 	
 	<select id="selectPostDetail" parameterType="Long" resultType="PostDTO">
-		SELECT p.postno, p.postcontent, p.userid, TO_CHAR(p.createdt, 'yyyy-MM-dd') createdt, p.likescount, u.PLANTSNAME, f.REALFILENAME, f.ORGFILENAME, w.WEATHER, w.address 
+		SELECT p.postno, p.postcontent, p.userid, TO_CHAR(p.createdt, 'yyyy-MM-dd') createdt, p.likescount, u.PLANTSNAME, f.REALFILENAME, f.ORGFILENAME, w.WEATHER, w.address, p.PLANTSCATENO 
 		FROM POST p 
 		FULL OUTER JOIN (
 			SELECT PF.POSTNO, LISTAGG(f.REALFILENAME, ',') WITHIN GROUP(ORDER BY f.NO) AS REALFILENAME,
@@ -32,7 +32,7 @@
 	<update id="modify" parameterType="PostDTO">
 		UPDATE post
 		<set>
-			<if test="postContent != null and postContent != '' "> postcontent = #{postContent}</if>
+			<if test="postContent != null and postContent != '' "> postcontent = #{postContent}, </if>
 			<if test="plantsCateNo != null and plantsCateNo != '' "> plantscateno = #{plantsCateNo}</if>
 		</set>
 		WHERE postno = #{postNo}
@@ -115,6 +115,15 @@
 		)
 	</insert>
 
+
+	<delete id="deletePostFile" parameterType="long">
+		DELETE FROM postfiles WHERE no = #{no}
+	</delete>
+	
+	<delete id="deletePostFileWithPostNo" parameterType="long">
+		DELETE FROM postfiles WHERE postno = #{postNo}
+	</delete>
+	
 	<delete id="deleteFile" parameterType="long">
 		DELETE FROM files WHERE no = #{no}
 	</delete>
