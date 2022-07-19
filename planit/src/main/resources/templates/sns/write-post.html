@@ -20,7 +20,7 @@
 				<div class="hashtag_box">
 					<ul id="file_list">
 						<li th:each="file : ${files}">
-							<img class="file_image" th:src="@{${'/imgs/img_section/'+file.realFileName}}">
+							<img class="file_image" th:src="@{${'/planiter/post/image/'+file.realFileName}}">
 							<input class="file_no" name="no" type="hidden" th:value="${file.no}">
 							<span class="file_name" th:text="${file.orgFileName}"></span>
 							<a href="javascript:void(0);" onclick="fileDelete(this)" style="text-decoration: none;">삭제</a>
@@ -31,7 +31,7 @@
 
 			<div class="post_box_right">
 				<div class="write_box">
-					<input type="hidden" id="userId" name="userId" value="test">
+					<input type="hidden" id="userId" name="userId" th:value="${session.userdto.userId}">
 					<input type="hidden" id="latitude" name="latitude">
 					<input type="hidden" id="longitude" name="longitude">
 					<input type="hidden" id="address" name="address">
@@ -40,11 +40,11 @@
 					<textarea id="post_content" name="postContent" placeholder="글 작성하기"></textarea>
 				</div>
 				<div class="select_box">
-					<div class="category" th:each="u : ${userToPlantList}">
-					<select name="plantsCateNo">
-						<option value="">내 식물 선택하기</option>
-						<option th:text="*{u.plantsName}" th:value="*{u.plantsCateNo}"></option>
-					</select>
+					<div class="category">
+						<select name="plantsCateNo" >
+							<option value="">내 식물 선택하기</option>
+							<option th:each="u : ${userToPlantList}" th:text="*{u.plantsName}" th:value="*{u.plantsCateNo}"></option>
+						</select>
 					</div>
 					
 					<div class="weather">

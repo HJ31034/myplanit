@@ -748,3 +748,17 @@ followList start
 	text-align: right;
 	width: 10%;
 }
+
+.error_page{
+    display: flex;
+    flex-direction: column;
+    position:relative;
+}
+
+.session_error_message{
+	text-align: center;
+}
+
+.session_error_login{
+	text-align: center;
+}

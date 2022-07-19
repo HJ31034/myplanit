@@ -47,21 +47,26 @@
 				   </span> 
 				   
 				
- 					<a id="profile" th:href="@{/planiter/profile.do}" /> 
- 						<img src="/imgs/img_section/user.png"/ style="height: 30px; margin-top: 20px;">
- 					</a>
 				
 				
-  <th:block th:if="${session.userdto == null}">
-<a th:href="@{/login}">로그인 </a>
-<a th:href="@{/join}">회원가입</a>
 
-</th:block>
+	<th:block th:if="${session.userdto == null}">
+		<a id="profile" th:href="@{/login}" style="margin-left: 5px;"/> login</a>
+		<a id="write" th:href="@{/join}" style="margin-left: 5px;"/> join</a>
+	</th:block>
+	
+	<th:block th:if="${session.userdto !=null}"> 
+		<a id="profile" th:href="@{/planiter/profile.do}" /> 
+	 		<img src="/imgs/img_section/user.png" style="height: 30px; margin-top: 20px; margin-left: 5px;">
+	 	</a>
+		<a id="write" th:href="@{/planiter/post/write}" /> 
+	 		<img src="/imgs/img_section/plus.png" style="height: 30px; margin-top: 20px; margin-left: 5px;">
+	 	</a>
+	 	<a id="planiter" th:href="@{/planiter/}" /> 
+	 		<img src="/imgs/img_section/save-the-planet.png" style="height: 30px; margin-top: 20px; margin-left: 5px;">
+	 	</a>
+	</th:block>  
 
-<th:block th:if="${session.userdto !=null}"> 
-<a href="/planit/userInfo">회원정보 수정</a>
-<a href="/logout">로그아웃</a>
-</th:block>  
  
 
 			</div>

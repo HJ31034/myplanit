@@ -13,7 +13,7 @@
 			<div class="photo_box">
 	            <div class="swiper-wrapper">
 	               <div class="swiper-slide" th:each="fileName, index : ${post.realFileNameArr}">
-	                  <img class="photo swiper-lazy"  th:src="${'/imgs/img_section/' + fileName}" />
+	                  <img class="photo swiper-lazy"  th:src="@{${'/planiter/post/image/'+fileName}}" />
 	               </div>
 	            </div>
 	            <div class="swiper-button-next"></div>
@@ -39,7 +39,7 @@
 						<a href="#" th:text="${post.userId}" style="display: block; padding-bottom: 5px;"></a>
 						<a href="#" th:text="${accountProfile.accDescription}" style="display: block;"></a>
 					</span>
-					<span style="display: inline-block; padding-left: 20px;">
+					<span th:if="${session.userdto} != null AND ${session.userdto.userId} == ${post.userId}" style="display: inline-block; padding-left: 20px;">
 						<a th:href="@{/planiter/post/modify(postno=${post.postNo})}">수정</a>
 						<a th:href="@{/planiter/post/delete(postno=${post.postNo})}">삭제</a>
 					</span>

@@ -25,6 +25,8 @@ public interface PostMapper {
 	public void insertPostFiles(PostFilesDTO params);
 	public void insertWeatherLocation(PostDetailDTO params);
 	public void insertFiles(FilesDTO params);
+	public void deletePostFile(long no);
+	public void deletePostFileWithPostNo(long postNo);
 	public void deleteFile(long no);
 	public List<UserToPlantsDTO> selectPlantsCate(String userId);
 	public int getLikes(LikesDTO params);

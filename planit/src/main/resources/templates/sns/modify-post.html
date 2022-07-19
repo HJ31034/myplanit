@@ -20,7 +20,7 @@
 				<div class="hashtag_box">
 					<ul id="file_list">
 						<li th:each="file : ${files}">
-							<img class="file_image" th:src="@{${'/imgs/img_section/'+file.realFileName}}">
+							<img class="file_image" th:src="@{${'/planiter/post/image/'+file.realFileName}}">
 							<input class="file_no" name="no" type="hidden" th:value="${file.no}">
 							<span class="file_name" th:text="${file.orgFileName}"></span>
 							<a href="javascript:void(0);" onclick="fileDelete(this)" style="text-decoration: none;">삭제</a>
@@ -31,20 +31,21 @@
 
 			<div class="post_box_right">
 				<div class="write_box" th:object="${post}">
-					<input type="hidden" id="userId" name="userId" value="test">
+					<input type="hidden" id="userId" name="userId">
+					<input type="hidden" id="postNo" name="postNo" th:value=${post.postNo}>
 					<input type="hidden" id="latitude" name="latitude">
 					<input type="hidden" id="longitude" name="longitude">
 					<input type="hidden" id="address" name="address">
 					<input type="hidden" id="current_weather" name="weather">
+					<input type="hidden" id="cur_plants_cate_no" th:value="*{plantsCateNo}">
 					
 					<textarea id="post_content" name="postContent" th:text="*{postContent}"></textarea>
 				</div>
 				<div class="select_box">
-					<div class="category" th:each="u : ${userToPlantList}">
-					<select name="plantsCateNo">
-						<option th:text="${post.plantsName}" th:value="${post.plantsCateNo}" ></option>
-						<option th:text="*{u.plantsName}" th:value="*{u.plantsCateNo}"></option>
-					</select>
+					<div class="category" >
+						<select id="plants_cate_no_list" name="plantsCateNo">
+							<option th:each="u : ${userToPlantList}" th:text="*{u.plantsName}" th:value="*{u.plantsCateNo}"></option>
+						</select>
 					</div>
 					
 					<div class="weather">
@@ -74,6 +75,20 @@
     </script>
     
     <script>
+    	$(function() {
+			selectedCategory();
+		});
+
+		function selectedCategory(){
+			let curPlantsCateNo = document.getElementById('cur_plants_cate_no').value;
+			let plantsCateNoList = document.getElementById('plants_cate_no_list');
+			let length = plantsCateNoList.length;
+
+			for(let i=0; i < length; i++){
+				if(plantsCateNoList[i].value == curPlantsCateNo) plantsCateNoList[i].selected = true;
+			}
+		}
+    
 		function fileUpload(){
 			//기존 파일 리스트
 			let fileList  = $("#file_list");

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,126 +47,92 @@ public class PlaniterRestController {
 
 	@Autowired
 	private ProfileService profileService;
-	
+ 
 	// 팔로잉 리스트
 		@RequestMapping(value = "/followingList.do", method = RequestMethod.GET)
 		public List<FollowDTO> follower(Model model, ModelAndView mav,
-				@RequestParam(value="page") int page, HttpSession session) {
-			System.out.println("followingList con page: "+page);
-			
+										@RequestParam(value="page") int page, HttpSession session,
+										@RequestParam(value="userId",required = false)String USERID) {
+			 
 			 int nowPage = page;
 			 int startNum=1;
 			 int endNum=5;
-			 int numPerPage=5; 
+			 int numPerPage=5;  
 			 
-			 if (page==1){
-				 
+			 if (page==1){ 
 				 startNum = 1;
-				 endNum = numPerPage ;
-				 
+				 endNum = numPerPage ; 
 			 }else{
 				 startNum = (page * numPerPage)-numPerPage+1;
 				 endNum = numPerPage;
-			}
-			
-			  String USERID = null;
+			} 
+			 
+			    List<FollowDTO> followingList_TEMP = new ArrayList<FollowDTO>();
+				List<FollowDTO> followingList = snsservice.selectFollowingList(startNum,endNum,USERID);
+			 
+				for (FollowDTO followDTO : followingList) {  
+				String followID = followDTO.getFollowingId();
+				String ProfileIMG=followDTO.getProfileImg();
+				String ACCdescription=followDTO.getAccDescription();
+				 
+				FollowDTO dto = new FollowDTO();
+				dto.setFollowingId(followID);
+				dto.setFollowerId(USERID);
+				dto.setAccDescription(ACCdescription);
+				dto.setProfileImg(ProfileIMG);
 				
-			  if (session.getAttribute("id") != null) {
-					USERID = session.getAttribute("id").toString();
-				}else {
-					USERID="guest";
+				List<FollowDTO> fList = snsservice.selectFollowerList2(session.getAttribute("id").toString(),followID); 
+				
+				if (fList.size() == 0) {
+					dto.setFtype(0);
+				} else {
+					dto.setFtype(1);
 				}
-				  
-			List<FollowDTO> followingList_TEMP = new ArrayList<FollowDTO>();
-			List<FollowDTO> followingList = snsservice.selectFollowingList(startNum,endNum,USERID);
-			System.out.println("RestCon Service selectFollowingList startNum: "+startNum+" endNum: "+endNum+" userId: "+USERID);
-		 
-//			for (FollowDTO followDTO : followingList) {  
-//				String followID = followDTO.getFollowerId();
-//				String ProfileIMG=followDTO.getProfileImg();
-//				String ACCdescription=followDTO.getAccDescription();
-//				
-//				System.out.println("follow followingList: "+ followID);
-//				
-//				FollowDTO dto = new FollowDTO();
-//				dto.setFollowerId(followID);
-//				dto.setUserId(USERID);
-//				dto.setAccDescription(ACCdescription);
-//				dto.setProfileImg(ProfileIMG);
-//				
-//				List<FollowDTO> fList = snsservice.selectFollowingList(startNum,endNum,USERID);
-//				
-//				if (fList.size() == 0) {
-//					dto.setFtype(0);
-//				} else {
-//					dto.setFtype(1);
-//				}
-//				followingList_TEMP.add(dto);
-//				 
-//			 }   
-
-			return followingList;
-
+				followingList_TEMP.add(dto);
+				 
+			 }   
+		  return followingList_TEMP; 
 		}
 
 
 	// 팔로워 리스트
 	@RequestMapping(value = "/followerList.do", method = RequestMethod.GET)
 	public List<FollowDTO> Following(Model model, ModelAndView mav,@RequestParam(value="page") int page,
-			HttpSession session) {
-		System.out.println("followerList con page: "+page);
+									 HttpSession session, @RequestParam(value="userId",required = false) String USERID) { 
 		List<FollowDTO> followerList_TEMP = new ArrayList<FollowDTO>();
-		
-		  String USERID = "";
-			
-		  if (session.getAttribute("id") != null) {
-				USERID = session.getAttribute("id").toString();
-			}else {
-				USERID="guest";
-			}
-		  
 		 int nowPage = page;
 		 int startNum=1;
 		 int endNum=5;
-		 int numPerPage=5; 
-		 
-		 if (page==1){
-			 
+		 int numPerPage=5;  
+		 if (page==1){ 
 			 startNum = 1;
-			 endNum = numPerPage ;
-			 
+			 endNum = numPerPage ; 
 		 }else{
 			 startNum = (page * numPerPage)-numPerPage+1;
 			 endNum = numPerPage;
 		}
-		
-		
-		
+		 
+		 
 		List<FollowDTO> followerList = snsservice.selectFollowerList(startNum,endNum,USERID);
 		for (FollowDTO followDTO : followerList) {
-			String followID = followDTO.getFollowerId();
-			System.out.println("aaaaaaaaaaaa: " + followID);
+			System.out.println("데이터 시작");
+			String followID = followDTO.getFollowerId(); 
 			String ProfileIMG = followDTO.getProfileImg();
 			String ACCdescription = followDTO.getAccDescription();
-			System.out.println("followIDIDIDIDIDID: " + followID);
-			
+			  
 			FollowDTO dto = new FollowDTO();
 			dto.setFollowerId(USERID);
 			dto.setFollowingId(followID);
 			dto.setAccDescription(ACCdescription);
 			dto.setProfileImg(ProfileIMG);
-
-			List<FollowDTO> fList = snsservice.selectFollowerList2(USERID, followID);// followID기준
-			System.out.println("followID: " + followID + " flist: " + fList.size());
-
+			List<FollowDTO> fList = snsservice.selectFollowerList2(session.getAttribute("id").toString(), followID); 
+			System.out.println("데이터 끝"); 
 			 
-		 
 			if (fList.size() == 0) {
 				dto.setFtype(0);
 			} else {
 				dto.setFtype(1);
-			}
-			 
+			} 
 			followerList_TEMP.add(dto);
 		}
 	 
@@ -175,12 +142,13 @@ public class PlaniterRestController {
 
 	@RequestMapping(value = "/follow.do")
 	public AccountDTO follow(@RequestParam(value = "followerId") String userId,
-			@RequestParam(value = "followingId") String followingId) {
+			@RequestParam(value = "followingId") String followingId, HttpSession session) {
 		int ftype=1;
 		 
-		snsservice.insertFollow(userId,userId,followingId,ftype);
+		String USERID = session.getAttribute("id").toString();
+		snsservice.insertFollow(USERID,USERID,followingId,ftype);
 		
-		snsmapper.updateFollowcount(userId, "follower");
+		snsmapper.updateFollowcount(USERID, "follower");
 		snsmapper.updateFollowcount(followingId, "following");
  
 		return profileService.selectUserProfile(userId);
@@ -188,12 +156,11 @@ public class PlaniterRestController {
 
 	@RequestMapping(value = "/unfollow.do")
 	public AccountDTO unfollow(@RequestParam(value = "followerId") String followerId,
-			@RequestParam(value = "followingId") String followingId,@RequestParam(value="page") int page) {
-	    System.out.println("unfollow: "+followerId+" / "+followingId);
-	    
-		snsservice.unfollow(followerId, followingId);
+			@RequestParam(value = "followingId") String followingId, HttpSession session) {
+		String USERID = session.getAttribute("id").toString();
+		snsservice.unfollow(USERID, followingId);
  
-		snsmapper.updateFollowcount(followerId, "unfollowing");
+		snsmapper.updateFollowcount(USERID, "unfollowing");
 		snsmapper.updateFollowcount(followingId, "unfollower");
 		
 		return profileService.selectUserProfile(followerId);
@@ -202,13 +169,11 @@ public class PlaniterRestController {
 	// 프로필 수정 페이지 이동
 	@GetMapping(value = "/goProfileEdit.do")
 	public ModelAndView goProfileEdit(Model model, ModelAndView mav, AccountDTO dto, HttpSession session) {
-		   String USERID = ""	;
+		   String USERID = "";
 		
 		   if (session.getAttribute("id") != null) {
 				USERID = session.getAttribute("id").toString();
-			}else {
-				USERID="guest";
-			}
+			} 
 			
 		
 		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID);
@@ -258,8 +223,7 @@ public class PlaniterRestController {
 		dto.setAccDescription(InfoDes);
 		dto.setUserId(USERID);
 		snsservice.updateInfo(dto);
-
-		System.out.println("InfoDes: " + InfoDes);
+ 
 		mav.setViewName("redirect:/planiter/goProfileEdit.do");
 		return mav;
 

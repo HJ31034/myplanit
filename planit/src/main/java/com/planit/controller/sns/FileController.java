@@ -4,17 +4,20 @@ import com.planit.domain.sns.FilesDTO;
 import com.planit.service.sns.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -61,5 +64,11 @@ public class FileController {
 		postService.deleteFile(no);
 
 		return "sns/write-post";
+	}
+	
+	@ResponseBody
+	@GetMapping("/planiter/post/image/{filename}")
+	public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+		return new UrlResource("file:///" + saveDir + filename);
 	}
 }
