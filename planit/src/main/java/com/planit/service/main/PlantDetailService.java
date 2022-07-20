@@ -10,7 +10,7 @@ import com.planit.domain.main.SolutionDTO;
 import com.planit.domain.sns.UserToPlantsDTO;
 
 public interface PlantDetailService {
-	/*	plants Detail */
+
 	public List<PlantsDTO> plantDetail(int plantsId);
 	public List<PlantsDTO> plantDes(int plantsId);
 	public List<PlantsDTO> plantImgs(int plantsId);

@@ -132,7 +132,11 @@
  
 		  				 var followerList = "";
 		  				  $.each(data, function(index, item) { // 데이터 =item
-		  					 
+		  					 //로그인 계정이 타계정의 팔로워리스트에는 버튼이 보이지않게 함
+		  					  var input_followBTN='';
+		  					 if(item.followingId != sessionId){
+		  					   input_followBTN = '<input onclick="followBTN( \''+item.followerId+'\',\''+item.followingId+'\',\''+item.ftype+'\',1)" id="followButton_'+item.followerId+item.followingId+'" class="followButton" type="button" value="'+ GetType(item.followerId,item.userId,item.followingId,item.ftype)+'"  />';
+	  			              }
 		  					  followerList = '<div class="followList" id="followList">'
 		  						     +   '<div class="followIMGA">'
 		  						     +   '<img class="followIMG" src="/imgs/img_section/'+item.profileImg+'"alt="프로필사진">'
@@ -143,20 +147,18 @@
 		  			            	 +   '<P class="followDis">'+item.accDescription+'</P></a>'
 		  			            	 +   '</div>'
 		  			            	 +	 '<div class="followButtonA">'
-		  			            	 +	 '<input onclick="followBTN( \''+item.followerId+'\',\''+item.followingId+'\',\''+item.ftype+'\',1)" id="followButton_'+item.followerId+item.followingId+'" class="followButton" type="button" value="'+ GetType(item.followerId,item.userId,item.followingId,item.ftype)+'"  />'
+		  			            	 +   input_followBTN 
 		  			            	 +   '<input id="ftype_'+item.followerId+item.followingId+'"+ type="hidden" value="'+item.ftype+'"/>'
 		  			            	 +   '</div>'
 		  			            	 +   '</div>';
 		  	
 		  			             $(".follower_section").append(followerList);
 		  			             
-		  			             //로그인 계정이 타계정의 팔로워리스트에는 버튼이 보이지않게 함
-		  			             if(item.followingId == sessionId){
-		  			            	 
-		  			             }
+		  			            
+		  			            
 		  			             
-		  			             var btnID = "#followButton_" +item.followerId+item.followingId ;
-		  			           console.log('item.ftype: '+ item.ftype + ' btnID: '+btnID);
+		  			           var btnID = "#followButton_" +item.followerId+item.followingId ;
+		  			            
 		  			 			  if (item.ftype == 1) { 
 						 				$(btnID).css("backgroundColor", "white");
 						 			} else {
@@ -192,6 +194,12 @@
 				  }  
 					 
 				  $.each(data, function(index, item) { // 데이터 =item
+					  //로그인 계정이 타계정의 팔로워리스트에는 버튼이 보이지않게 함
+  					  var input_followBTN='';
+  					 if(item.followingId != sessionId){
+  					   input_followBTN = '<input onclick="followBTN(\''+item.followerId+'\',\''+item.followingId+'\',\''+item.ftype+'\',2)" id="followButton2_'+item.followerId+item.followingId+'" class="followButton" type="button" value="'+ GetType(item.followerId,item.userId,item.followingId,item.ftype)+'"  />';
+			              }
+  					 
 					  followingList = '<div class="followList" id="followList">'
 						     +   '<div class="followIMGA">'
 						     +   '<img class="followIMG" src="/imgs/img_section/'+item.profileImg+'"alt="프로필사진">'
@@ -202,7 +210,7 @@
 			            	 +   '<P   class="followDis">'+item.accDescription+'</P></a>'
 			            	 +   '</div>'
 			            	 +	 '<div class="followButtonA">'
-			            	 +	 '<input onclick="followBTN(\''+item.followerId+'\',\''+item.followingId+'\',\''+item.ftype+'\',2)" id="followButton2_'+item.followerId+item.followingId+'" class="followButton" type="button" value="'+ GetType(item.followerId,item.userId,item.followingId,item.ftype)+'"  />'
+			            	 +	  input_followBTN
 			            	 +    '<input id="ftype2_'+item.followerId+item.followingId+'"+ type="hidden" value="'+item.ftype+'"/>'
 			            	 +   '</div>'
 			            	 +   '</div>';
@@ -229,16 +237,16 @@
    
  function followBTN(followerID,followingID, ftype, fol) {//팔로우 언팔로우 처리
 	 
- 		if(fol==1){
- 			var btnID = "#followButton_" + followerID + followingID;
- 			var btnID = "#ftype_" + followerID + followingID;
- 		}else if(fol==2){
+	 if(fol==1){
+			var btnID = "#followButton_" + followerID + followingID;
+			var btnID2 = "#ftype_" + followerID + followingID;
+		}else if(fol==2){
+			var btnID2 = "#ftype2_" + followerID + followingID;
 			var btnID = "#followButton2_" + followerID + followingID;
- 			var btnID = "#ftype2_" + followerID + followingID;
- 		}
+		}
 		 
-		var input_ftype = $(btnID2).val();
-		 
+	 var input_ftype = $(btnID2).val();
+	 
 		
 		if (input_ftype == 0) { 
 		
@@ -251,13 +259,10 @@
 					$(".followerCount").text(data.followerCount);
 					$(".followingCount").text(data.followingCount);
 			 		  
-						console.log('followButton_ID 0->1');
-						 $(btnID).val('팔로잉');
-						 $(btnID).css("backgroundColor", "white");
-						 $(btnID).css("color", "black");  
-						 $(btnID2).val('팔로잉');
-						 $(btnID2).css("backgroundColor", "white");
-						 $(btnID2).css("color", "black");  
+					console.log('followButton_ID 0->1');
+					 $(btnID).val('팔로잉');
+					 $(btnID).css("backgroundColor", "white");
+					 $(btnID).css("color", "black");  
 						  
 						 if ($(btnID2).val() == 1) { 
 				            	$(btnID2).attr('value', 0 ); 
@@ -286,11 +291,9 @@
 					  
 					 $(btnID).val('팔로우');
 					 $(btnID).css("backgroundColor", "#9FCF62");
-					 $(btnID).css("color", "white");  
-					 $(btnID2).val('팔로우');
-					 $(btnID2).css("backgroundColor", "#9FCF62");
-					 $(btnID2).css("color", "white");  
+					 $(btnID).css("color", "white");   
 					 
+
 					 if ($(btnID2).val() == 1) { 
 			            	$(btnID2).attr('value', 0 ); 
 			 			} else {

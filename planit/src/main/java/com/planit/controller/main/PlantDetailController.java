@@ -38,7 +38,7 @@ public class PlantDetailController {
 		if (session.getAttribute("id") != null) {
 			USERID = session.getAttribute("id").toString();
 		}
-	 
+		 
 		 model.addAttribute("USERID", USERID);
 		 model.addAttribute("plantsId", plantsId); 
 		  
@@ -49,6 +49,9 @@ public class PlantDetailController {
 		
 		 model.addAttribute("solution",  detailService.selectSolution(plantsId));
 		 List<UserToPlantsDTO> plantUser = detailService.detail_User(plantsId);
+		 String sessionId=session.getAttribute("id").toString();
+		 model.addAttribute("sessionId",sessionId);
+		 
 		 String resultText=null;
 		 if(plantUser.size()==0) {
 			 model.addAttribute("userList", detailService.random_User());
