@@ -32,6 +32,7 @@
                         <span th:if= "${keyword == null} or ${keyField == null} ">
                           <span th:each="img : ${ImgPost}" id="list">
                             <a th:href="@{/planiter/post/read(postno=${img.postNo},page=${page},keyField=${keyField},keyword=${keyword})}" style="text-decoration:none;" >
+                           		 <!--<img th:src="@{${'/imgs/img_section/'+img.realFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>-->
                            		 <img th:src="@{${'/planiter/post/image/'+img.realFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
                           </span>
                         </span>
