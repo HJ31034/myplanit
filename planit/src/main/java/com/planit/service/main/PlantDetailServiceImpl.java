@@ -19,7 +19,7 @@ public class PlantDetailServiceImpl implements PlantDetailService {
 	@Autowired
 	private PlantDetailMapper detailMapper;
 	
-	/*	plants Detail */
+
 	public List<PlantsDTO> plantDetail(int plantsId){
 		List<PlantsDTO> detailList=detailMapper.plantDetail(plantsId);
 		return detailList;

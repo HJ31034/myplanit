@@ -21,11 +21,6 @@ public class SearchServiceImpl implements SearchService {
 	public List<PlantsDTO> selectPlants(String term, int keyId, int start, int end) {
 		return searchMapper.selectPlants('%' + term + '%', keyId, start, end);
 	}
-
-	@Override
-	public List<PlantsDTO> selectKwdSearch(int kwdId, int start, int end) {
-		return searchMapper.selectKwdSearch(kwdId, start, end);
-	}
 	
 	@Override
 	public int plantsTotalCount(String term, int keyId) {

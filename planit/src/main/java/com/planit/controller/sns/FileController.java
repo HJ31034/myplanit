@@ -69,6 +69,6 @@ public class FileController {
 	@ResponseBody
 	@GetMapping("/planiter/post/image/{filename}")
 	public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-		return new UrlResource("file:///" + saveDir + filename);
+		return new UrlResource("file:///" + saveDir + filename.trim());
 	}
 }

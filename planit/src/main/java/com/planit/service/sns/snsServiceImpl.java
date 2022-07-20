@@ -41,7 +41,7 @@ public class snsServiceImpl implements snsService {
 			keyField="postcontent";
 		}
 		
-		System.out.println("service keyField: "+keyField+ " keyword: "+keyword);
+		
 		List<PostDTO> serachSNS = snsmapper.searchSNS(keyField,'%' + keyword + '%',startNum,endNum);
 		 
 		return serachSNS;
@@ -66,14 +66,14 @@ public class snsServiceImpl implements snsService {
 	@Override
 	public boolean updateInfo(AccountDTO params) {
 		int updateInfo = snsmapper.updateInfo(params);
-		System.out.println("updateInfo IMPL: " + updateInfo);
+		
 		return (updateInfo == 1) ? true : false;
 	}
 
  	
 	@Override
 	public List<FollowDTO> selectFollowerList(int startNum, int endNum,String userId) {
-		System.out.println(" Service selectFollowerList startNum: "+startNum+" endNum: "+endNum+" userId: "+userId);
+		 
 		List<FollowDTO> FollowerList = snsmapper.selectFollowerList(startNum,endNum,userId);
 		return FollowerList;
 	}
