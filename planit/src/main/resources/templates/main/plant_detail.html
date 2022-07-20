@@ -309,14 +309,26 @@
 			  <h2 class="mainTitle" th:text="${plantsName}"></h2>
 					 <span id="userItems" style="margin-left: 53px;"> 
 						 <span th:each="user:${userList}" style="display: inline-block;  width: 185px; text-align: center;"> 
-							<span style="width: 250px; height: 250px;">
-							<a th:href="@{/planiter/{id}(id=${user.userId})}">
+						 
+							<!-- 로그인한 계정일 때 -->
+							<span th:if= "${user.userId == sessionId}">
+							  <span style="width: 250px; height: 250px;">
+							    <a href="/planiter/profile.do">
+							    <img id="detail_profileImg" th:src=" @{${'/imgs/img_section/'+user.proFileImg}}">  
+							    <span id="detail_userId" th:text="${user.userId}"></span></a>
+							   </span>
+							</span>
+							
+							<!-- 로그인한 계정이 아닌 타 사용자들 일 때  -->
+							<span th:if= "${user.userId != sessionId}">
+							 <span style="width: 250px; height: 250px;">
+							  <a th:href="@{/planiter/{id}(id=${user.userId})}">
 							  <img id="detail_profileImg" th:src=" @{${'/imgs/img_section/'+user.proFileImg}}">  
 							  <span id="detail_userId" th:text="${user.userId}"></span></a>
 							</span>
+						   </span>
 						 </span>
-					 </span>
-
+					  </span>
 
 						</div>
 				 
