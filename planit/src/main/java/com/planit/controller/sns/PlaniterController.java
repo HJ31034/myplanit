@@ -52,38 +52,31 @@ public class PlaniterController {
 		}else {
 			USERID="guest";
 		}
-		
+		model.addAttribute("sessionId",USERID);
         
 		if(keyword==null||keyField==null) {
 			
 		 ImgPost = snsservice.selectImgPost(0,15);
 		 model.addAttribute("ImgPost", ImgPost);
 		 
-		}else if(keyword!=null||keyField!=null){ //검색처리
+		}else if(keyword!=null||keyField!=null){//검색처리
 			String searchText=" 기준 검색결과";
 			model.addAttribute("keyFieldSearch",keyField+searchText);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("keyField", keyField);
- 
-			
-			
-		 if(keyField=="계정" || "계정".equals(keyField)) {
-			 ImgPost = snsservice.searchSNS(keyField, keyword, 0, 15);
+  
+		 if(keyField=="계정" || "계정".equals(keyField)) {//계정검색
+			 ImgPost = snsservice.searchSNS(keyField, keyword,0,15);
 			 
-		 }else if("식물".equals(keyField) || "내용".equals(keyField)){
-			 
+		 }else if("식물".equals(keyField) || "내용".equals(keyField)){//식물,내용 검색
 			 ImgPost = snsservice.searchSNS(keyField, keyword,0,15);
 		 }
-		 model.addAttribute("ImgPost", ImgPost);
-		}
-		
-		
-		
-		//계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리
-		List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID);
-		model.addAttribute("AccInfo", AccInfo);
-		List<PlantsCateDTO> CateList = snsservice.selectMainCate(USERID);
-		model.addAttribute("CateList",CateList);
+		 	model.addAttribute("ImgPost", ImgPost);
+		 }
+		 
+		//계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리 
+		model.addAttribute("AccInfo",snsservice.selectMainAccINfo(USERID));
+		model.addAttribute("CateList",snsservice.selectMainCate(USERID));
 		 
 		
 		return "sns/index";
@@ -95,13 +88,7 @@ public class PlaniterController {
 	public  List<PostDTO> nextImgPost(@RequestParam(value="page", required = false) String page,
 									  @RequestParam(value="keyField",required = false) String keyField,
 									  @RequestParam(value="keyword", required = false) String keyword, HttpServletRequest request,Model model) {
-
- 
-		 
-		System.out.println("nextImgPost keyword: "+keyword);
-		System.out.println("nextImgPost keyField: "+ keyField); 
-		System.out.println("nextImgPost page: " +page);
- 
+  
 		 if(page== null) {
 			 page = "1";
 		 }
@@ -117,11 +104,9 @@ public class PlaniterController {
 		 int totalPage = (int)Math.ceil((float)totalCnt/(float)numPerPage);
 		 
 		 System.out.println("totalPage: "+ totalPage);
-		 if (pageNum==1){
-			 
+		 if (pageNum==1){ 
 			 startNum = 1;
-			 endNum = numPerPage ;
-			 
+			 endNum = numPerPage ; 
 		 }else{
 			 startNum = (pageNum * numPerPage)-numPerPage;
 			 endNum = numPerPage;
@@ -130,28 +115,22 @@ public class PlaniterController {
 		 List<PostDTO> nextImgPost = null;
 			
 			
-			if("".equals(keyword)&&"".equals(keyField)) {
-				System.out.println("next: "+totalPage+" "+nowPage);
-				
+			if("".equals(keyword)&&"".equals(keyField)) { 
 				if(totalPage>=nowPage) {
 				nextImgPost = snsservice.selectImgPost(startNum,endNum);  
 				}
 				 
 				
-				}else{ //검색처리
-					
+			}else{ //검색처리 
 					String searchText=" 기준 검색결과";
-					model.addAttribute("keyFieldSearch",keyField+searchText);
-					
+					model.addAttribute("keyFieldSearch",keyField+searchText); 
 					model.addAttribute("keyword", keyword);
 					model.addAttribute("keyField", keyField);
 					 
 					nextImgPost = snsservice.searchSNS(keyField, keyword,startNum,endNum);
 				}
-			
-			 
-			return nextImgPost;
-	}
+			 return nextImgPost;
+				}
 		 
  
 	
@@ -172,17 +151,15 @@ public class PlaniterController {
 		  System.out.println("selectFollow USERID: "+USERID);
 		  model.addAttribute("USERID",USERID);
 		  model.addAttribute("sessionId", session.getAttribute("id").toString());
+		  
 		  //계정 정보 출력 = 팔로워,팔로잉,프로필사진,식물카테고리 
-		  List<AccountDTO> AccInfo = snsservice.selectMainAccINfo(USERID); 
-		  model.addAttribute("AccInfo", AccInfo); List<PlantsCateDTO> CateList = snsservice.selectMainCate(USERID);
-		  model.addAttribute("CateList",CateList);
-		  
+		  model.addAttribute("AccInfo", snsservice.selectMainAccINfo(USERID)); 
+		  model.addAttribute("CateList",snsservice.selectMainCate(USERID));
+		  //팔로잉페이지인지 팔로워페이지인지 구분
 		  model.addAttribute("fol",fol);
-		  
-		 
-		
-		mav.setViewName("sns/followList");
-		return mav;
+		   
+		  mav.setViewName("sns/followList");
+		  return mav;
 	}
  
 	

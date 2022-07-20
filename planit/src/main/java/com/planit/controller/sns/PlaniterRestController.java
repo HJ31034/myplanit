@@ -1,36 +1,32 @@
 package com.planit.controller.sns;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
+ 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
+ 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+ 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
-import org.springframework.core.io.ClassPathResource;
+ 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+ 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.planit.domain.sns.AccountDTO;
 import com.planit.domain.sns.FollowDTO;
-import com.planit.domain.sns.PlantsCateDTO;
-import com.planit.domain.sns.PostDTO;
+ 
 import com.planit.mapper.sns.SnsMapper;
 import com.planit.service.sns.ProfileService;
 import com.planit.service.sns.snsService;
