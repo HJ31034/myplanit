@@ -17,8 +17,6 @@ public interface SearchMapper {
 			@Param("start") int start,
 			@Param("end") int end);
 
-	public List<PlantsDTO> selectKwdSearch(@Param("keyId") int keyId, @Param("start") int start, @Param("end") int end);
-
 	public int plantsTotalCount(@Param("term") String term, @Param("keyId") int keyId);
 
 	// plants Detail

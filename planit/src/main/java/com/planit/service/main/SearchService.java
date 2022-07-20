@@ -12,7 +12,6 @@ import com.planit.domain.sns.UserToPlantsDTO;
  
 public interface SearchService {
 	public List<PlantsDTO> selectPlants(String term, int keyId, int start, int end);
-	public List<PlantsDTO> selectKwdSearch(int kwdId, int start, int end);
 	public int plantsTotalCount(String term, int keyId);
  
 	/*	plants Detail */
