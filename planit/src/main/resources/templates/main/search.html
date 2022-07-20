@@ -12,9 +12,52 @@
 <th:block layout:fragment="script">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script th:inline="javascript">
-	var keyId = "[[${keyId}]]";
-	
+	var fk;
+	var sk = "[[${sk}]]";
 	$(document).ready(function() {
+		
+		// 메인에서 키워드를 선택해서 들어왔을 때 선택한 키워드 보여주기
+		if(sk > 0){
+			fk = "[[${fk}]]";
+			
+			$("#second-filter").addClass('active');
+			
+			$.ajax({
+				type : 'POST',
+				url : '/kwd',
+				data : {
+					keyId : fk
+				},
+				dataType : 'json',
+				success : function(data) {
+					if(fk <= 4){
+						str = "<div class='divide'></div>";
+						
+						for (var i = 0; i < data.length; i++) {
+							str += "<button class='kwd' value='";
+							str += data[i].keyId;
+							str += "'>";
+							str += data[i].keyName;
+							str += "</button>";
+						}
+	
+						$('.second-filter').html(str);
+						
+						$('button[class=kwd]').each(function(){
+							if($(this).val() == fk || $(this).val() == sk){
+								$(this).addClass('btn_active');
+							}
+							
+						});
+					}
+					nextImgPost(1, fk, sk);
+				},
+				error : function() {
+					alert("에러 발생");
+				}
+			});
+			
+		}
 		
 		// 키워드 클릭 시
 		$(document).on("click", ".kwd", function(){
@@ -22,7 +65,7 @@
 			if($(this).is(".btn_active") === true){
 				$(this).removeClass('btn_active'); // 선택한 키워드 취소
 				
-				if($(this).closest("div").attr('class') == "first-filter"){ // 선택한 키워드가 첫 번째 필터이면 두 번째, 세 번째 필터 영역 지우기
+				if($(this).closest("div").attr('class') == "first-filter"){ // 선택한 키워드가 첫 번째 필터이면 두 번째 필터 영역 지우기
 					$("#second-filter").removeClass('active');
 				}
 			} else { // 선택하지 않았던 버튼을 클릭했을 경우
@@ -30,6 +73,7 @@
 				$(this).addClass('btn_active'); // 선택한 키워드 활성화
 
 				if($(this).closest("div").attr('class') == "first-filter"){ // 첫 번째 필터 영역의 키워드를 클릭했을 경우
+					fk = $(this).val();
 					$("#second-filter").addClass('active'); // 두 번째 필터 영역 나타내기
 					$("#second-filter").children('.kwd').removeClass('btn_active'); // 두 번째 필터 영역에서 선택된 키워드를 리셋
 				}
@@ -38,10 +82,12 @@
 		
 		
 		$(document).on("click", ".reset", function(){
+			nextImgPost(1, null, -1);
 			$(".first-filter").children('.kwd').removeClass('btn_active');
 			$("#second-filter").removeClass('active');
 		});
 		
+		// 두 번째 필터 생성
 		 $(document).on("click", ".kwd", function(){
 			var kwd = $(this).val();
 			keyId = kwd;
@@ -66,7 +112,7 @@
 	
 						$('.second-filter').html(str);
 					}
-					nextImgPost(1, kwd);
+					nextImgPost(1, fk, kwd);
 				},
 				error : function() {
 					alert("에러 발생");
@@ -91,23 +137,45 @@
 		//console.log('dh: '+ dh +' wh: '+wh+' wt: '+wt +' wh+wt: ' + (wh+wt));
 		if(dh <= (wh + wt)) { // 스크롤바가 아래 쪽에 위치할 때
 			//console.log("over");
-			nextImgPost(page, keyId);
+			nextImgPost(page, fk, sk);
 			page++;
         }
 		console.log(page);
 
 	});
 
+	function urlChange(fk, sk){
+		sch = location.search
+		 var params = new URLSearchParams(sch);
+		 
+		 params.set('fk', fk);
+		 params.set('sk', sk);
+		 
+		 if(typeof fk == "undefined" || fk == null || fk == ""){
+			 params.delete('fk');
+		 }
+			 
+		 if(sk <= 4) // 첫 번째 필터 키워드 값 변경할 경우
+			 params.delete('sk');
+		 
+		 url = params.toString();
+		 if(url == "")
+		 	return "search" + url;
+		 return "search?" + url;
+	}
 
- function nextImgPost(page, keyId){
+ function nextImgPost(page, fk, sk){
 	 var term = $('.search-info').val(); 
-	 console.log("1111" + keyId);
+
+	 //페이지 리로드없이 url 갱신
+	 history.pushState(null, null, urlChange(fk, sk));
+	 
 	 $.ajax({
 		 	type : 'POST',
 			url : '/planit/search',
 			data : {
 				term : term,
-				keyId : keyId,
+				keyId : sk,
 				page : page
 			},
 			dataType : 'json',

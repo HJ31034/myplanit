@@ -49,8 +49,11 @@
 					dataType : 'json',
 					success : function(data) {
 						// 해당 키워드의 keyId를 컨트롤러에 전달하기 위해 사용
-						str2 = "<input type='hidden' name='keyId' value='" + kwd + "' />";
-						$('.kwd-form').html(str2);
+						if(kwd <= 4)
+							str2 = "<input type='hidden' name='fk' value='" + kwd + "' />";
+						else
+							str2 = "<input type='hidden' name='sk' value='" + kwd + "' />";
+						$('.kwd-form').append(str2);
 						
 						if(data.length == 0){
 							$('.kwd-form').submit();
@@ -138,7 +141,7 @@
 						<button class="kwd" th:value="${plantKwd.keyId}">[[${plantKwd.keyName}]]</button>
 					</th:block>
 				</div>
-				<form action="/planit/search/kwd" method="post" class="kwd-form">
+				<form action="/planit/search" method="get" class="kwd-form">
 				</form>
 			</div>
 			<!-- end container -->

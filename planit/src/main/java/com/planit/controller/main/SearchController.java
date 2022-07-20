@@ -41,24 +41,45 @@ public class SearchController {
 	private MainService mainService;
 
 	@GetMapping("/search")
-	public String search(@RequestParam(value = "term", required = false) String term, Model model) {
+	public String search(@RequestParam(value = "term", required = false, defaultValue = "all") String term, 
+							@RequestParam(value = "fk", required = false, defaultValue = "-1") int fk, 
+							@RequestParam(value = "sk", required = false, defaultValue = "-1") int sk, Model model) {
 		int total = 0;
-
+		
 		List<PlantsDTO> plantList;
-		if (term != null) {
-			total = searchService.plantsTotalCount(term, -1);
-			plantList = searchService.selectPlants(term, -1, 1, 16);
-			model.addAttribute("term", term);
-			System.out.println(term);
-		} else {
-			total = searchService.plantsTotalCount("all", -1);
-			plantList = searchService.selectPlants("all", -1, 1, 16);
-		}
+//		if (term != null) {
+//			total = searchService.plantsTotalCount(term, -1);
+//			plantList = searchService.selectPlants(term, -1, 1, 16);
+//			model.addAttribute("term", term);
+//			System.out.println(term);
+//		} else {
+//			total = searchService.plantsTotalCount("all", -1);
+//			plantList = searchService.selectPlants("all", -1, 1, 16);
+//		}
+//		if(keyId == null) {
+////			keyId = {-1, -1};
+//			//keyId[1] = -1;
+//		}
+//		else {
+//			total = searchService.plantsTotalCount(term, sk);
+//			plantList = searchService.selectPlants(term, sk, 1, 16);
+//	
+//			model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0)); // 1차 필터 키워드
+//			model.addAttribute("plantList", plantList);
+//			model.addAttribute("total", total);
+//			model.addAttribute("firstKeyId", keyId[0]);
+//			model.addAttribute("keyId", keyId[1]);
+//		}
+		System.out.println("term : " + term != "all" ? term : null );
+		total = searchService.plantsTotalCount(term, sk);
+		plantList = searchService.selectPlants(term, sk, 1, 16);
 
 		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0)); // 1차 필터 키워드
 		model.addAttribute("plantList", plantList);
 		model.addAttribute("total", total);
-		model.addAttribute("keyId", -1);
+		model.addAttribute("term", !term.equals("all") ? term : null);
+		model.addAttribute("fk", fk);
+		model.addAttribute("sk", sk);
 		return "main/search";
 	}
 
@@ -100,40 +121,6 @@ public class SearchController {
 		// map.put("keyId", keyId);
 
 		return map;
-	}
-
-	@PostMapping("/search/kwd")
-	public String kwdSearch(@RequestParam("keyId") int keyId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") String page, Model model) {
-		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0)); // 1차 필터 키워드
-
-		int pageNum = Integer.parseInt(page);
-
-		int total = searchService.plantsTotalCount("all", keyId);
-
-		int nowPage = pageNum;
-		int startNum = 0;
-		int endNum = 16;
-		int numPerPage = 16;
-		int totalPage = (int) Math.ceil((float) total / (float) numPerPage);
-
-		System.out.println("totalPage: " + totalPage);
-		if (pageNum == 1) {
-
-			startNum = 1;
-			endNum = numPerPage;
-
-		} else {
-			startNum = (pageNum * numPerPage) - numPerPage + 1;
-			endNum = startNum + numPerPage - 1;
-		}
-
-		List<PlantsDTO> plantList = searchService.selectKwdSearch(keyId, startNum, endNum);
-		model.addAttribute("plantList", plantList);
-		model.addAttribute("total", total);
-		model.addAttribute("keyId", keyId);
-
-		return "main/search";
 	}
 
 }
