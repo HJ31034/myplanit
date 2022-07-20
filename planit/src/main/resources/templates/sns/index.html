@@ -41,21 +41,31 @@
                           <span th:if= "${keyField == '식물'} or ${keyField == '내용'}">
                           <span th:each="img : ${ImgPost}" id="list">
                             <a th:href="@{/planiter/post/read(postno=${img.postNo},page=${page},keyField=${keyField},keyword=${keyword})}" style="text-decoration:none;" >
-                           		 <img th:src="@{${'/imgs/img_section/'+img.realFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
+                           		 <img th:src="@{${'/planiter/post/image/'+img.realFileName}}" alt="imgPost" id="imgPost" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover"></a>   
                           </span>
                           </span>
                           
                       <!-- 계정 검색 -->
-                          <span th:if= "${keyField == '계정'}">
-                          <!--  <h1 id="profileId" th:text="${img.userId}"></h1> -->
+                          <span th:if= "${keyField == '계정'}"> 
                           <span  th:each="img : ${ImgPost}" style="width:200px; display: inline-block;"> 
-  
-                             <a th:href="@{/planiter/{id}(id=${img.userId})}" id="userSearch">
-                           		 <img th:src="@{${'/imgs/img_section/'+img.profileImg}}" alt="imgPost" id="profileImgList"
-									class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" >
+                       			<!-- 검색 후 session에 저장된 아이디가 출력됐을때 내 프로필로 보내기 -->
+   								<span th:if= "${img.userId == sessionId}">
+   								 <a href="/planiter/profile.do" id="userSearch">
+                           		 <img th:src="@{${'/imgs/img_section/'+img.profileImg}}" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" > 
 								 <p id="search_userId"  th:text="${img.userId}"></p>
 								 <p id="search_des"  th:text="${img.accDescription}"></p>
                            		 </a>
+   								</span>
+   								
+   								<!-- 검색 후 session에 저장된 아이디와 동일하지 않으면 otherProfile로 보내기 -->
+   						      <span th:if= "${img.userId != sessionId}">
+                                 <a th:href="@{/planiter/{id}(id=${img.userId})}" id="userSearch">
+                           		 <img th:src="@{${'/imgs/img_section/'+img.profileImg}}" alt="imgPost" id="profileImgList"
+									class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" > 
+								 <p id="search_userId"  th:text="${img.userId}"></p>
+								 <p id="search_des"  th:text="${img.accDescription}"></p>
+                           		 </a>
+                          </span>
                           </span>
                           
                           </span>
@@ -85,9 +95,9 @@
     
                   <div style="margin-top: -20px;">  
                    <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
-                      <p th:text="${info.followerCount}"/></a></div>
+                      <p class="followerCount" th:text="${info.followerCount}"/></a></div>
                    <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag" >팔로잉<br>
-                      <p th:text="${info.followingCount}"/></a></div>
+                      <p class="followingCount" th:text="${info.followingCount}"/></a></div>
                   </div><br><br>
                 
  
@@ -111,11 +121,11 @@
         </th:block>
  
  <th:block layout:fragment="script">  
-	<script type="text/javascript">
+	 <script th:inline="javascript">
  
 	//history.scrollRestoration = "auto"
 	 var page = 2;
- 
+   
 	 
 		 $(".imgList_section").scroll(function() {  
 			 
@@ -146,6 +156,11 @@
         }); */
 		/* scroll */
 
+		 /*<![CDATA[*/
+ var sessionId = /*[[ ${sessionId} ]]*/ 
+ 		/*]]*/
+ 
+ 
 		function nextImgPost(page) {
 			var keyword = $("#search-field").val();
 			var keyField = $("#keyField").val();
@@ -159,16 +174,17 @@
 						dataType : "json",
 						success : function(data) {
 							$.each(data,function(index, item) {
-						 if(keyField=="계정"){
+						 if(keyField=="계정"){ //계정검색
 							 console.log('datadatadata:'+ JSON.stringify(data));
-							 $("#nextImgPost").append('<span style="width:200px; display: inline-block;"> '
+							 $("#nextImgPost").append('<span style="width:200px; display: inline-block;">'
 							 +'<a id="userSearch" href="/planiter/{id}?id='+ item.userId+'&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" >' 
 							 +'<img src="/imgs/img_section/'+item.profileImg+'" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" >'
 						     +' <p id="search_userId">'+item.userId+'</p>'
 						     +' <p id="search_des">'+item.accDescription+'</p></a><span>');
-						 }else{
+							 
+						 }else{//식물,내용 검색
 							$("#nextImgPost").append('<a href="/planiter/post/read?postno='+ item.postNo+ '&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" style="text-decoration:none;" >'
-						    + '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/imgs/img_section/'+item.realFileName+'">');
+						    + '<img class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" src="/planiter/post/image/'+item.realFileName+'">');
 						  }
 						 
 					 });

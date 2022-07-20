@@ -41,6 +41,7 @@ public class ProfileController {
 			}else {
 				id=otherUserId;
 			}
+		 
 		String page = "main";
 		
 		// 사용자 프로필 정보
