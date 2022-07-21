@@ -320,7 +320,7 @@
 							</span>
 							
 							<!-- 로그인한 계정이 아닌 타 사용자들 일 때  -->
-							<span th:if= "${user.userId != sessionId}">
+							<span th:if= "${user.userId != sessionId or null}">
 							 <span style="width: 250px; height: 250px;">
 							  <a th:href="@{/planiter/{id}(id=${user.userId})}">
 							  <img id="detail_profileImg" th:src=" @{${'/imgs/img_section/'+user.proFileImg}}">  
