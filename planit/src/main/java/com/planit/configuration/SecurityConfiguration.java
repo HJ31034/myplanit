@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.planit.mapper.main.UserMapper;
@@ -34,6 +35,7 @@ public class SecurityConfiguration {
   @Autowired
   UserMapper userMapper;
  
+  //private final AuthenticationSuccessHandler authenticationSuccessHandler;
   
   @Autowired
   public void SecurityConfig(UserService userService) {
@@ -61,21 +63,31 @@ public class SecurityConfiguration {
             .anyRequest().authenticated()
             .and()
         .formLogin()
+        	.permitAll() //로그인 페이지 링크
         	.usernameParameter("userId")
         	.passwordParameter("password")
-            .loginPage("/login").permitAll() //로그인 페이지 링크
-            .loginProcessingUrl("/login") //로그인 처리 url
+            .loginPage("/login")
             
+            .loginProcessingUrl("/login.do") //로그인 처리 url
+          
             .defaultSuccessUrl("/login.do") //로그인 성공시 이동하는 페이지 등록
+            .successHandler(loginSuccessHandler()) // 로그인 성공시 이전 작업 페이지로 이동 작동안돼 ...
+            
+           
+            
+            
             .failureHandler(loginFailHandler()) //로그인 실패 처리 핸들러
+            
             .and()
         .logout()
            .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //로그아웃 경로를 지정
+           .deleteCookies("JSESSIONID")
            .logoutSuccessUrl("/planit")  //로그아웃 성공시 경로를 지정
            .invalidateHttpSession(true); //로그아웃 성공시 세션을 제거
       
       
-      return http.build();   }
+      return http.build();   
+      }
    
    
    
@@ -84,13 +96,15 @@ public class SecurityConfiguration {
       return new BCryptPasswordEncoder();
    }
    
-//   @Bean
-//   public PasswordEncoder passwordEncoder() {
-//      return new BCryptPasswordEncoder();
-//   }
-//   
-   
-@Bean
+ 
+  
+@Bean 
+public AuthenticationSuccessHandler loginSuccessHandler() {
+	return new CustomLoginSuccessHandler();
+}
+ 
+
+
 public LoginFailHandler loginFailHandler() {
 	return new LoginFailHandler();
 }
@@ -103,13 +117,7 @@ public LoginFailHandler loginFailHandler() {
    protected void configure(HttpSecurity http) throws Exception {
 	   
    }
-//   public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-//       User principal = userMapper.findByUsername(userId)
-//               .orElseThrow(() ->{
-//                   return new UsernameNotFoundException("해당 사용자를 찾을수 없습니다.:" + userId);
-//               });
-//       return new PrincipalDetail(principal); //시큐리티의 세션에 유저정보가 저장이됨. 
-//   }
+//   
    
 
    

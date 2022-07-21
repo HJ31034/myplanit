@@ -1,6 +1,7 @@
 .container {
 
-  max-width: 1200px;
+  max-width: 1300px;
+  max-height:1200px;
   background-color: none;
   position: center;
   margin-top: 150;
@@ -18,6 +19,7 @@
 
 .hi{
 max-width:auto;
+max-height:auto;
 position:center;
 }
 

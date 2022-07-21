@@ -49,8 +49,13 @@ public class PlantDetailController {
 		
 		 model.addAttribute("solution",  detailService.selectSolution(plantsId));
 		 List<UserToPlantsDTO> plantUser = detailService.detail_User(plantsId);
-		 String sessionId=session.getAttribute("id").toString();
-		 model.addAttribute("sessionId",sessionId);
+		 
+		 String sessionId="";
+		 if (session.getAttribute("id") != null) {
+			 sessionId = session.getAttribute("id").toString();
+			 model.addAttribute("sessionId",sessionId);
+			}
+
 		 
 		 String resultText=null;
 		 if(plantUser.size()==0) {
