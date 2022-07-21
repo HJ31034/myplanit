@@ -115,7 +115,7 @@ public class ProfileController {
 		
 		HttpSession session  = request.getSession();
 		
-		String myId = null;
+		String myId = "";
 		if (session.getAttribute("id") != null)
 			myId = session.getAttribute("id").toString();
 		
