@@ -113,24 +113,28 @@ public class UserController {
 //		return "/login/loginForm";
 //	}
 	
+	
+	
+	
 	@GetMapping("/login")
 	public String loginForm(@RequestParam(value="error", required=false) String error,
 			@RequestParam(value="exception", required=false) String exception,
-			Model model) {
+			Model model, HttpServletRequest request) {
+		
+		  /**
+	     * 이전 페이지로 되돌아가기 위한 Referer 헤더값을 세션의 prevPage attribute로 저장 
+	     */
+	    String uri = request.getHeader("Referer");
+	    if (uri != null && !uri.contains("/login")) {
+	        request.getSession().setAttribute("prevPage", uri);
+	    }
+		
 		
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
 		return "/login/loginForm";
 	}
-	// 로그인 실패폼
-		@GetMapping("/loginFail")
-		public String loginFailForm(@RequestParam(value="error", required=false) String error,
-				@RequestParam(value="exception", required=false) String exception,
-				Model model) {
-			model.addAttribute("error", error);
-			model.addAttribute("exception", exception);
-			return "/login/loginFail";
-		}
+
 
 	// 시큐리티 로그인 처리 ;;;
 	@GetMapping("/login.do")
@@ -139,17 +143,19 @@ public class UserController {
 		UserDTO userdto = (UserDTO) authentication.getPrincipal(); // userDetail 객체를 가져옴
 		if (userdto == null) {
 			model.addAttribute("msg", "아이디와 비번호를 다시 입력해 주세요!");
-			return "redirect:/loginFail";
+			return "redirect:/login";
 			
 			//user_access
 		}
+		
+		
 		model.addAttribute("info", userdto.getUsername() + "님" + "로그인은 성공이요"); // 유저 아이디
 		HttpSession sessionInfo = request.getSession();
 		sessionInfo.setAttribute(SessionController.loginSession, sessionInfo);
 		sessionInfo.setAttribute("session", sessionInfo);
-		//sessionInfo.setAttribute("id", userdto.getUserId());
 		sessionInfo.setAttribute("userdto", userdto);
 		sessionInfo.setAttribute("id", userdto.getUserId());
+		
 		return "redirect:/planit";
 	}
 
@@ -175,7 +181,7 @@ public class UserController {
 		// userdto.setUserId((String) session.getAttribute("id"));
 		userService.userInfo(userdto);
 
-		return "/login/update/userInfo";
+		return "/login/update/user-info";
 	}
 
 	// 회원정보 수정 페이지

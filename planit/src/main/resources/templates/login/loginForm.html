@@ -21,6 +21,12 @@
 <link href="assets/dist/signin.css" rel="stylesheet">
 
 
+<script th:inline="javascript" >
+
+
+
+
+</script>
 
 </head>
 
@@ -47,7 +53,7 @@
 
 
 					<th:block th:if="${session.userdto == null}">
-						<form action="" method="post">
+						<form th:action="@{/login.do}" method="post">
 							<h1 class="h3 mb-3 fw-normal">로그인 해주세요</h1>
 
 
