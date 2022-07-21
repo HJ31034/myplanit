@@ -176,7 +176,6 @@
 				</div>
 				<div class="contents_container">
 					<div th:each="post : ${myUserPosts[index.index]}" class="pic">
-						<!--<a th:href="@{/planiter/post/read(postno=${post.postNo})}" ><img th:src="@{/imgs/img_section/} + ${post.realFileName}" alt=""></a>-->
 						<a th:href="@{/planiter/post/read(postno=${post.postNo})}" ><img th:src="@{${'/planiter/post/image/'+post.realFileName}}" alt=""></a>
 					</div>
 				</div>
