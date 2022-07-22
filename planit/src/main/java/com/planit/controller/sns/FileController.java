@@ -33,8 +33,7 @@ public class FileController {
 	@PostMapping("/planiter/post/file/upload")
     public String uploadFile(@RequestParam("uploadFiles") MultipartFile[] files, Model model) throws IllegalStateException, IOException {
 		List<FilesDTO> list = new ArrayList<>();
-		//String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section/";
-
+		 
 		for (MultipartFile file : files) {
 			if(!file.isEmpty()) {
 				FilesDTO dto = new FilesDTO();

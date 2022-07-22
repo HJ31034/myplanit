@@ -50,7 +50,7 @@
                        			<!-- 검색 후 session에 저장된 아이디가 출력됐을때 내 프로필로 보내기 -->
    								<span th:if= "${img.userId == sessionId}">
    								 <a href="/planiter/profile.do" id="userSearch">
-                           		 <img th:src="@{${'/imgs/img_section/'+img.profileImg}}" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" > 
+                           		 <img th:src="@{${'/planiter/post/image/'+img.profileImg}}" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" > 
 								 <p id="search_userId"  th:text="${img.userId}"></p>
 								 <p id="search_des"  th:text="${img.accDescription}"></p>
                            		 </a>
@@ -86,14 +86,14 @@
                <div class="side_box" th:each="info:${AccInfo}">
                    <div class="user_profile"  >
                       <div class="profile_thumb">
-                        <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
+                        <img th:src="@{${'/planiter/post/image/'+info.profileImg}}" alt="프로필사진"> 
                       </div>
                       <div><p id="planiter_userId" th:text="${info.userId}+님" ></p></div>
                    </div>
  
     
                   <div style="margin-top: -20px;">  
-                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워<br>
+                   <div class="follower" id="follower"><a th:href="@{/planiter/follower.do(fol=1)}" class="followerAtag">팔로워 
                       <p class="followerCount" th:text="${info.followerCount}"/></a></div>
                    <div class="following"><a th:href="@{/planiter/follower.do(fol=2)}" class="followerAtag" >팔로잉<br>
                       <p class="followingCount" th:text="${info.followingCount}"/></a></div>
@@ -129,9 +129,9 @@
 		 $(".imgList_section").scroll(function() {  
 			 
 				var innerHeight = $(this).innerHeight(); 
-				var scroll=$(this).scrollTop() + $(this).innerHeight()+0.5; 
+				var scroll=$(this).scrollTop() + $(this).innerHeight()+1; 
 				var height=$(this)[0].scrollHeight; 
-               // console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+               console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
 				if(scroll >= height){
 					 console.log('페이지 끝');
 					 nextImgPost(page);
