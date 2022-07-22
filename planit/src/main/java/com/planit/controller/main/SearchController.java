@@ -47,32 +47,18 @@ public class SearchController {
 		int total = 0;
 		
 		List<PlantsDTO> plantList;
-//		if (term != null) {
-//			total = searchService.plantsTotalCount(term, -1);
-//			plantList = searchService.selectPlants(term, -1, 1, 16);
-//			model.addAttribute("term", term);
-//			System.out.println(term);
-//		} else {
-//			total = searchService.plantsTotalCount("all", -1);
-//			plantList = searchService.selectPlants("all", -1, 1, 16);
-//		}
-//		if(keyId == null) {
-////			keyId = {-1, -1};
-//			//keyId[1] = -1;
-//		}
-//		else {
-//			total = searchService.plantsTotalCount(term, sk);
-//			plantList = searchService.selectPlants(term, sk, 1, 16);
-//	
-//			model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0)); // 1차 필터 키워드
-//			model.addAttribute("plantList", plantList);
-//			model.addAttribute("total", total);
-//			model.addAttribute("firstKeyId", keyId[0]);
-//			model.addAttribute("keyId", keyId[1]);
-//		}
+
 		System.out.println("term : " + term != "all" ? term : null );
-		total = searchService.plantsTotalCount(term, sk);
-		plantList = searchService.selectPlants(term, sk, 1, 16);
+		
+		if(sk != -1)
+			total = searchService.plantsTotalCount(term, sk);
+		else
+			total = searchService.plantsTotalCount(term, fk);
+		
+		if(sk != -1)
+			plantList = searchService.selectPlants(term, sk, 1, 16);
+		else
+			plantList = searchService.selectPlants(term, fk, 1, 16);
 
 		model.addAttribute("plantKwdList", mainService.selectPlantKeyword(0)); // 1차 필터 키워드
 		model.addAttribute("plantList", plantList);
@@ -86,12 +72,16 @@ public class SearchController {
 	@ResponseBody
 	@PostMapping("/search")
 	public Map<String, Object> plants(@RequestParam(value = "term", required = false, defaultValue = "all") String term,
-			@RequestParam(value = "keyId", required = false, defaultValue = "-1") int keyId,
+			@RequestParam(value = "fk", required = false, defaultValue = "-1") int fk, 
+			@RequestParam(value = "sk", required = false, defaultValue = "-1") int sk,
 			@RequestParam(value = "page", required = false, defaultValue = "1") String page, Model model) {
 
 		int pageNum = Integer.parseInt(page);
-
-		int total = searchService.plantsTotalCount(term, keyId);
+		int total;
+		if(sk != -1)
+			total = searchService.plantsTotalCount(term, sk);
+		else
+			total = searchService.plantsTotalCount(term, fk);
 
 		int nowPage = pageNum;
 		int startNum = 0;
@@ -112,11 +102,16 @@ public class SearchController {
 
 		List<PlantsDTO> plantList;
 
-		plantList = searchService.selectPlants(term, keyId, startNum, endNum);
+		if(sk != -1)
+			plantList = searchService.selectPlants(term, sk, startNum, endNum);
+		else
+			plantList = searchService.selectPlants(term, fk, startNum, endNum);
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("plantList", plantList);
 		map.put("total", total);
+		model.addAttribute("fk", fk);
+		model.addAttribute("sk", sk);
 		// map.put("term", term);
 		// map.put("keyId", keyId);
 

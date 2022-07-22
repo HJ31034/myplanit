@@ -124,7 +124,8 @@ public class ProfileController {
 		follow.setUserId(myId);
 		follow.setFollowingId(id);
 		
-		model.addAttribute("followCheck", profileService.selectFollow(follow));
+		if(myId != null)
+			model.addAttribute("followCheck", profileService.selectFollow(follow));
 
 		return "sns/otherProfile";
 	}

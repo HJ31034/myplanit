@@ -12,12 +12,12 @@
 <th:block layout:fragment="script">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script th:inline="javascript">
-	var fk;
+	var fk = "[[${fk}]]";
 	var sk = "[[${sk}]]";
 	$(document).ready(function() {
 		
 		// 메인에서 키워드를 선택해서 들어왔을 때 선택한 키워드 보여주기
-		if(sk > 0){
+		if(sk > 0 || fk > -1){
 			fk = "[[${fk}]]";
 			
 			$("#second-filter").addClass('active');
@@ -31,6 +31,7 @@
 				dataType : 'json',
 				success : function(data) {
 					if(fk <= 4){
+						console.log("fk: " + fk + " , sk :" + sk);
 						str = "<div class='divide'></div>";
 						
 						for (var i = 0; i < data.length; i++) {
@@ -44,8 +45,10 @@
 						$('.second-filter').html(str);
 						
 						$('button[class=kwd]').each(function(){
+							console.log($(this).val());
 							if($(this).val() == fk || $(this).val() == sk){
 								$(this).addClass('btn_active');
+								console.log($(this).val());
 							}
 							
 						});
@@ -155,10 +158,12 @@
 			 params.delete('fk');
 		 }
 			 
-		 if(sk <= 4) // 첫 번째 필터 키워드 값 변경할 경우
+		 if(sk <= 4){ // 첫 번째 필터 키워드 값 변경할 경우
 			 params.delete('sk');
+		 }
 		 
 		 url = params.toString();
+		 console.log(url);
 		 if(url == "")
 		 	return "search" + url;
 		 return "search?" + url;
@@ -175,7 +180,8 @@
 			url : '/planit/search',
 			data : {
 				term : term,
-				keyId : sk,
+				fk : fk,
+				sk : sk,
 				page : page
 			},
 			dataType : 'json',
