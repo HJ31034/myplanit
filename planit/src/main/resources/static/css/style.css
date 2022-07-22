@@ -302,10 +302,10 @@ font-size: 20px;
 
 .following{
 margin-left: 150px;
-    width: 100px;
-       margin-top: -39px;
-    text-align: center;
-    font-size: 20px;
+width: 100px;
+margin-top: -38.8px;
+text-align: center;
+font-size: 20px;
 }
 
 .single-widget-area {
@@ -561,6 +561,9 @@ img.followIMG{
 
 .followerCount{
   margin-top: -2px;
+}
+.followingCount{
+  margin-top: -1px;
 }
 
 /* followList END */

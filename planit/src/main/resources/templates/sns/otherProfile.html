@@ -158,7 +158,9 @@
 			<div class="detail">
 				<div class="top">
 					<div class="user_name">[[${userProfile.userId}]]</div>
-					<button type="button" th:value="${followCheck}">팔로우</button>
+					<th:block th:if="${session.userdto != null}">
+						<button type="button" th:value="${followCheck}">팔로우</button>
+					</th:block>
 				</div>
 
 				<ul class="middle plant_name">

@@ -5,7 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
- 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +13,16 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
- 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
- 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,7 +37,9 @@ import com.planit.service.sns.snsService;
 @RestController
 @RequestMapping(value = "/planiter")
 public class PlaniterRestController {
-
+	 @Value("${planit.upload.path}")
+	    private String saveDir;
+	 
 	@Autowired
 	private snsService snsservice;
 
@@ -193,7 +198,7 @@ public class PlaniterRestController {
 			
 		
 		String fileName = profileIMG.getOriginalFilename();
-		String saveDir = getClass().getClassLoader().getResource("static").getFile() + "/imgs/img_section";
+		 
 		 
 
 		if (profileIMG.isEmpty()) {
@@ -203,7 +208,8 @@ public class PlaniterRestController {
 		// 파일업로드
 		try {
 			byte[] fileData = profileIMG.getBytes();
-			OutputStream out = new FileOutputStream(saveDir + "/" + fileName);
+			OutputStream out = new FileOutputStream(saveDir + fileName.trim());
+			System.out.println(saveDir +  fileName);
 			BufferedOutputStream bout = new BufferedOutputStream(out);
 
 			bout.write(fileData);
@@ -223,6 +229,12 @@ public class PlaniterRestController {
 		mav.setViewName("redirect:/planiter/goProfileEdit.do");
 		return mav;
 
+	}
+	
+	@ResponseBody
+	@GetMapping("/planiter/post/image/{filename}")
+	public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+		return new UrlResource("file:///" + saveDir + filename.trim());
 	}
 
 }

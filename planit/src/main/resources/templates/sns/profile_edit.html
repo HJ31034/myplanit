@@ -26,7 +26,7 @@
 					<div class="img_section" th:each="info:${AccInfo}">
 						<div class="img_sectionA">
 							<img class="followerPro"
-								th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
+								th:src="@{${'/planiter/post/image/'+info.profileImg}}" alt="프로필사진"> 
 				 	    <img onclick='fileDel()' class="dataDeleteIMG" src="/imgs/img_section/dataDelete.png"> <br>
  
 						<br><br> <input type="file" id="profileIMG" name="profileIMG">

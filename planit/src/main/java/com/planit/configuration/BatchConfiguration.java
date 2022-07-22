@@ -27,8 +27,7 @@ import com.planit.domain.main.RecommendDTO;
 @EnableBatchProcessing
 public class BatchConfiguration {
 	
-	@Value("${planit.recommend.path}")
-    private String path;
+    private String path = "data/";
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
@@ -89,7 +88,7 @@ public class BatchConfiguration {
     @Bean
     public FlatFileItemWriter<RecommendDTO> writer(){
         FlatFileItemWriter<RecommendDTO> writer = new FlatFileItemWriter<RecommendDTO>();
-        writer.setResource(new FileSystemResource(path + "\\recommendUsers.csv"));
+        writer.setResource(new FileSystemResource(path + "recommendUsers.csv"));
         writer.setShouldDeleteIfEmpty(true);
         writer.setShouldDeleteIfExists(true);
         DelimitedLineAggregator<RecommendDTO> aggregator = new DelimitedLineAggregator<>();
@@ -103,7 +102,7 @@ public class BatchConfiguration {
     @Bean
     public FlatFileItemWriter<RecommendDTO> writer2(){
         FlatFileItemWriter<RecommendDTO> writer = new FlatFileItemWriter<RecommendDTO>();
-        writer.setResource(new FileSystemResource(path + "\\usersMapping.csv"));
+        writer.setResource(new FileSystemResource(path + "usersMapping.csv"));
         writer.setShouldDeleteIfEmpty(true);
         writer.setShouldDeleteIfExists(true);
         DelimitedLineAggregator<RecommendDTO> aggregator = new DelimitedLineAggregator<>();
