@@ -7,7 +7,7 @@
 
 <th:block layout:fragment="write-post">
 	<div>
-		<form class="post_inner" id="post_form" th:action=@{/planiter/post/write} method="post">
+		<form class="post_inner" id="post_form" th:action=@{/planiter/post/write} method="post" onsubmit="return validationCheck()">
 			<div class="post_box_left">
 				<div class="photo_box_insert">
 				    <label for="file_input">
@@ -41,7 +41,7 @@
 				</div>
 				<div class="select_box">
 					<div class="category">
-						<select name="plantsCateNo" >
+						<select id="plantsCateNo" name="plantsCateNo" >
 							<option value="">내 식물 선택하기</option>
 							<option th:each="u : ${userToPlantList}" th:text="*{u.plantsName}" th:value="*{u.plantsCateNo}"></option>
 						</select>
@@ -57,7 +57,7 @@
 				</div>
 				<div class="commit_box">
 					<div class="commit">
-						<button onclick="validationCheck">등록</button>
+						<button >등록</button>
 					</div>
 				</div>
 			</div>
@@ -172,6 +172,37 @@
 			});
 
 			return false;
+		}
+		
+		function validationCheck(){
+			let post_form = document.getElementById('post_form');
+		
+		    let fileList  = $("#file_list");
+		    let fileCnt = fileList.children().length;
+		
+		    let plantsCateNo = document.getElementById('plantsCateNo');
+		
+		    let post_content = document.getElementById('post_content');
+		    
+		    if(fileCnt <= 0){
+		        alert('파일을 등록해주세요');
+		        
+		        return false;
+		    }
+		    
+		    if(plantsCateNo.value == ''){
+		    	alert('카테고리를 선택해주세요');
+		    	
+		    	return false;
+		    }
+		    
+		    if(post_content.value == ''){
+		    	alert('내용을 입력해주세요.');
+		    	
+		    	return false;
+		    }
+		    
+			return true;
 		}
 
     </script>
