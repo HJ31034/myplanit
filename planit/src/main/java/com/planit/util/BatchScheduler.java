@@ -26,6 +26,7 @@ public class BatchScheduler {
 	
 //	@Scheduled(cron = "0 0 0/6 * * * ")
 	@Scheduled(cron = "0 0/10 * * * *")
+//	@Scheduled(cron = "10 * * * * *")
 	public void runJob() {
 		System.out.println("현재 시간은" + new Date());
 		
