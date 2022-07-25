@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="sns/layout/basic">
 <th:block layout:fragment="title">
-	<title>list page</title>
+	<title>Planiter</title>
 </th:block>
 
 <th:block layout:fragment="sub-head">
@@ -151,7 +151,7 @@
 		<div class="hori_cont">
 			<div class="profile_wrap">
 				<div class="profile_img">
-					<img th:src="@{/imgs/img_section/} + ${userProfile.profileImg}">
+					<img th:src="@{${'/planiter/post/image/'+userProfile.profileImg}}">
 				</div>
 			</div>
 
