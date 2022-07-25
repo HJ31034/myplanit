@@ -61,6 +61,7 @@
             <div class="col-12">
               <label for="username" class="form-label">이름 <span class="text-muted"></span></label>
               <input type="text" class="form-control" name="userName" id="username"
+              onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
               th:value="${user?.userName}" placeholder="이름" required="required">
               
             </div>
@@ -71,7 +72,9 @@
                 
                 <input type="text" class="form-control" name="userId" id="userId" 
                 th:value="${user?.userId}"
-                placeholder=" 영문 최소 5자리 이상 12자리 이하 " autocomplete="username" required onchange="checkId()"/>
+                onkeyup="noSpaceForm(this);" 
+                placeholder=" 영문 최소 5자리 이상 12자리 이하 " autocomplete="username" required onchange="checkId(), noSpaceForm();"/>
+                
                 <span th:text="${valid_userId}"></span>
                 
               <!--   <span>
@@ -93,6 +96,7 @@
               <label for="password" class="form-label">비밀번호 </label>
               <input type="password" class="form-control" name="password" id="pwd1" 
               th:value="${user?.password}"
+              onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
               autocomplete="new-password" placeholder="PASSWORD" required/>
               <span th:text="${valid_password}"></span>
             </div>
@@ -100,6 +104,7 @@
             <div class="col-12">
               <label for="password" class="form-label">비밀번호 확인</label>
               <input type="password" class="form-control" name="password2" id="pwd2"
+              onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
               autocomplete="new-password"  placeholder="RE-PASSWORD" required/>
              <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
 			<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다. 다시한번 확인하여 주세요.</div>
@@ -112,6 +117,7 @@
 	            <div class="col-12">
               <label for="email" class="form-label">이메일 <span class="text-muted"></span></label>
               <input type="email" class="form-control" name="email" id="email" 
+              onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
               th:value="${user?.email}" placeholder="you@example.com">
   			<span th:text="${valid_email}"></span>
             </div>
@@ -459,6 +465,17 @@
     
 <script th:inline="javascript" >
 
+
+function noSpaceForm(obj) { // 공백사용못하게
+    var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value)) { //공백 체크
+        alert("해당 항목에는 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(' ',''); // 공백제거
+        return false;
+    }
+ // onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
+}
 
 function validation(){
 	
