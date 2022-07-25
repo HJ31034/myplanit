@@ -165,7 +165,16 @@ function passedit(){
 		 
 		 });
 	 
-
+	 function noSpaceForm(obj) { // 공백사용못하게
+		    var str_space = /\s/;  // 공백체크
+		    if(str_space.exec(obj.value)) { //공백 체크
+		        alert("해당 항목에는 공백을 사용할수 없습니다.");
+		        obj.focus();
+		        obj.value = obj.value.replace(' ',''); // 공백제거
+		        return false;
+		    }
+		 // onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
+		}
  
 		
   
@@ -248,7 +257,8 @@ function passedit(){
 							<div class="col-12">
 								<label for="password" class="form-label">새 비밀번호 </label> <input
 									type="password" class="form-control" name="password" id="pwd1"
-									onchange="valid()" autocomplete="new-password"
+									onchange="valid(),noSpaceForm(this);" autocomplete="new-password"
+									onkeyup="noSpaceForm(this);" 
 									placeholder="PASSWORD" required /> <span
 									th:text="${valid_password}"></span>
 								<div>
@@ -258,8 +268,10 @@ function passedit(){
 							</div>
 
 							<div class="col-12">
-								<label for="password" class="form-label">새 비밀번호 확인</label> <input
+								<label for="password" class="form-label">새 비밀번호 확인</label>
+								 <input
 									type="password" class="form-control" name="password2" id="pwd2"
+									onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
 									autocomplete="new-password" placeholder="RE-PASSWORD" required />
 								<div class="alert alert-success" id="alert-success">비밀번호가
 									일치합니다.</div>
