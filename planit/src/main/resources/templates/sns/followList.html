@@ -32,7 +32,7 @@
            <div class="side_box" th:each="info:${AccInfo}">
                    <div class="user_profile"  >
                       <div class="profile_thumb">
-                        <img th:src="@{${'/imgs/img_section/'+info.profileImg}}" alt="프로필사진"> 
+                        <img th:src="@{${'/planiter/post/image/'+info.profileImg}}" alt="프로필사진"> 
                       </div>
                       <div><p id="planiter_userId" th:text="${info.userId}+님" ></p></div>
                    </div>
@@ -139,7 +139,7 @@
 	  			              }
 		  					  followerList = '<div class="followList" id="followList">'
 		  						     +   '<div class="followIMGA">'
-		  						     +   '<img class="followIMG" src="/imgs/img_section/'+item.profileImg+'"alt="프로필사진">'
+		  						     +   '<img class="followIMG" src="/planiter/post/image/'+item.profileImg+'"alt="프로필사진">'
 		  			              	 +   '</div>'
 		  			              	 +   '<div class="followLIstInfo">'
 		  			            	 +   '<a href="/planiter/'+item.followingId+'">' 
@@ -180,7 +180,7 @@
 	 $(".following_section").show();
 	 $(".follower_section").hide();
 	 
-	 console.log('followingList page: '+page);
+	 //console.log('followingList page: '+page);
 	 $.ajax({
 			type : 'get',
 			url : "/planiter/followingList.do?page="+page+"&userId="+userId,
@@ -202,7 +202,7 @@
   					 
 					  followingList = '<div class="followList" id="followList">'
 						     +   '<div class="followIMGA">'
-						     +   '<img class="followIMG" src="/imgs/img_section/'+item.profileImg+'"alt="프로필사진">'
+						     +   '<img class="followIMG" src="/planiter/post/image/'+item.profileImg+'"alt="프로필사진">'
 			              	 +   '</div>'
 			              	 +   '<div class="followLIstInfo">'
 			              	 +   '<a href="/planiter/'+item.followingId+'">' 

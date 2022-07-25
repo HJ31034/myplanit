@@ -16,7 +16,7 @@
                         <div id="searchText" th:text="${keyFieldSearch}"></div>
                         </div>
                         
-                <article class="contents" >
+                <article class="contents" > 
                 	<input type="hidden" value=${totalPage} name="test" />
                <!--인기게시물 리스트 -->
                
@@ -131,9 +131,9 @@
 				var innerHeight = $(this).innerHeight(); 
 				var scroll=$(this).scrollTop() + $(this).innerHeight()+1; 
 				var height=$(this)[0].scrollHeight; 
-               console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
+              // console.log('innerHeight: '+ innerHeight +' scroll: '+scroll+' height: '+height);
 				if(scroll >= height){
-					 console.log('페이지 끝');
+					 //console.log('페이지 끝');
 					 nextImgPost(page);
 					 page++;
 				}  
@@ -177,7 +177,7 @@
 							 console.log('datadatadata:'+ JSON.stringify(data));
 							 $("#nextImgPost").append('<span style="width:200px; display: inline-block;">'
 							 +'<a id="userSearch" href="/planiter/{id}?id='+ item.userId+'&page='+ page+ '&keyField='+ keyField+ '&keyword='+ keyword+ '" >' 
-							 +'<img src="/imgs/img_section/'+item.profileImg+'" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" >'
+							 +'<img src="/planiter/post/image/'+item.profileImg+'" alt="imgPost" id="profileImgList" class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" >'
 						     +' <p id="search_userId">'+item.userId+'</p>'
 						     +' <p id="search_des">'+item.accDescription+'</p></a><span>');
 							 
