@@ -70,4 +70,5 @@ public class FileController {
 	public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
 		return new UrlResource("file:///" + saveDir + filename.trim());
 	}
+	
 }
