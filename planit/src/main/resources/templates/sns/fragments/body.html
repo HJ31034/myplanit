@@ -11,8 +11,8 @@
 		<div id="header">
 			<div class="inner">
 				<h1 class="lsogo">
-					<a th:href="@{/planiter/}"> <img src="/imgs/LOGO.JPG"
-						style="width: 190px;">
+					<a th:href="@{/planiter/}"> <img src="/imgs/logo_sns.png"
+						style="width: 190px; margin-top: 40px;">
 					</a>
 				</h1>
 
@@ -49,20 +49,19 @@
 				
 				
 				
-
+<div class="header_font">
 	<th:block th:if="${session.userdto == null}">
-		<a id="profile" th:href="@{/login}" style="margin-left: 5px;"/> login</a>
-		<a id="write" th:href="@{/join}" style="margin-left: 5px;"/> join</a>
+		<a id="profile" th:href="@{/login}" style="font-family: 'Roboto', sans-serif; color: #9FCF62;"/> login</a>
+		<a id="write" th:href="@{/join}" style="font-family: 'Roboto', sans-serif; color: #9FCF62;"/> join</a>
 	</th:block>
 	
-	<th:block th:if="${session.userdto !=null}"> 
-		<a id="profile" th:href="@{/planiter/profile.do}" style="margin-left: 5px;"/> profile</a>
-		<a id="write" th:href="@{/planiter/post/write}" style="margin-left: 5px;"/> write</a>
-	 	<a id="planiter" th:href="@{/planit}" style="margin-left: 5px;"/> planit</a>
-	 	<a id="logout" th:href="@{/logout}" style="margin-left: 5px;"/> logout</a>
+	<th:block th:if="${session.userdto !=null}">
+			<a id="profile" th:href="@{/planiter/profile.do}" style="font-family: 'Roboto', sans-serif; color: #9FCF62;"/> profile</a>
+			<a id="post" th:href="@{/planiter/post/write}" style="font-family: 'Roboto', sans-serif; color: #9FCF62;"/> post</a>
+	 		<a id="planiter" th:href="@{/planit}" style="font-family: 'Roboto', sans-serif; color: #9FCF62;"/> planit</a>
+	 		<a id="logout" th:href="@{/logout}" style="font-family: 'Roboto', sans-serif; color: #9FCF62;"/> logout</a>
 	</th:block>  
-
- 
+</div>
 
 			</div>
 		</div>

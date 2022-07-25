@@ -762,3 +762,14 @@ followList start
 .session_error_login{
 	text-align: center;
 }
+
+.header_font {
+	margin-top: 35px;
+}
+
+.header_font a{
+	margin-left: 5px; 
+	font-size: 20px; 
+	color: #9FCF62; 
+	text-decoration: none;
+}
