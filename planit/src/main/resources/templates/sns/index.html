@@ -59,7 +59,7 @@
    								<!-- 검색 후 session에 저장된 아이디와 동일하지 않으면 otherProfile로 보내기 -->
    						      <span th:if= "${img.userId != sessionId}">
                                  <a th:href="@{/planiter/{id}(id=${img.userId})}" id="userSearch">
-                           		 <img th:src="@{${'/imgs/img_section/'+img.profileImg}}" alt="imgPost" id="profileImgList"
+                           		 <img th:src="@{${'/planiter/post/image/'+img.profileImg}}" alt="imgPost" id="profileImgList"
 									class="my-2 mx-auto p-relative bg-white shadow-1 blue-hover" > 
 								 <p id="search_userId"  th:text="${img.userId}"></p>
 								 <p id="search_des"  th:text="${img.accDescription}"></p>
