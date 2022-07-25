@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="sns/layout/basic">
 <th:block layout:fragment="title">
-	<title>read post page</title>
+	<title>Planiter</title>
 </th:block>
 
 <span layout:fragment="write-post">
@@ -33,15 +33,19 @@
 			<div id="post_box_right_read_main" class="post_box_right_read_main">
 				<div class="profile_box">
 					<span class="profile_box_img" style="display: inline-block;">
-						<img th:src="${'/imgs/img_section/' + accountProfile.profileImg}"/>
+						<img th:src="@{${'/planiter/post/image/'+accountProfile.profileImg}}"/>
 					</span>
-					<span style="display: inline-block; width: 60%;">
-						<a href="#" th:text="${post.userId}" style="display: block; padding-bottom: 5px;"></a>
-						<a href="#" th:text="${accountProfile.accDescription}" style="display: block;"></a>
+					<span style="display: inline-block; width: 60%;" th:if="${session.userdto} != null AND ${session.userdto.userId} == ${post.userId}">
+						<a th:href="@{/planiter/profile.do}" th:text="${post.userId}" style="display: block; padding-bottom: 5px;"></a>
+						<a href="javascript:void(0);" th:text="${accountProfile.accDescription}" style="display: block;"></a>
+					</span>
+					<span style="display: inline-block; width: 60%;" th:if="${session.userdto} != null AND ${session.userdto.userId} != ${post.userId}">
+						<a th:href="@{/planiter/{id}(id=${post.userId})}" th:text="${post.userId}" style="display: block; padding-bottom: 5px;"></a>
+						<a href="javascript:void(0);" th:text="${accountProfile.accDescription}" style="display: block;"></a>
 					</span>
 					<span th:if="${session.userdto} != null AND ${session.userdto.userId} == ${post.userId}" style="display: inline-block; padding-left: 20px;">
-						<a th:href="@{/planiter/post/modify(postno=${post.postNo})}">수정</a>
-						<a th:href="@{/planiter/post/delete(postno=${post.postNo})}">삭제</a>
+						<a th:href="@{/planiter/post/modify(postno=${post.postNo})}" style="color: gray;">수정</a>
+						<a th:href="@{/planiter/post/delete(postno=${post.postNo})}" style="color: gray;">삭제</a>
 					</span>
 				</div>
 				<div class="read_box">
@@ -77,7 +81,7 @@
 								<td th:text="${c.userId}"></td>
 								<td th:text="${c.content}"></td>
 								<td th:text="${c.regDate}"></td>
-								<td><a th:if="${session.userdto} != null AND ${session.userdto.userId} == ${c.userId}" href="javascript:void(0);" th:onclick="'deleteComment('+${c.no}+')'">삭제</a></td>
+								<td><a th:if="${session.userdto} != null AND ${session.userdto.userId} == ${c.userId}" href="javascript:void(0);" th:onclick="'deleteComment('+${c.no}+')'" style="text-decoration: none; color: gray;" >삭제</a></td>
 							</th:block>
 						</tr>
 					</table>
@@ -106,7 +110,7 @@
 								<td th:text="${c.userId}"></td>
 								<td th:text="${c.content}"></td>
 								<td th:text="${c.regDate}"></td>
-								<td><a th:if="${session.userdto} != null AND ${session.userdto.userId} == ${c.userId}" href="javascript:void(0);" th:onclick="'deleteComment('+${c.no}+')'">삭제</a></td>
+								<td><a th:if="${session.userdto} != null AND ${session.userdto.userId} == ${c.userId}" href="javascript:void(0);" th:onclick="'deleteComment('+${c.no}+')'" style="text-decoration: none; color: gray;">삭제</a></td>
 							</th:block>
 						</tr>
 					</table>
