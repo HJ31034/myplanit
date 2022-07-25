@@ -102,7 +102,16 @@ function useredit(){
 	
 	
 	
-
+	function noSpaceForm(obj) { // 공백사용못하게
+	    var str_space = /\s/;  // 공백체크
+	    if(str_space.exec(obj.value)) { //공백 체크
+	        alert("해당 항목에는 공백을 사용할수 없습니다.");
+	        obj.focus();
+	        obj.value = obj.value.replace(' ',''); // 공백제거
+	        return false;
+	    }
+	 // onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
+	}
 
 </script>
     
@@ -161,6 +170,7 @@ function useredit(){
           <div class="col-12">
             <label for="address2" class="form-label">이름</label>
             <input type="text"  class="form-control" id="userName" name="userName"
+            onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
             th:value="${session.userdto.userName}" placeholder="이름" >
           </div>
 
@@ -182,6 +192,7 @@ function useredit(){
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" name="email"
               th:value="${session.userdto.email}"
+              onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
             id="email" placeholder="you@example.com" for="email" required>
             <div class="invalid-feedback">
               Please enter a valid email address for updates.
