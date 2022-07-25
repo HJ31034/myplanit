@@ -82,20 +82,20 @@
 			var check = $('button').val();
 			console.log(userId);
 			if(check == 1){
-				$('button').attr('class','write_btn');
-				$('button').text('팔로우');
-			}
-			else {
 				$('button').attr('class','profile_modify');
 				$('button').text('팔로잉');
+			}
+			else {
+				$('button').attr('class','write_btn');
+				$('button').text('팔로우');	
 			}
 			
 			$('button').click(function(){
 				var followingId = $('.user_name').text();
 				
 				if(check == 0){ // 팔로우가 되어 있지 않은 상태에서 팔로우 버튼을 눌렀을 경우
-					$(this).attr('class','write_btn');
-					$(this).text('팔로우');
+					$(this).attr('class','profile_modify');
+					$(this).text('팔로잉');
 					check = 1;
 					
 					$.ajax({
@@ -116,8 +116,8 @@
 					});
 				}
 				else {
-					$(this).attr('class','profile_modify');
-					$('button').text('팔로잉');
+					$(this).attr('class','write_btn');
+					$('button').text('팔로우');
 					check = 0;
 					$.ajax({
 						type : 'POST',
