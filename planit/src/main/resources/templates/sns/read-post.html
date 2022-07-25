@@ -75,11 +75,11 @@
 					</div>
 				</div>
 				<div class="comment">
-					<table id="comment_table">
-						<tr th:each="c,index : ${commentList}" th:if="${index.index} < 4">
+					<table id="comment_table" style="display:block;">
+						<tr th:each="c,index : ${commentList}" th:if="${index.index} < 4" style="max-height: 30px; width: 100%;">
 							<th:block>
 								<td th:text="${c.userId}"></td>
-								<td th:text="${c.content}"></td>
+								<td><span th:text="${c.content}"></span></td>
 								<td th:text="${c.regDate}"></td>
 								<td><a th:if="${session.userdto} != null AND ${session.userdto.userId} == ${c.userId}" href="javascript:void(0);" th:onclick="'deleteComment('+${c.no}+')'" style="text-decoration: none; color: gray;" >삭제</a></td>
 							</th:block>
@@ -104,7 +104,7 @@
 					</div>
 				</div>
 				<div class="comment_second">
-					<table id="comment_table_second">
+					<table id="comment_table_second" style="display: block;">
 						<tr th:each="c : ${commentList}">
 							<th:block>
 								<td th:text="${c.userId}"></td>
