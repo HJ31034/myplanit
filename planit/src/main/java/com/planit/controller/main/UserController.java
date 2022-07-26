@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,13 +34,13 @@ public class UserController {
 
 	@GetMapping("planit/detail")
 	String detail() {
-		return "/login/fuleaf-detail";
+		return "login/fuleaf-detail";
 	}
 
 	// 회원가입 화면
 	@GetMapping("join")
 	public String register() {
-		return "/login/register";
+		return "login/register";
 	}
 
 	
@@ -69,7 +70,7 @@ public class UserController {
 				model.addAttribute(key, validatorResult.get(key));
 			}
 
-			return "/login/register";
+			return "login/register";
 			//return "";
 		}
 		
@@ -120,19 +121,23 @@ public class UserController {
 	public String loginForm(@RequestParam(value="error", required=false) String error,
 			@RequestParam(value="exception", required=false) String exception,
 			Model model, HttpServletRequest request) {
+		try {
+			  /**
+		     * 이전 페이지로 되돌아가기 위한 Referer 헤더값을 세션의 prevPage attribute로 저장 
+		     */
+		    String uri = request.getHeader("Referer");
+		    if (uri != null && !uri.contains("/login")) {
+		        request.getSession().setAttribute("prevPage", uri);
+		    }
+			
+			
+			model.addAttribute("error", error);
+			model.addAttribute("exception", exception);
+		} catch (Exception e) {
+			System.err.println(e);
+		}
 		
-		  /**
-	     * 이전 페이지로 되돌아가기 위한 Referer 헤더값을 세션의 prevPage attribute로 저장 
-	     */
-	    String uri = request.getHeader("Referer");
-	    if (uri != null && !uri.contains("/login")) {
-	        request.getSession().setAttribute("prevPage", uri);
-	    }
-		
-		
-		model.addAttribute("error", error);
-		model.addAttribute("exception", exception);
-		return "/login/loginForm";
+		return "login/loginForm";
 	}
 
 
@@ -181,7 +186,7 @@ public class UserController {
 		// userdto.setUserId((String) session.getAttribute("id"));
 		userService.userInfo(userdto);
 
-		return "/login/update/user-info";
+		return "login/update/user-info";
 	}
 
 	// 회원정보 수정 페이지
@@ -191,7 +196,7 @@ public class UserController {
 		session.getAttribute("userdto");
 		System.out.println("회원수정 페이지" + session.getAttribute("userdto"));
 
-		return "/login/update/user-edit";
+		return "login/update/user-edit";
 	}
 
 	// 회원정보 수정 동작
@@ -209,7 +214,7 @@ public class UserController {
 	@GetMapping("/planit/interest.do")
 	public String interest(HttpSession session) {
 		session.getAttribute("userdto");
-		return"/login/update/user-interest";
+		return"login/update/user-interest";
 	}
 	
 	//관심항목 수정 동작
@@ -225,7 +230,7 @@ public class UserController {
 	// 비밀번호 변경 페이지
 	@GetMapping("planit/password.do")
 	public String password() {
-		return "/login/update/pass-edit";
+		return "login/update/pass-edit";
 	}
 
 	// 비밀번호 변경 동작
@@ -243,6 +248,6 @@ public class UserController {
 	
 	@GetMapping("/planit/welcome")
 	public String regSuccess() {
-		return"/login/regSuccess";
+		return"login/regSuccess";
 	}
 }
