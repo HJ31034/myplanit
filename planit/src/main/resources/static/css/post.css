@@ -678,6 +678,14 @@ followList start
 	height: 100%;
 }
 
+#comment_table tr td span{
+	text-align: left;
+	width: 150px;
+	display: block;
+	vertical-align: middle;
+	max-height: 30px;
+}
+
 #comment_table tr td {
 	vertical-align: middle !important;
 	height: 30px !important;
@@ -690,7 +698,8 @@ followList start
 
 #comment_table tr td:nth-child(2){
 	text-align: left;
-	width: 45%;
+	width: 150px;
+	overflow-y: hidden;
 }
 
 #comment_table tr td:nth-child(3){
@@ -725,7 +734,7 @@ followList start
 }
 
 #comment_table_second tr td {
-	vertical-align: middle !important;
+	/*vertical-align: middle !important;*/
 	height: 30px !important;
 }
 
@@ -765,6 +774,7 @@ followList start
 
 .header_font {
 	margin-top: 35px;
+	width: 265px;
 }
 
 .header_font a{
