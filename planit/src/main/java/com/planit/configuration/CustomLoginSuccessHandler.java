@@ -56,6 +56,7 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             		|| prevPage.contains("/planit/password.do") 
             		||prevPage.contains("/planit/eidt.do") 
             		||prevPage.contains("/planit/userinfo")
+            		||prevPage.contains("/planit/welcome")
             		) {
                 uri = "/planit";
             } else {
