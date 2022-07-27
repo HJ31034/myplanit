@@ -28,7 +28,7 @@
 			WHERE RANK = 1 AND USERID = #{params.userId} AND PLANTSNAME = #{params.plantsName} AND DELETE_YN = 'N'
 		)
 		<if test='page.equals("main")'>
-		WHERE NUM BETWEEN 1 AND 4 AND DELETE_YN = 'N'
+		WHERE NUM BETWEEN 1 AND 4
 		</if>
 	</select>
 	
