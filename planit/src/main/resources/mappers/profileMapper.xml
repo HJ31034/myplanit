@@ -28,7 +28,7 @@
 			WHERE RANK = 1 AND USERID = #{params.userId} AND PLANTSNAME = #{params.plantsName} AND DELETE_YN = 'N'
 		)
 		<if test='page.equals("main")'>
-		WHERE NUM BETWEEN 1 AND 4
+		WHERE NUM BETWEEN 1 AND 4 AND DELETE_YN = 'N'
 		</if>
 	</select>
 	
@@ -41,7 +41,7 @@
 					LEFT OUTER JOIN POSTFILES p2 ON p.POSTNO = p2.POSTNO
 					LEFT OUTER JOIN FILES f ON p2.NO = f.NO
 					)
-		WHERE RANK = 1
+		WHERE RANK = 1 AND DELETE_YN = 'N'
 	</select>
 	
 	<select id="selectFollow" parameterType="FollowDTO" resultType="Integer">
