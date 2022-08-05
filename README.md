@@ -71,39 +71,65 @@
 
 
 ### 5. 식물 상세 페이지
-![상세페이지](https://user-images.githubusercontent.com/37447282/182808887-9f24435f-c73b-4905-a7ca-940a7e63168a.png)
-![그림5](https://user-images.githubusercontent.com/37447282/181887004-2ce91ed6-9a6e-4614-9174-498aa33ae204.png)
-![그림6](https://user-images.githubusercontent.com/37447282/181887044-4dfad94e-1945-4d27-9646-9aca99071730.png)
+![상세페이지](https://user-images.githubusercontent.com/37447282/183000786-84b8487b-fa33-4a89-90ed-2953aa37217c.png)
+- 스와이퍼 슬라이드 라이브러리를 사용하여 식물 사진 나열 및 자동 재생하여 보여준다.
+- 식물의 특성을 가진 키워드 및 설명, 관리법을 보여준다.
+- 식물 추가 버튼(내 식물 추가하기)을 누르면 사용자의 SNS 계정에 해당 식물의 카테고리가 생성이 되도록 한다.
+- 사용자 계정 추천
+  - 해당 식물을 나만의 식물로 추가한 계정이 있을 경우 그 식물을 키우고 있는 계정을 보여주고, 추가한 사용자가 없다면 랜덤으로 계정을 보여준다.
+- 식물의 특성을 감안한 자주 묻는 질문을 통해 식물을 키우는데 도움을 주도록 한다.
 
 
 ### 6. SNS 메인 페이지
-![그림9](https://user-images.githubusercontent.com/37447282/181888951-b43b9bdf-afce-4c8f-8350-62da3799e9b7.png)
-![그림10](https://user-images.githubusercontent.com/37447282/181889044-0beac56b-6b14-462c-91fe-5f2ea0b650f0.png)
+![sns메인](https://user-images.githubusercontent.com/37447282/183002911-9c832578-212c-4d85-b804-75e0ad19e1b7.png)
+- 헤더에 검색창을 위치시켜 어느 페이지에서도 검색할 수 있도록 구현
+- hover 이벤트를 통해 검색조건을 선택하여 검색할 수 있도록 구현
+- 사용자들이 작성한 게시물 리스트를 보여준다.
+- 로그인한 사용자의 계정 정보를 보여준다.
+
+![검색조회](https://user-images.githubusercontent.com/37447282/183003967-6b44268d-cbf2-43f8-bb81-d15b5a5a5479.png)
+- 조회 조건으로 식물을 선택하고 검색하면 해당 식물에 대한 글을 보여준다.
+- 조회 조건으로 계정을 선택하고 검색하면 해당 사용자 계정을 보여준다.
+- 조회 조건으로 내용을 선택하고 검색하면 게시글의 내용 중 해당 단어가 있는 게시물을 보여준다.
+
 
 ### 7. 팔로워/팔로잉 리스트 페이지
-![그림11](https://user-images.githubusercontent.com/37447282/181889491-cf8a2d97-5557-45a7-b459-1bfb98bcd44d.png)
-![그림12](https://user-images.githubusercontent.com/37447282/181890229-4df1788a-5513-46cd-a01c-be8d672366cb.png)
+![팔로우](https://user-images.githubusercontent.com/37447282/183004124-f79c5876-5f64-4ee6-9500-9d786e3f998b.png)
+- 로그인한 사용자를 팔로우/팔로잉하는 계정들을 보여준다.
+- 팔로우 버튼을 클릭하면 해당 계정을 팔로우하며 팔로잉으로 버튼이 바뀐다.
+- 팔로잉 버튼은 해당 계정을 팔로우하고 있을 경우 보여지는 버튼으로 해당 버튼을 클릭하면 해당 계정을 언팔로우하게 된다.
 
 ### 8. SNS 사용자 페이지
-![그림14](https://user-images.githubusercontent.com/37447282/181895900-eccb073c-eadb-4e96-80a9-8065b56e638f.jpg)
-![그림15](https://user-images.githubusercontent.com/37447282/181895923-f61046a1-72dc-432f-89fe-f2a3596b9cb7.jpg)
+![사용자계정](https://user-images.githubusercontent.com/37447282/183005078-6003d2c9-cd7e-4667-9cca-c75d50068d1e.png)
+- 상단에는 사용자의 프로필과 팔로워, 팔로잉 수, 사용자 게시물의 총 개수, 사용자가 좋아요 누른 게시물의 개수를 보여준다.
+- 그 아래에는 사용자가 작성한 게시물이 식물 이름별로 나누어져 있으며 최신 게시물 기준으로 4개씩 보여준다.
+- 식물 이름을 클릭하면 그에 해당되는 전체 게시물 데이터를 Ajax처리하여 화면에 보여준다.
+
+![사용자계정2](https://user-images.githubusercontent.com/37447282/183005437-377a2636-095a-4cb3-b1b2-80297f255a6d.png)
+- 사용자가 팔로우 버튼을 누르면 팔로잉 버튼으로 바뀌고 상대의 팔로워 수가 증가한다.
 
 
 ### 9. 사용자 프로필 수정 페이지
 ![그림15](https://user-images.githubusercontent.com/37447282/181892017-d7562624-ef18-40d2-b446-770ce6a73bca.png)
 
+
 ### 10. 게시물 작성 페이지
-![그림20](https://user-images.githubusercontent.com/37447282/181900510-5ed207e4-647e-407b-935e-d59c3071423e.png)
-![그림21](https://user-images.githubusercontent.com/37447282/181900538-86541bd3-eaf0-4bbf-b3cb-f79f842dee7b.png)
-![그림22](https://user-images.githubusercontent.com/37447282/181900565-12b31a8c-26ea-4cf2-9ab9-ee8bfc03404c.png)
+![쓰기](https://user-images.githubusercontent.com/37447282/183005775-e93575af-6353-495f-9457-c2e1939e6f41.png)
+![쓰기2](https://user-images.githubusercontent.com/37447282/183007700-6fdfbffb-91f9-433e-aa38-e527123bc90f.png)
+- (+) 버튼을 누르면 업로드할 파일을 선택할 수 있다.
+- 업로드할 파일을 선택하면 파일명과 이미지 미리보기를 보여준다.
+- 페이지가 로드 될 때 현재 GPS 기반으로 위치와 날씨를 가져온다. 지도 아이콘을 누르면 팝업창이 뜨면서 지도를 보여준다. 해당 지도에서 위치를 선택하고 팝업창을 닫으면 선택한 위치로 정보가 바뀐다. 
+![쓰기3](https://user-images.githubusercontent.com/37447282/183008298-5d2a137d-5983-42a0-80ac-5637ea3a7590.png)
+- 카테고리를 선택하면 상세페이지에서 사용자가 추가했던 식물의 리스트를 보여준다.
+- 게시물 글, 업로드할 이미지, 카테고리 중 하나라도 빈 곳이 있다면 알림창을 띄워준다.
 
 ### 11. 게시물 읽기 및 수정 페이지
-![그림23](https://user-images.githubusercontent.com/37447282/181900863-7d4c0ac3-b169-46b5-ba41-465edf3eb278.png)
+![글](https://user-images.githubusercontent.com/37447282/183005817-0625bb99-deee-4b69-8d7d-2582be4e344f.png)
 ![그림24](https://user-images.githubusercontent.com/37447282/181900892-947d12ff-09b7-4c97-9cd0-89be3a0b17c5.png)
 ![그림25](https://user-images.githubusercontent.com/37447282/181900911-cc6d9533-2581-491f-8e41-c84547148a86.png)
 
 
 
 ## 프로젝트 결과물
-프로젝트 소개 영상: 
+프로젝트 소개 영상: https://youtu.be/aKi-6DJJ9II
  
