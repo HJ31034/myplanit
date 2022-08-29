@@ -66,6 +66,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
- 
-
- 
+jar {
+    baseName = 'heroku-api'
+    version = '0.0.1'
+} 
