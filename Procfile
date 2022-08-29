@@ -1,1 +1,1 @@
-'worker: python parsingPost.py' 
+web: java -jar target/myapp-1.0.0.jar
